@@ -10,7 +10,7 @@ const NEXT_PUBLIC_SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://loc
 const nextConfig = {
   images: {
     remotePatterns: [
-      // ✅ Your own domain
+      // ✅ Your app's public domain
       ...[NEXT_PUBLIC_SERVER_URL].map((item) => {
         const url = new URL(item)
         return {
@@ -25,10 +25,16 @@ const nextConfig = {
         hostname: 'utfs.io',
       },
   
-      // ✅ UploadThing's new CDN subdomains (*.ufs.sh)
+      // ✅ UploadThing new CDN subdomains (*.ufs.sh)
       {
         protocol: 'https',
-        hostname: '**.ufs.sh', // 👈 wildcard subdomains now supported in Next.js 13+
+        hostname: '**.ufs.sh',
+      },
+  
+      // ✅ Hetzner: sslip.io IP-based domain (important!)
+      {
+        protocol: 'http', // change to 'https' if using HTTPS
+        hostname: '**.sslip.io',
       },
     ],
   },
