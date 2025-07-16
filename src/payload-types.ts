@@ -178,7 +178,7 @@ export interface Page {
       | null;
     media?: (string | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | NewsAndHoursBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -654,6 +654,30 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NewsAndHoursBlock".
+ */
+export interface NewsAndHoursBlock {
+  news: {
+    date: string;
+    summary?: string | null;
+    link?: string | null;
+    id?: string | null;
+  }[];
+  openingHours: {
+    title?: string | null;
+    hours: {
+      dayKey: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
+      morning?: string | null;
+      afternoon?: string | null;
+      id?: string | null;
+    }[];
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'newsAndHours';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -846,6 +870,7 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        newsAndHours?: T | NewsAndHoursBlockSelect<T>;
       };
   meta?:
     | T
@@ -943,6 +968,35 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NewsAndHoursBlock_select".
+ */
+export interface NewsAndHoursBlockSelect<T extends boolean = true> {
+  news?:
+    | T
+    | {
+        date?: T;
+        summary?: T;
+        link?: T;
+        id?: T;
+      };
+  openingHours?:
+    | T
+    | {
+        title?: T;
+        hours?:
+          | T
+          | {
+              dayKey?: T;
+              morning?: T;
+              afternoon?: T;
+              id?: T;
+            };
+      };
   id?: T;
   blockName?: T;
 }

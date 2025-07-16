@@ -16,6 +16,19 @@
     "auto": "Automatisch",
     "light": "Hell",
     "dark": "Dunkel",
-    "appointment": "Termin buchen"
+    "appointment": "Termin buchen",
+    
+        "days": {
+          "monday": "Montag",
+          "tuesday": "Dienstag",
+          "wednesday": "Mittwoch",
+          "thursday": "Donnerstag",
+          "friday": "Freitag",
+          "saturday": "Samstag",
+          "sunday": "Sonntag"
+        },
+        "open": "Geöffnet",
+        "closed": "Geschlossen"
+      
   }
   

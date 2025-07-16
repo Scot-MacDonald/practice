@@ -16,5 +16,16 @@
   "auto": "Auto",
   "light": "Light",
   "dark": "Dark",
-  "appointment": "Book appointment"
+  "appointment": "Book appointment",
+  "days": {
+  "monday": "Monday",
+  "tuesday": "Tuesday",
+  "wednesday": "Wednesday",
+  "thursday": "Thursday",
+  "friday": "Friday",
+  "saturday": "Saturday",
+  "sunday": "Sunday"
+},
+"open": "Open now",
+"closed": "Closed"
 }
