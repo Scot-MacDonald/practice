@@ -13,6 +13,8 @@ import { slugField } from "@/fields/slug";
 import { populatePublishedAt } from "../../hooks/populatePublishedAt";
 import { generatePreviewPath } from "../../utilities/generatePreviewPath";
 import { revalidatePage } from "./hooks/revalidatePage";
+import { Mitglied } from "@/blocks/Mitglied/config";
+import { FindUs } from "@/blocks/FindUs/config";
 
 import {
   MetaDescriptionField,
@@ -81,6 +83,8 @@ export const Pages: CollectionConfig = {
                 Archive,
                 FormBlock,
                 NewsAndHours,
+                Mitglied,
+                FindUs,
               ],
               required: true,
             },

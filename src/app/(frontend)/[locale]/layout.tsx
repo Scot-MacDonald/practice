@@ -16,6 +16,8 @@ import { draftMode } from "next/headers";
 import { TypedLocale } from "payload";
 
 import "./globals.css";
+import "leaflet/dist/leaflet.css";
+
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { routing } from "@/i18n/routing";

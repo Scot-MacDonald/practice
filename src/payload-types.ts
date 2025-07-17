@@ -178,7 +178,53 @@ export interface Page {
       | null;
     media?: (string | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | NewsAndHoursBlock)[];
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | NewsAndHoursBlock
+    | {
+        heading: string;
+        description?: string | null;
+        items: {
+          title: string;
+          description?:
+            | {
+                line: string;
+                id?: string | null;
+              }[]
+            | null;
+          url: string;
+          id?: string | null;
+        }[];
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'mitglied';
+      }
+    | {
+        heading: string;
+        description?: string | null;
+        transports: {
+          title: string;
+          lines?:
+            | {
+                line: string;
+                id?: string | null;
+              }[]
+            | null;
+          id?: string | null;
+        }[];
+        lat: number;
+        lng: number;
+        secondIconUrl?: string | null;
+        thirdIconUrl?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'findUs';
+      }
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -871,6 +917,51 @@ export interface PagesSelect<T extends boolean = true> {
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
         newsAndHours?: T | NewsAndHoursBlockSelect<T>;
+        mitglied?:
+          | T
+          | {
+              heading?: T;
+              description?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    description?:
+                      | T
+                      | {
+                          line?: T;
+                          id?: T;
+                        };
+                    url?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        findUs?:
+          | T
+          | {
+              heading?: T;
+              description?: T;
+              transports?:
+                | T
+                | {
+                    title?: T;
+                    lines?:
+                      | T
+                      | {
+                          line?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              lat?: T;
+              lng?: T;
+              secondIconUrl?: T;
+              thirdIconUrl?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   meta?:
     | T

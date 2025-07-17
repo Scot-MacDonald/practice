@@ -8,8 +8,10 @@ import { CallToActionBlock } from "@/blocks/CallToAction/Component";
 import { ContentBlock } from "@/blocks/Content/Component";
 import { FormBlock } from "@/blocks/Form/Component";
 import { MediaBlock } from "@/blocks/MediaBlock/Component";
+import MitgliedBlock from "@/blocks/Mitglied/Component";
 import { TypedLocale } from "payload";
 import { NewsAndHoursBlock } from "@/blocks/NewsAndHours/Component";
+import FindUsBlock from "@/blocks/FindUs/Component";
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -17,8 +19,9 @@ const blockComponents = {
   cta: CallToActionBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
-
+  mitglied: MitgliedBlock,
   newsAndHours: NewsAndHoursBlock,
+  findUs: FindUsBlock,
 };
 
 export const RenderBlocks: React.FC<{
@@ -40,7 +43,7 @@ export const RenderBlocks: React.FC<{
 
             if (Block) {
               return (
-                <div className="my-16" key={index}>
+                <div className="" key={index}>
                   {/* @ts-expect-error */}
                   <Block {...block} locale={locale} />
                 </div>

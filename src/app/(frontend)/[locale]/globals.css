@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "leaflet/dist/leaflet.css";
+
 @layer base {
   h1,
   h2,
@@ -49,7 +51,7 @@
     --error: 10 100% 86%;
   }
 
-  [data-theme='dark'] {
+  [data-theme="dark"] {
     --background: 0 0% 0%;
     --foreground: 210 40% 98%;
 
@@ -97,7 +99,15 @@ html {
   opacity: 0;
 }
 
-html[data-theme='dark'],
-html[data-theme='light'] {
+html[data-theme="dark"],
+html[data-theme="light"] {
   opacity: initial;
+}
+
+.custom-marker .dot {
+  width: 12px;
+  height: 12px;
+  background-color: #228b22;
+  border-radius: 50%;
+  border: 2px solid white;
 }
