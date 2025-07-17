@@ -15,6 +15,7 @@ import { generatePreviewPath } from "../../utilities/generatePreviewPath";
 import { revalidatePage } from "./hooks/revalidatePage";
 import { Mitglied } from "@/blocks/Mitglied/config";
 import { FindUs } from "@/blocks/FindUs/config";
+import { AccordionBlock } from "@/blocks/Accordion/config";
 
 import {
   MetaDescriptionField,
@@ -85,6 +86,7 @@ export const Pages: CollectionConfig = {
                 NewsAndHours,
                 Mitglied,
                 FindUs,
+                AccordionBlock,
               ],
               required: true,
             },

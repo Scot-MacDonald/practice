@@ -12,6 +12,7 @@ import MitgliedBlock from "@/blocks/Mitglied/Component";
 import { TypedLocale } from "payload";
 import { NewsAndHoursBlock } from "@/blocks/NewsAndHours/Component";
 import FindUsBlock from "@/blocks/FindUs/Component";
+import { AccordionBlock } from "@/blocks/Accordion/Component";
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -22,6 +23,7 @@ const blockComponents = {
   mitglied: MitgliedBlock,
   newsAndHours: NewsAndHoursBlock,
   findUs: FindUsBlock,
+  accordion: AccordionBlock,
 };
 
 export const RenderBlocks: React.FC<{
