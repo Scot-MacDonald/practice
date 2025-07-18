@@ -1,13 +1,10 @@
 "use client";
 
 import type { StaticImageData } from "next/image";
-
 import { cn } from "src/utilities/cn";
 import NextImage from "next/image";
 import React from "react";
-
 import type { Props as MediaProps } from "../types";
-
 import cssVariables from "@/cssVariables";
 
 const { breakpoints } = cssVariables;
@@ -31,6 +28,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   let height: number | undefined;
   let alt = altFromProps;
   let src: StaticImageData | string = srcFromProps || "";
+  let unoptimized = false;
 
   if (!src && resource && typeof resource === "object") {
     const {
@@ -39,16 +37,17 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
       height: fullHeight,
       url,
       width: fullWidth,
+      id,
     } = resource;
 
     width = fullWidth!;
     height = fullHeight!;
     alt = altFromResource;
 
-    src = `https://psttqwag20.ufs.sh/f/ejAlVJk8XsEhuR8ICPfdtRpl7UG4wN6SdEaQiICreDZmKyzX`;
+    src = url || `/api/media/file/${id}`;
+    unoptimized = !!url; // disable optimization for external URLs
   }
 
-  // NOTE: this is used by the browser to determine which image to download at different screen sizes
   const sizes = sizeFromProps
     ? sizeFromProps
     : Object.entries(breakpoints)
@@ -73,6 +72,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
       sizes={sizes}
       src={src}
       width={!fill ? width : undefined}
+      unoptimized={unoptimized}
     />
   );
 };

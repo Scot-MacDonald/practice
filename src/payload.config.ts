@@ -24,8 +24,9 @@ import Categories from "./collections/Categories";
 import { Media } from "./collections/Media";
 import { Pages } from "./collections/Pages";
 import { Posts } from "./collections/Posts";
+import { Doctors } from "./collections/Doctors";
 import Users from "./collections/Users";
-// import { seedHandler } from "./endpoints/seedHandler";
+
 import { Footer } from "./globals/Footer/config";
 import { Header } from "./globals/Header/config";
 import { revalidateRedirects } from "./hooks/revalidateRedirects";
@@ -56,107 +57,75 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
 
 export default buildConfig({
   admin: {
-    //   components: {
-    //     // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
-    //     // Feel free to delete this at any time. Simply remove the line below and the import `BeforeLogin` statement on line 15.
-    //     beforeLogin: ['@/components/BeforeLogin'],
-    //     // The `AfterDashboard` component renders "Seed" that you see after logging into your admin panel.
-    //     afterDashboard: ['@/components/AfterDashboard'],
-    //   },
     importMap: {
       baseDir: path.resolve(dirname),
     },
     user: Users.slug,
     livePreview: {
       breakpoints: [
-        {
-          label: "Mobile",
-          name: "mobile",
-          width: 375,
-          height: 667,
-        },
-        {
-          label: "Tablet",
-          name: "tablet",
-          width: 768,
-          height: 1024,
-        },
-        {
-          label: "Desktop",
-          name: "desktop",
-          width: 1440,
-          height: 900,
-        },
+        { label: "Mobile", name: "mobile", width: 375, height: 667 },
+        { label: "Tablet", name: "tablet", width: 768, height: 1024 },
+        { label: "Desktop", name: "desktop", width: 1440, height: 900 },
       ],
     },
   },
-  // This config helps us configure global or default features that the other editors can inherit
   editor: lexicalEditor({
-    features: () => {
-      return [
-        UnderlineFeature(),
-        BoldFeature(),
-        ItalicFeature(),
-        LinkFeature({
-          enabledCollections: ["pages", "posts"],
-          fields: ({ defaultFields }) => {
-            const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
-              if ("name" in field && field.name === "url") return false;
-              return true;
-            });
-
-            return [
-              ...defaultFieldsWithoutUrl,
-              {
-                name: "url",
-                type: "text",
-                admin: {
-                  condition: ({ linkType }) => linkType !== "internal",
-                },
-                label: ({ t }) => t("fields:enterURL"),
-                required: true,
+    features: () => [
+      UnderlineFeature(),
+      BoldFeature(),
+      ItalicFeature(),
+      LinkFeature({
+        enabledCollections: ["pages", "posts", "doctors"],
+        fields: ({ defaultFields }) => {
+          const defaultFieldsWithoutUrl = defaultFields.filter(
+            (field) => !("name" in field && field.name === "url")
+          );
+          return [
+            ...defaultFieldsWithoutUrl,
+            {
+              name: "url",
+              type: "text",
+              admin: {
+                condition: ({ linkType }) => linkType !== "internal",
               },
-            ];
-          },
-        }),
-      ];
-    },
+              label: ({ t }) => t("fields:enterURL"),
+              required: true,
+            },
+          ];
+        },
+      }),
+    ],
   }),
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || "",
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [Pages, Posts, Media, Categories, Users, Doctors],
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ""].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ""].filter(Boolean),
-  // endpoints: [
-  //   // The seed endpoint is used to populate the database with some example data
-  //   // You should delete this endpoint before deploying your site to production
-  //   {
-  //     handler: seedHandler,
-  //     method: "get",
-  //     path: "/seed",
-  //   },
-  // ],
   globals: [Header, Footer],
   plugins: [
     redirectsPlugin({
-      collections: ["pages", "posts"],
+      collections: ["pages", "posts", "doctors"],
       overrides: {
-        // @ts-expect-error
-        fields: ({ defaultFields }) => {
-          return defaultFields.map((field) => {
-            if ("name" in field && field.name === "from") {
+        fields: ({ defaultFields }) =>
+          defaultFields.map((field) => {
+            if (
+              "name" in field &&
+              "type" in field &&
+              field.name === "from" &&
+              field.type === "text"
+            ) {
               return {
                 ...field,
                 admin: {
+                  ...field.admin,
                   description:
                     "You will need to rebuild the website when changing this field.",
                 },
               };
             }
             return field;
-          });
-        },
+          }),
         hooks: {
           afterChange: [revalidateRedirects],
         },
@@ -182,39 +151,34 @@ export default buildConfig({
         payment: false,
       },
       formOverrides: {
-        fields: ({ defaultFields }) => {
-          return defaultFields.map((field) => {
+        fields: ({ defaultFields }) =>
+          defaultFields.map((field) => {
             if ("name" in field && field.name === "confirmationMessage") {
               return {
                 ...field,
                 editor: lexicalEditor({
-                  features: ({ rootFeatures }) => {
-                    return [
-                      ...rootFeatures,
-                      FixedToolbarFeature(),
-                      HeadingFeature({
-                        enabledHeadingSizes: ["h1", "h2", "h3", "h4"],
-                      }),
-                    ];
-                  },
+                  features: ({ rootFeatures }) => [
+                    ...rootFeatures,
+                    FixedToolbarFeature(),
+                    HeadingFeature({
+                      enabledHeadingSizes: ["h1", "h2", "h3", "h4"],
+                    }),
+                  ],
                 }),
               };
             }
             return field;
-          });
-        },
+          }),
       },
     }),
     searchPlugin({
       collections: ["posts"],
       beforeSync: beforeSyncWithSearch,
       searchOverrides: {
-        fields: ({ defaultFields }) => {
-          return [...defaultFields, ...searchFields];
-        },
+        fields: ({ defaultFields }) => [...defaultFields, ...searchFields],
       },
     }),
-    payloadCloudPlugin(), // storage-adapter-placeholder
+    payloadCloudPlugin(),
   ],
   localization,
   email: resendAdapter({

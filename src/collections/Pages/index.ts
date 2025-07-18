@@ -16,6 +16,7 @@ import { revalidatePage } from "./hooks/revalidatePage";
 import { Mitglied } from "@/blocks/Mitglied/config";
 import { FindUs } from "@/blocks/FindUs/config";
 import { AccordionBlock } from "@/blocks/Accordion/config";
+import { Doctor } from "../../blocks/DoctorBlock/config";
 
 import {
   MetaDescriptionField,
@@ -86,6 +87,7 @@ export const Pages: CollectionConfig = {
                 NewsAndHours,
                 Mitglied,
                 FindUs,
+                Doctor,
                 AccordionBlock,
               ],
               required: true,

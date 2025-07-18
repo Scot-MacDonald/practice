@@ -13,6 +13,7 @@ import { TypedLocale } from "payload";
 import { NewsAndHoursBlock } from "@/blocks/NewsAndHours/Component";
 import FindUsBlock from "@/blocks/FindUs/Component";
 import { AccordionBlock } from "@/blocks/Accordion/Component";
+import { DoctorBlock } from "./DoctorBlock/Component";
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -24,6 +25,7 @@ const blockComponents = {
   newsAndHours: NewsAndHoursBlock,
   findUs: FindUsBlock,
   accordion: AccordionBlock,
+  doctor: DoctorBlock,
 };
 
 export const RenderBlocks: React.FC<{
