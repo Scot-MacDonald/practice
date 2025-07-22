@@ -15,6 +15,14 @@
     font-weight: auto;
   }
 
+  p {
+    font-size: 1.1rem;
+    line-height: 1.5rem;
+    margin-bottom: 0;
+    color: oklch(44.6% 0.03 256.802); /* OKLCH */
+    color: #666666; /* fallback */
+  }
+
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
@@ -104,13 +112,17 @@ html[data-theme="light"] {
   opacity: initial;
 }
 
-.custom-marker .dot {
+.boder-border {
+  border-color: hsl(var(--border)) !important;
+}
+
+/* .custom-marker .dot {
   width: 12px;
   height: 12px;
   background-color: #228b22;
   border-radius: 50%;
   border: 2px solid white;
-}
+} */
 
 .AccordionItem {
   overflow: hidden;
@@ -201,4 +213,37 @@ html[data-theme="light"] {
 /* When closed, reset to vertical */
 .AccordionTrigger[data-state="closed"] .AccordionVerticalLine {
   transform: rotate(0deg);
+}
+
+/* page with header */
+/* .page-with-header {
+  box-sizing: border-box;
+  position: relative;
+  grid-column: 1 / 7; 
+  color: #7eb36a;
+  border-top: 0.5px solid #7eb36a;
+  margin-top: 32px;
+  padding-top: 24px;
+}
+
+.page-header {
+  position: absolute;
+  top: -13px; 
+  left: 0;
+  padding-right: 16px;
+  background-color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-size: 1.125rem;
+} */
+
+.page-with-header {
+  color: #7eb36a;
+}
+
+.page-header {
+  padding: 16px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-size: 1.125rem;
 }

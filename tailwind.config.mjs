@@ -119,7 +119,7 @@ export default {
               marginBottom: 0,
             },
             p: {
-              fontSize: "1rem",
+              fontSize: "1.1rem",
               marginBottom: 0,
               lineHeight: "1.5",
               color: "oklch(44.6% 0.03 256.802)",
@@ -140,7 +140,7 @@ export default {
               marginTop: "0rem",
             },
             p: {
-              fontSize: "1rem",
+              fontSize: "1.1rem",
               fontWeight: "600",
               marginBottom: "0",
               marginTop: "0rem",

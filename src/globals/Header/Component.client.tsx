@@ -41,7 +41,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
 
   return (
     <header
-      className="sticky top-0 z-50 bg-white border-b border-border px-4 py-4"
+      className="sticky top-0 z-50 bg-white border-b border-gray-100  px-4 py-4"
       {...(theme ? { "data-theme": theme } : {})}
     >
       <div className="flex justify-between items-center">
@@ -58,9 +58,9 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
         {/* Right: Appointment button */}
         <div className="hidden lg:flex items-center">
           <p className="text-xs pr-2">
-            <span>Our appointments are managed</span>
+            <span>{t("appointments.line1")}</span>
             <br />
-            <span>through the Doctolib app.</span>
+            <span>{t("appointments.line2")}</span>
           </p>
           <Link href="/" className="bg-[#c0eeff]  px-4 py-2 rounded">
             {t("appointment")}

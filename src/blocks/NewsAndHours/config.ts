@@ -1,4 +1,4 @@
-import type { Block, Field } from "payload";
+import type { Block } from "payload";
 import {
   lexicalEditor,
   HeadingFeature,
@@ -18,19 +18,29 @@ export const NewsAndHours: Block = {
       maxRows: 2,
       fields: [
         {
-          name: "date", // rename to `date` if you want clarity
+          name: "date",
           label: "Date",
-          type: "date", // changed from "text"
+          type: "date",
           required: true,
           admin: {
             date: {
-              pickerAppearance: "dayOnly", // optional: only show day
+              pickerAppearance: "dayOnly",
             },
           },
         },
         {
           name: "summary",
-          type: "textarea",
+          label: "Summary",
+          type: "richText",
+          localized: true,
+          required: false,
+          editor: lexicalEditor({
+            features: [
+              HeadingFeature(),
+              InlineToolbarFeature(),
+              FixedToolbarFeature(),
+            ],
+          }),
         },
         {
           name: "link",

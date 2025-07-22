@@ -8,7 +8,7 @@ export const Mitglied: Block = {
   },
   fields: [
     {
-      name: "heading",
+      name: "title",
       type: "text",
       localized: true,
       required: true,

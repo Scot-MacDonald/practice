@@ -1,12 +1,12 @@
 import React from "react";
 import Link from "next/link";
 
-export default function MitgliedBlock({ heading, description, items }) {
+export default function MitgliedBlock({ title, description, items }) {
   return (
     <div className="w-full grid grid-cols-12 border-t border-border">
       {/* 4-column section on the LEFT */}
       <div className="col-span-12 lg:col-span-4 p-8 border-b lg:border-b-0 lg:border-r border-border">
-        <h2 className="text-2xl font-bold mb-4">{heading}</h2>
+        <h2 className="text-2xl font-bold mb-4">{title}</h2>
         <p>{description}</p>
       </div>
 

@@ -188,7 +188,7 @@ export interface Page {
     | FormBlock
     | NewsAndHoursBlock
     | {
-        heading: string;
+        title: string;
         description?: string | null;
         items: {
           title: string;
@@ -210,6 +210,7 @@ export interface Page {
         description?: string | null;
         transports: {
           title: string;
+          type: 'u-bahn' | 's-bahn' | 'bus' | 'tram' | 'other';
           lines?:
             | {
                 line: string;
@@ -222,12 +223,17 @@ export interface Page {
         lng: number;
         secondIconUrl?: string | null;
         thirdIconUrl?: string | null;
+        fourthIconUrl?: string | null;
+        fifthIconUrl?: string | null;
+        sixthIconUrl?: string | null;
+        seventhIconUrl?: string | null;
         id?: string | null;
         blockName?: string | null;
         blockType: 'findUs';
       }
     | DoctorBlock
     | AccordionBlock
+    | ContentImageBlock
   )[];
   meta?: {
     title?: string | null;
@@ -709,7 +715,21 @@ export interface Form {
 export interface NewsAndHoursBlock {
   news: {
     date: string;
-    summary?: string | null;
+    summary?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
     link?: string | null;
     id?: string | null;
   }[];
@@ -865,6 +885,33 @@ export interface AccordionBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'accordion';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentImageBlock".
+ */
+export interface ContentImageBlock {
+  title?: string | null;
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  image: string | Media;
+  mediaPosition?: ('left' | 'right') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contentImage';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1072,7 +1119,7 @@ export interface PagesSelect<T extends boolean = true> {
         mitglied?:
           | T
           | {
-              heading?: T;
+              title?: T;
               description?: T;
               items?:
                 | T
@@ -1099,6 +1146,7 @@ export interface PagesSelect<T extends boolean = true> {
                 | T
                 | {
                     title?: T;
+                    type?: T;
                     lines?:
                       | T
                       | {
@@ -1111,11 +1159,16 @@ export interface PagesSelect<T extends boolean = true> {
               lng?: T;
               secondIconUrl?: T;
               thirdIconUrl?: T;
+              fourthIconUrl?: T;
+              fifthIconUrl?: T;
+              sixthIconUrl?: T;
+              seventhIconUrl?: T;
               id?: T;
               blockName?: T;
             };
         doctor?: T | DoctorBlockSelect<T>;
         accordion?: T | AccordionBlockSelect<T>;
+        contentImage?: T | ContentImageBlockSelect<T>;
       };
   meta?:
     | T
@@ -1285,6 +1338,18 @@ export interface AccordionBlockSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentImageBlock_select".
+ */
+export interface ContentImageBlockSelect<T extends boolean = true> {
+  title?: T;
+  richText?: T;
+  image?: T;
+  mediaPosition?: T;
   id?: T;
   blockName?: T;
 }

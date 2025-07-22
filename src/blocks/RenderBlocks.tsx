@@ -14,6 +14,7 @@ import { NewsAndHoursBlock } from "@/blocks/NewsAndHours/Component";
 import FindUsBlock from "@/blocks/FindUs/Component";
 import { AccordionBlock } from "@/blocks/Accordion/Component";
 import { DoctorBlock } from "./DoctorBlock/Component";
+import { ContentImageBlock } from "@/blocks/ContentImage/Component";
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -26,6 +27,7 @@ const blockComponents = {
   findUs: FindUsBlock,
   accordion: AccordionBlock,
   doctor: DoctorBlock,
+  contentImage: ContentImageBlock,
 };
 
 export const RenderBlocks: React.FC<{

@@ -17,6 +17,7 @@ import { Mitglied } from "@/blocks/Mitglied/config";
 import { FindUs } from "@/blocks/FindUs/config";
 import { AccordionBlock } from "@/blocks/Accordion/config";
 import { Doctor } from "../../blocks/DoctorBlock/config";
+import ContentImageBlock from "@/blocks/ContentImage/config";
 
 import {
   MetaDescriptionField,
@@ -89,6 +90,7 @@ export const Pages: CollectionConfig = {
                 FindUs,
                 Doctor,
                 AccordionBlock,
+                ContentImageBlock,
               ],
               required: true,
             },

@@ -16,16 +16,22 @@
   "auto": "Auto",
   "light": "Light",
   "dark": "Dark",
+  "welcome": "Welcome to your specialist infectious disease practice, SPP-Mitte.",
+
+  "appointments": {
+    "line1": "Our appointments are managed",
+    "line2": "through the Doctolib app."
+  },
   "appointment": "Book appointment",
   "days": {
-  "monday": "Monday",
-  "tuesday": "Tuesday",
-  "wednesday": "Wednesday",
-  "thursday": "Thursday",
-  "friday": "Friday",
-  "saturday": "Saturday",
-  "sunday": "Sunday"
-},
-"open": "Open now",
-"closed": "Closed"
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday"
+  },
+  "open": "Open now",
+  "closed": "Closed"
 }

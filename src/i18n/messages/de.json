@@ -1,34 +1,38 @@
 {
-    "date-published": "Veröffentlichungsdatum",
-    "author": "Autor",
-    "page-not-found": "Diese Seite konnte nicht gefunden werden.",
-    "go-home": "Zur Startseite",
-    "loading": "Lädt, bitte warten...",
-    "posts": "Beiträge",
-    "post": "Beitrag",
-    "showing": "Anzeigen",
-    "of": "von",
-    "search": "Suche",
-    "dashboard": "Dashboard",
-    "previous": "Zurück",
-    "next": "Weiter",
-    "more-pages": "Weitere Seiten",
-    "auto": "Automatisch",
-    "light": "Hell",
-    "dark": "Dunkel",
-    "appointment": "Termin buchen",
-    
-        "days": {
-          "monday": "Montag",
-          "tuesday": "Dienstag",
-          "wednesday": "Mittwoch",
-          "thursday": "Donnerstag",
-          "friday": "Freitag",
-          "saturday": "Samstag",
-          "sunday": "Sonntag"
-        },
-        "open": "Geöffnet",
-        "closed": "Geschlossen"
-      
-  }
-  
+  "date-published": "Veröffentlichungsdatum",
+  "author": "Autor",
+  "page-not-found": "Diese Seite konnte nicht gefunden werden.",
+  "go-home": "Zur Startseite",
+  "loading": "Lädt, bitte warten...",
+  "posts": "Beiträge",
+  "post": "Beitrag",
+  "showing": "Anzeigen",
+  "of": "von",
+  "search": "Suche",
+  "dashboard": "Dashboard",
+  "previous": "Zurück",
+  "next": "Weiter",
+  "more-pages": "Weitere Seiten",
+  "auto": "Automatisch",
+  "light": "Hell",
+  "dark": "Dunkel",
+  "welcome": "Willkommen in Ihrer Infektionspraxis SPP-Mitte",
+
+  "appointments": {
+    "line1": "Unsere Termine werden",
+    "line2": "über die Doctolib-App verwaltet."
+  },
+  "appointment": "Termin buchen",
+
+  "days": {
+    "monday": "Montag",
+    "tuesday": "Dienstag",
+    "wednesday": "Mittwoch",
+    "thursday": "Donnerstag",
+    "friday": "Freitag",
+    "saturday": "Samstag",
+    "sunday": "Sonntag"
+  },
+  "open": "Geöffnet",
+  "closed": "Geschlossen"
+}

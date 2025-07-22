@@ -36,6 +36,8 @@ import { Page, Post } from "src/payload-types";
 import { searchFields } from "@/search/fieldOverrides";
 import { beforeSyncWithSearch } from "@/search/beforeSync";
 import localization from "./i18n/localization";
+import { en } from "@payloadcms/translations/languages/en";
+import { de } from "@payloadcms/translations/languages/de";
 import { uploadthingStorage } from "@payloadcms/storage-uploadthing";
 
 import { resendAdapter } from "@payloadcms/email-resend";
@@ -56,6 +58,14 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
 };
 
 export default buildConfig({
+  // localization: {
+  //   locales: ["en", "de"],
+  //   defaultLocale: "de",
+  // },
+
+  i18n: {
+    supportedLanguages: { en, de },
+  },
   admin: {
     importMap: {
       baseDir: path.resolve(dirname),

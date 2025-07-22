@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { cn } from "@/utilities/cn";
 import { useTranslations } from "next-intl";
-
+import Time from "@/components/Time";
+import RichText from "@/components/RichText";
 function parseTime(str: string): Date {
   const [hours, minutes] = str.split(":").map(Number);
   const now = new Date();
@@ -27,7 +28,7 @@ type Hour = {
 
 type NewsItem = {
   title: string;
-  summary?: string;
+  summary?: any; // RichText content
   link?: string;
   date: string;
 };
@@ -76,46 +77,54 @@ export const NewsAndHoursBlock: React.FC<Props> = ({
     : false;
 
   return (
-    <div className="container my-16" id={id}>
-      <div className="grid grid-cols-4 lg:grid-cols-12 gap-x-16 gap-y-8">
+    <div className=" p-0" id={id}>
+      <div className=" page-with-header mx-8">
+        <h2 className="page-header">{t("welcome")}</h2>
+      </div>
+      <div className="w-full grid grid-cols-4 lg:grid-cols-12  gap-y-8  xl:bg-white lg:bg-black p-0 border-t  border-border">
         {news.slice(0, 2).map((item, index) => (
-          <div key={index} className="col-span-4 lg:col-span-4">
-            <h3 className="text-lg font-semibold mb-2 text-[#4a5565]">
+          <div
+            key={index}
+            className={cn(
+              "col-span-4 lg:col-span-4 md:col-span-12 p-8",
+              (index === 0 || index === 1) && "lg:border-r lg:border-border"
+            )}
+          >
+            {index === 0 ? (
+              <h2 className="text-lg font-semibold  mb-4">Latest Infos</h2>
+            ) : (
+              <h2 className="text-lg font-semibold text-transparent mb-4 select-none">
+                Latest Infos
+              </h2>
+            )}
+            <h2 className="text-lg font-semibold mb-2 ">
               {new Date(item.date).toLocaleDateString(
                 locale === "de" ? "de-DE" : "en-GB"
               )}
-            </h3>
+            </h2>
             {item.summary && (
-              <p className="text-sm text-gray-600 mb-2">{item.summary}</p>
-            )}
-            {item.link && (
-              <a
-                href={item.link}
-                className="text-sm text-blue-600 hover:underline"
-              >
-                {/* {t("readMore")} */}
-              </a>
+              <div className="mb-2 text-gray-600">
+                <RichText content={item.summary} enableGutter={false} />
+              </div>
             )}
           </div>
         ))}
 
-        <div className="col-span-4 lg:col-span-4">
-          {/* <h2
+        <div className="col-span-4 lg:col-span-4 md:col-span-12 p-8">
+          {openingHours.title && (
+            <h2 className="text-lg font-semibold  mb-4">
+              {openingHours.title}
+            </h2>
+          )}
+          <h2
             className={cn(
-              "text-xs font-normal mb-4",
+              "text-lg font-semibold mb-2",
               isOpenNow ? "text-[#7eb36a]" : "text-[#e15555]"
             )}
           >
             {isOpenNow ? t("open") : t("closed")}
-          </h2> */}
-
-          {openingHours.title && (
-            <h3 className="text-lg font-semibold text-[#4a5565] mb-4">
-              {openingHours.title}
-            </h3>
-          )}
-
-          <div className="flex flex-col gap-2 text-[#4a5565] text-sm">
+          </h2>
+          <div className="flex flex-col gap-2 text-[#4a5565] ">
             {openingHours.hours.map(({ dayKey, morning, afternoon }) => {
               const isToday = dayKey === currentDayKey;
               const isMorningNow =
@@ -148,6 +157,7 @@ export const NewsAndHoursBlock: React.FC<Props> = ({
               );
             })}
           </div>
+          <Time />
         </div>
       </div>
     </div>

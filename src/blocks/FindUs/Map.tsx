@@ -6,11 +6,26 @@ import "leaflet/dist/leaflet.css";
 type Props = {
   lat: number;
   lng: number;
+  mainIconUrl?: string;
   secondIconUrl?: string;
   thirdIconUrl?: string;
+  fourthIconUrl?: string;
+  fifthIconUrl?: string;
+  sixthIconUrl?: string;
+  seventhIconUrl?: string;
 };
 
-export default function Map({ lat, lng, secondIconUrl, thirdIconUrl }: Props) {
+export default function Map({
+  lat,
+  lng,
+
+  secondIconUrl,
+  thirdIconUrl,
+  fourthIconUrl,
+  fifthIconUrl,
+  sixthIconUrl,
+  seventhIconUrl,
+}: Props) {
   const [Map, setMap] = useState<React.ReactNode>(null);
 
   useEffect(() => {
@@ -19,11 +34,11 @@ export default function Map({ lat, lng, secondIconUrl, thirdIconUrl }: Props) {
       const L = await import("leaflet");
       //   await import("leaflet/dist/leaflet.css");
 
-      const dotIcon = L.divIcon({
-        className: "custom-marker",
-        html: '<div class="dot"></div>',
-        iconSize: [20, 20],
-        iconAnchor: [10, 10],
+      const dotIcon = L.icon({
+        iconUrl: "/api/media/file/spp_logo.png",
+        iconSize: [42, 42],
+        iconAnchor: [16, 32],
+        className: "image-marker",
       });
 
       const imageIcon = L.icon({
@@ -39,7 +54,30 @@ export default function Map({ lat, lng, secondIconUrl, thirdIconUrl }: Props) {
         iconAnchor: [15, 15],
         className: "image-marker",
       });
-
+      const imageIconS = L.icon({
+        iconUrl: fourthIconUrl || "/media/S-Bahn-Logo.svg.webp",
+        iconSize: [20, 20],
+        iconAnchor: [15, 15],
+        className: "image-marker",
+      });
+      const imageIconT = L.icon({
+        iconUrl: fifthIconUrl || "/media/Tram-Logo.svg",
+        iconSize: [20, 20],
+        iconAnchor: [15, 15],
+        className: "image-marker",
+      });
+      const imageIconB = L.icon({
+        iconUrl: sixthIconUrl || "media/Bus-Logo.svg",
+        iconSize: [20, 20],
+        iconAnchor: [15, 15],
+        className: "image-marker",
+      });
+      const imageIconB2 = L.icon({
+        iconUrl: seventhIconUrl || "/media/BUS-Logo-BVG.svg",
+        iconSize: [20, 20],
+        iconAnchor: [15, 15],
+        className: "image-marker",
+      });
       setMap(
         <MapContainer
           center={[lat, lng]}
@@ -60,20 +98,33 @@ export default function Map({ lat, lng, secondIconUrl, thirdIconUrl }: Props) {
             attribution="&copy; <a href='https://carto.com/'>CARTO</a>"
           />
           <Marker position={[lat, lng]} icon={dotIcon} />
-          {/* <Marker
+          <Marker
             position={[52.52497770786654, 13.392909433053319]}
             icon={imageIcon}
           />
           <Marker
             position={[52.52552931610739, 13.387399706552674]}
             icon={imageIconU}
-          /> */}
+          />
+          <Marker position={[52.5203, 13.3869]} icon={imageIconS} />
+          <Marker position={[52.5256, 13.3936]} icon={imageIconT} />
+          <Marker position={[52.5234, 13.3888]} icon={imageIconB} />
+          <Marker position={[52.5262, 13.3924]} icon={imageIconB2} />
         </MapContainer>
       );
     };
 
     loadMap();
-  }, [lat, lng, secondIconUrl, thirdIconUrl]);
+  }, [
+    lat,
+    lng,
+    secondIconUrl,
+    thirdIconUrl,
+    fourthIconUrl,
+    fifthIconUrl,
+    sixthIconUrl,
+    seventhIconUrl,
+  ]);
 
   return <div>{Map || <div>Loading map…</div>}</div>;
 }

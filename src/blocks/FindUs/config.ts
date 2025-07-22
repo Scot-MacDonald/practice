@@ -29,6 +29,18 @@ export const FindUs: Block = {
           required: true,
         },
         {
+          name: "type", // 👈 New field
+          type: "select",
+          required: true,
+          options: [
+            { label: "U-Bahn", value: "u-bahn" },
+            { label: "S-Bahn", value: "s-bahn" },
+            { label: "Bus", value: "bus" },
+            { label: "Tram", value: "tram" },
+            { label: "Other", value: "other" },
+          ],
+        },
+        {
           name: "lines",
           type: "array",
           fields: [
@@ -57,6 +69,22 @@ export const FindUs: Block = {
     },
     {
       name: "thirdIconUrl",
+      type: "text",
+    },
+    {
+      name: "fourthIconUrl",
+      type: "text",
+    },
+    {
+      name: "fifthIconUrl",
+      type: "text",
+    },
+    {
+      name: "sixthIconUrl",
+      type: "text",
+    },
+    {
+      name: "seventhIconUrl",
       type: "text",
     },
   ],
