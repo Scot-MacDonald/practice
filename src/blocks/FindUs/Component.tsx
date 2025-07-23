@@ -73,7 +73,7 @@ export default function FindUsBlock({
           <p>{description}</p>
         </div>
 
-        <div className="col-span-12 lg:col-span-8 p-8 grid grid-cols-2 gap-4">
+        <div className="col-span-12 lg:col-span-8 p-8 grid grid-cols-2 gap-8">
           {transports.map((transport, i) => (
             <div key={i} className="border rounded-lg p-4 flex flex-col">
               <div className="flex items-center mb-1 gap-2">

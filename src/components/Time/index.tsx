@@ -11,6 +11,9 @@ export default function Time() {
     setMounted(true); // Ensure this runs only on the client
 
     const checkOpeningHours = () => {
+      const berlinTime = new Date(
+        new Date().toLocaleString("en-US", { timeZone: "Europe/Berlin" })
+      );
       const now = new Date();
       const day = now.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
       const hours = now.getHours();
@@ -21,12 +24,12 @@ export default function Time() {
         1: [[800, 1300]],
         2: [
           [800, 1300],
-          [1300, 1900],
+          [1500, 1900],
         ],
         3: [[800, 1300]],
         4: [
           [800, 1300],
-          [1300, 1900],
+          [1500, 1900],
         ],
         5: [[800, 1300]],
       };

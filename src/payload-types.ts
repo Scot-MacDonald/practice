@@ -178,7 +178,8 @@ export interface Page {
           id?: string | null;
         }[]
       | null;
-    media?: (string | null) | Media;
+    mediaDay?: (string | null) | Media;
+    mediaNight?: (string | null) | Media;
   };
   layout: (
     | CallToActionBlock
@@ -907,7 +908,7 @@ export interface ContentImageBlock {
     };
     [k: string]: unknown;
   } | null;
-  image: string | Media;
+  image?: (string | null) | Media;
   mediaPosition?: ('left' | 'right') | null;
   id?: string | null;
   blockName?: string | null;
@@ -1105,7 +1106,8 @@ export interface PagesSelect<T extends boolean = true> {
                   };
               id?: T;
             };
-        media?: T;
+        mediaDay?: T;
+        mediaNight?: T;
       };
   layout?:
     | T

@@ -140,7 +140,7 @@ export default {
               marginTop: "0rem",
             },
             p: {
-              fontSize: "1.1rem",
+              fontSize: "1.3rem",
               fontWeight: "600",
               marginBottom: "0",
               marginTop: "0rem",

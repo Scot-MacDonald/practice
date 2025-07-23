@@ -37,7 +37,7 @@ const ContentImageBlock: Block = {
       name: "image",
       type: "upload",
       relationTo: "media",
-      required: true,
+      required: false,
     },
     {
       name: "mediaPosition",

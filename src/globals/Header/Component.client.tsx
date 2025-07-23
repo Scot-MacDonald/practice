@@ -57,19 +57,22 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
 
         {/* Right: Appointment button */}
         <div className="hidden lg:flex items-center">
-          <p className="text-xs pr-2">
+          <p className="text-xs text-black pr-2">
             <span>{t("appointments.line1")}</span>
             <br />
             <span>{t("appointments.line2")}</span>
           </p>
-          <Link href="/" className="bg-[#c0eeff]  px-4 py-2 rounded">
+          <Link
+            href="/"
+            className="bg-[#c0eeff] text-lg font-semibold px-4 py-2 rounded"
+          >
             {t("appointment")}
           </Link>
         </div>
 
         {/* Mobile Menu */}
         <div className="flex lg:hidden items-center gap-3">
-          <Link href="/" className="bg-[#c0eeff] px-2 py-1 rounded">
+          <Link href="/" className="bg-[#c0eeff] px-2 py-1  rounded">
             {t("appointment")}
           </Link>
           <Sheet open={open} onOpenChange={setOpen}>

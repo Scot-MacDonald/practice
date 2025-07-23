@@ -21,7 +21,10 @@ export const ContentImageBlock: React.FC<Props> = ({
 
   return (
     <div className="w-full">
-      <div className="grid grid-cols-1 md:grid-cols-12 w-full border-t border-border">
+      <div className=" page-with-header mx-8">
+        <h2 className="page-header">{title}</h2>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-12 w-full ">
         {/* Image first in markup so it shows first on mobile */}
         <div
           className={cn("md:col-span-12 lg:col-span-8", {
@@ -46,15 +49,12 @@ export const ContentImageBlock: React.FC<Props> = ({
             {
               "lg:order-2": isImageLeft,
               "lg:order-1": !isImageLeft,
-              "lg:border-r": !isImageLeft,
-              "lg:border-l": isImageLeft,
+              // "lg:border-r": !isImageLeft,
+              // "lg:border-l": isImageLeft,
             },
             "md:col-span-12 lg:col-span-4 p-8 border-gray-200"
           )}
         >
-          <div className=" page-with-header">
-            <h2 className="page-header">{title}</h2>
-          </div>
           {richText && <RichText content={richText} />}
         </div>
       </div>
