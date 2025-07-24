@@ -78,53 +78,74 @@ export const NewsAndHoursBlock: React.FC<Props> = ({
 
   return (
     <div className=" p-0" id={id}>
-      <div className=" page-with-header mx-8">
-        <h2 className="page-header">{t("welcome")}</h2>
+      <div className="page-with-header">
+        <h2 className="page-header px-8 flex items-center gap-2">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g fill="none" stroke="#7eb36a" strokeWidth="2">
+              <line x1="3" x2="21" y1="12" y2="12" />
+              <line
+                x1="12"
+                x2="12"
+                y1="3"
+                y2="21"
+                className="AccordionVerticalLine"
+              />
+            </g>
+          </svg>
+          {t("welcome")}
+        </h2>
       </div>
-      <div className="w-full grid grid-cols-4 lg:grid-cols-12  gap-y-8  xl:bg-white lg:bg-black p-0 border-t  border-border">
+      <div className="w-full grid grid-cols-4 lg:grid-cols-12    xl:bg-white lg:bg-black p-0 ">
         {news.slice(0, 2).map((item, index) => (
           <div
             key={index}
-            className={cn(
-              "col-span-4 lg:col-span-4 md:col-span-12 p-8",
-              (index === 0 || index === 1) && "lg:border-r lg:border-border"
-            )}
+            className="col-span-4 lg:col-span-4 md:col-span-12 p-8"
           >
+            {/* Heading (outside of bordered box) */}
             {index === 0 ? (
-              <h2 className="text-lg font-semibold  mb-4">Latest Infos</h2>
+              <h2 className="text-xl font-semibold mb-4">Latest Infos</h2>
             ) : (
-              <h2 className="text-lg font-semibold text-transparent mb-4 select-none">
+              <h2 className="text-xl font-semibold text-transparent mb-4 select-none">
                 Latest Infos
               </h2>
             )}
-            <h2 className="text-lg font-semibold mb-2 ">
-              {new Date(item.date).toLocaleDateString(
-                locale === "de" ? "de-DE" : "en-GB"
+
+            {/* Bordered content starts here */}
+            <div className="lg:border-r lg:border-border">
+              <h2 className="text-lg date font-semibold mb-2">
+                {new Date(item.date).toLocaleDateString(
+                  locale === "de" ? "de-DE" : "en-GB"
+                )}
+              </h2>
+              {item.summary && (
+                <div className="mb-2 text-gray-600 pr-8">
+                  <RichText content={item.summary} enableGutter={false} />
+                </div>
               )}
-            </h2>
-            {item.summary && (
-              <div className="mb-2 text-gray-600">
-                <RichText content={item.summary} enableGutter={false} />
-              </div>
-            )}
+            </div>
           </div>
         ))}
 
         <div className="col-span-4 lg:col-span-4 md:col-span-12 p-8">
           {openingHours.title && (
-            <h2 className="text-lg font-semibold  mb-4">
+            <h2 className="text-xl font-semibold  mb-4">
               {openingHours.title}
             </h2>
           )}
           <h2
             className={cn(
               "text-lg font-semibold mb-2",
-              isOpenNow ? "text-[#7eb36a]" : "text-[#e15555]"
+              isOpenNow ? "text-[#7eb36a]" : "text-[#e5e2e2]"
             )}
           >
             {isOpenNow ? t("open") : t("closed")}
           </h2>
-          <div className="flex flex-col gap-2 text-[#4a5565] ">
+          <div className="flex flex-col gap-2  ">
             {openingHours.hours.map(({ dayKey, morning, afternoon }) => {
               const isToday = dayKey === currentDayKey;
               const isMorningNow =

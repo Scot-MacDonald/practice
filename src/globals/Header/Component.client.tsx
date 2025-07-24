@@ -50,7 +50,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
           <Link href="/">
             <Logo />
           </Link>
-          <div className="pl-3 hidden lg:flex">
+          <div className="pl-3 hidden  lg:flex">
             <HeaderNav header={header} />
           </div>
         </div>
@@ -64,7 +64,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
           </p>
           <Link
             href="/"
-            className="bg-[#c0eeff] text-lg font-semibold px-4 py-2 rounded"
+            className="bg-[#cde3c5] text-lg font-semibold px-4 py-2 rounded"
           >
             {t("appointment")}
           </Link>

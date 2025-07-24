@@ -222,19 +222,20 @@ html[data-theme="light"] {
   grid-column: 1 / 7;
   color: #7eb36a;
   border-top: 0.5px solid #7eb36a;
-  margin-top: 32px;
+  margin-top: 42px;
   padding-top: 24px;
+  margin-bottom: 14px;
 }
 
 .page-header {
   position: absolute;
-  top: -13px;
+  top: -18px;
   left: 0;
   padding-right: 16px;
   background-color: white;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   letter-spacing: 0.07em;
-  font-size: 1.125rem;
+  font-size: 1.4rem;
 }
 
 /* .page-with-header {
@@ -247,3 +248,10 @@ html[data-theme="light"] {
   letter-spacing: 0.07em;
   font-size: 1.125rem;
 } */
+
+.date {
+  background: #cde3c5;
+  display: inline;
+  padding: 2px 5px;
+  border-radius: 0.25rem;
+}

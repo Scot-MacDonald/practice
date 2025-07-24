@@ -1,33 +1,40 @@
-import type { Doctor, DoctorBlock as DoctorBlockProps } from '@/payload-types'
+import type { Doctor, DoctorBlock as DoctorBlockProps } from "@/payload-types";
 
-import configPromise from '@payload-config'
-import { getPayload } from 'payload'
-import React from 'react'
-import RichText from '@/components/RichText'
+import configPromise from "@payload-config";
+import { getPayload } from "payload";
+import React from "react";
+import RichText from "@/components/RichText";
 
-import { CollectionDoctor } from '@/components/CollectionDoctor'
+import { CollectionDoctor } from "@/components/CollectionDoctor";
 
 export const DoctorBlock: React.FC<
   DoctorBlockProps & {
-    id?: string
+    id?: string;
   }
 > = async (props) => {
-  const { id, categories, introContent, limit: limitFromProps, populateBy, selectedDocs } = props
+  const {
+    id,
+    categories,
+    introContent,
+    limit: limitFromProps,
+    populateBy,
+    selectedDocs,
+  } = props;
 
-  const limit = limitFromProps || 3
+  const limit = limitFromProps || 3;
 
-  let doctors: Doctor[] = []
+  let doctors: Doctor[] = [];
 
-  if (populateBy === 'collection') {
-    const payload = await getPayload({ config: configPromise })
+  if (populateBy === "collection") {
+    const payload = await getPayload({ config: configPromise });
 
     const flattenedCategories = categories?.map((category) => {
-      if (typeof category === 'object') return category.id
-      else return category
-    })
+      if (typeof category === "object") return category.id;
+      else return category;
+    });
 
     const fetchedDoctors = await payload.find({
-      collection: 'doctors',
+      collection: "doctors",
       depth: 1,
       limit,
       ...(flattenedCategories && flattenedCategories.length > 0
@@ -39,28 +46,53 @@ export const DoctorBlock: React.FC<
             },
           }
         : {}),
-    })
+    });
 
-    doctors = fetchedDoctors.docs
+    doctors = fetchedDoctors.docs;
   } else {
     if (selectedDocs?.length) {
       const filteredSelectedDoctors = selectedDocs.map((doctor) => {
-        if (typeof doctor.value === 'object') return doctor.value
-      }) as Doctor[]
+        if (typeof doctor.value === "object") return doctor.value;
+      }) as Doctor[];
 
-      doctors = filteredSelectedDoctors
+      doctors = filteredSelectedDoctors;
     }
   }
 
   return (
     <div className="" id={`block-${id}`}>
-      {/* <div className=" page-with-header">
-        <h2 className="page-header">Unser Team</h2>
-      </div> */}
+      <div className="page-with-header">
+        <h2 className="page-header px-8 flex items-center gap-2">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g fill="none" stroke="#7eb36a" strokeWidth="2">
+              <line x1="3" x2="21" y1="12" y2="12" />
+              <line
+                x1="12"
+                x2="12"
+                y1="3"
+                y2="21"
+                className="AccordionVerticalLine"
+              />
+            </g>
+          </svg>
+          Ärzt*innen.
+        </h2>
+      </div>
 
-      <div className="w-full grid grid-cols-12 border-t border-border">
+      <div className="w-full grid grid-cols-12 ">
         <div className="col-span-4 p-8 border-r border-border">
-          {introContent && <RichText className="" content={introContent} enableGutter={false} />}
+          {introContent && (
+            <RichText
+              className=""
+              content={introContent}
+              enableGutter={false}
+            />
+          )}
         </div>
 
         {/* Doctors Collection */}
@@ -69,5 +101,5 @@ export const DoctorBlock: React.FC<
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

@@ -30,9 +30,31 @@ export const AccordionBlock: React.FC<Props> = ({
 }) => {
   return (
     <section className={cn(" ", className)}>
-      <div className="grid grid-cols-12 border-t border-border">
+      <div className="page-with-header">
+        <h2 className="page-header px-8 flex items-center gap-2">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g fill="none" stroke="#7eb36a" strokeWidth="2">
+              <line x1="3" x2="21" y1="12" y2="12" />
+              <line
+                x1="12"
+                x2="12"
+                y1="3"
+                y2="21"
+                className="AccordionVerticalLine"
+              />
+            </g>
+          </svg>
+          {title}
+        </h2>
+      </div>
+
+      <div className="grid grid-cols-12 ">
         <div className="col-span-12 lg:col-span-4 p-8 border-b lg:border-b-0 lg:border-r border-border">
-          {title && <h2 className="mb-2 text-2xl font-bold">{title}</h2>}
           {subheading && (
             <h3 className="font-semibold text-lg mb-4">{subheading}</h3>
           )}
@@ -46,7 +68,7 @@ export const AccordionBlock: React.FC<Props> = ({
         </div>
 
         <div className="col-span-12 lg:col-span-8 p-8">
-          <div className="w-full max-w-[600px] ml-auto">
+          <div className="w-full max-w-[600px]">
             <Accordion.Root type="multiple">
               {items?.map((item, index) => (
                 <Accordion.Item

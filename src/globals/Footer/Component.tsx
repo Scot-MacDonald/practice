@@ -8,6 +8,7 @@ import { ThemeSelector } from "@/providers/Theme/ThemeSelector";
 import { LocaleSwitcher } from "@/components/LocaleSwitcher";
 import { CMSLink } from "@/components/Link";
 import { TypedLocale } from "payload";
+import { OpeningHours } from "@/components/OpeningHours";
 // import { OpeningHours } from '@/components/OpeningHours'
 
 export async function Footer({ locale }: { locale: TypedLocale }) {
@@ -50,7 +51,7 @@ export async function Footer({ locale }: { locale: TypedLocale }) {
           {/* Column 4: Opening Hours (takes 4/12) */}
           <div className="lg:col-span-4 flex flex-col gap-1  leading-snug">
             <div className="font-semibold">Opening hours</div>
-            {/* <OpeningHours /> */}
+            <OpeningHours />
           </div>
         </div>
       </div>

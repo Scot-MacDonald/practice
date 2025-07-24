@@ -178,6 +178,7 @@ export interface Page {
           id?: string | null;
         }[]
       | null;
+    media?: (string | null) | Media;
     mediaDay?: (string | null) | Media;
     mediaNight?: (string | null) | Media;
   };
@@ -1106,6 +1107,7 @@ export interface PagesSelect<T extends boolean = true> {
                   };
               id?: T;
             };
+        media?: T;
         mediaDay?: T;
         mediaNight?: T;
       };

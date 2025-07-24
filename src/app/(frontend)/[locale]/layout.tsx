@@ -14,6 +14,7 @@ import { InitTheme } from "@/providers/Theme/InitTheme";
 import { mergeOpenGraph } from "@/utilities/mergeOpenGraph";
 import { draftMode } from "next/headers";
 import { TypedLocale } from "payload";
+import { ReactLenis } from "@/utilities/lenis";
 
 import "./globals.css";
 import "leaflet/dist/leaflet.css";
@@ -23,6 +24,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import localization from "@/i18n/localization";
+import CustomCursor from "@/components/CustomCursor";
 
 type Args = {
   children: React.ReactNode;
@@ -56,20 +58,23 @@ export default async function RootLayout({ children, params }: Args) {
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
       <body>
-        <Providers>
-          <NextIntlClientProvider messages={messages}>
-            <AdminBar
-              adminBarProps={{
-                preview: isEnabled,
-              }}
-            />
-            <LivePreviewListener />
+        <ReactLenis root>
+          <CustomCursor />
+          <Providers>
+            <NextIntlClientProvider messages={messages}>
+              <AdminBar
+                adminBarProps={{
+                  preview: isEnabled,
+                }}
+              />
+              <LivePreviewListener />
 
-            <Header locale={locale} />
-            {children}
-            <Footer locale={locale} />
-          </NextIntlClientProvider>
-        </Providers>
+              <Header locale={locale} />
+              {children}
+              <Footer locale={locale} />
+            </NextIntlClientProvider>
+          </Providers>
+        </ReactLenis>
       </body>
     </html>
   );

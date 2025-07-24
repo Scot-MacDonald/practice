@@ -55,21 +55,30 @@ export default function FindUsBlock({
 
   return (
     <>
-      <div>
-        <Map
-          lat={lat}
-          lng={lng}
-          secondIconUrl={secondIconUrl}
-          thirdIconUrl={thirdIconUrl}
-          fourthIconUrl={fourthIconUrl}
-          fifthIconUrl={fifthIconUrl}
-          sixthIconUrl={sixthIconUrl}
-          seventhIconUrl={seventhIconUrl}
-        />
+      <div className="page-with-header">
+        <h2 className="page-header px-8 flex items-center gap-2">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g fill="none" stroke="#7eb36a" strokeWidth="2">
+              <line x1="3" x2="21" y1="12" y2="12" />
+              <line
+                x1="12"
+                x2="12"
+                y1="3"
+                y2="21"
+                className="AccordionVerticalLine"
+              />
+            </g>
+          </svg>
+          {heading}
+        </h2>
       </div>
-      <div className="w-full grid grid-cols-12 border-t border-border">
+      <div className="w-full grid grid-cols-12">
         <div className="col-span-12 lg:col-span-4 p-8 border-b lg:border-b-0 lg:border-r border-border">
-          <h2 className="text-2xl font-bold mb-4">{heading}</h2>
           <p>{description}</p>
         </div>
 
@@ -90,6 +99,18 @@ export default function FindUsBlock({
             </div>
           ))}
         </div>
+      </div>
+      <div className="mt-8">
+        <Map
+          lat={lat}
+          lng={lng}
+          secondIconUrl={secondIconUrl}
+          thirdIconUrl={thirdIconUrl}
+          fourthIconUrl={fourthIconUrl}
+          fifthIconUrl={fifthIconUrl}
+          sixthIconUrl={sixthIconUrl}
+          seventhIconUrl={seventhIconUrl}
+        />
       </div>
     </>
   );

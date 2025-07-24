@@ -54,6 +54,10 @@ export const hero: Field = {
       admin: {
         condition: (_, { type } = {}) => type !== "highImpact",
       },
+      validate: (_, { siblingData }) => {
+        if (siblingData?.type !== "highImpact") return true;
+        return "This field is required";
+      },
     },
     {
       name: "mediaDay",
@@ -64,6 +68,10 @@ export const hero: Field = {
       admin: {
         condition: (_, { type } = {}) => type === "highImpact",
       },
+      validate: (_, { siblingData }) => {
+        if (siblingData?.type === "highImpact") return true;
+        return "This field is required";
+      },
     },
     {
       name: "mediaNight",
@@ -73,6 +81,10 @@ export const hero: Field = {
       required: true,
       admin: {
         condition: (_, { type } = {}) => type === "highImpact",
+      },
+      validate: (_, { siblingData }) => {
+        if (siblingData?.type === "highImpact") return true;
+        return "This field is required";
       },
     },
   ],
