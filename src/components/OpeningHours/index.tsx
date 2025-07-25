@@ -76,11 +76,11 @@ export const OpeningHours = () => {
 
           return (
             <div key={day.key} className="flex items-start w-full">
-              <p className="w-1/2 text-left">
+              <p className="w-1/3 text-left">
                 {t(`days.${day.key}` as `days.${DayKey}`)}
               </p>
 
-              <p className="w-1/4 text-left">
+              <p className="w-1/3 text-left">
                 {morning && (
                   <span className={cn(isMorningNow && "text-[#7eb36a]")}>
                     {morning}
@@ -88,7 +88,7 @@ export const OpeningHours = () => {
                 )}
               </p>
 
-              <p className="w-1/4 text-right">
+              <p className="w-1/3 text-right">
                 {afternoon && (
                   <span className={cn(isAfternoonNow && "text-[#7eb36a]")}>
                     {afternoon}

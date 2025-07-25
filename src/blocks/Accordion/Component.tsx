@@ -30,9 +30,10 @@ export const AccordionBlock: React.FC<Props> = ({
 }) => {
   return (
     <section className={cn(" ", className)}>
-      <div className="page-with-header">
-        <h2 className="page-header px-8 flex items-center gap-2">
+      <div className="page-with-header mb-[70px] sm:mb-[14px]">
+        <h2 className="page-header px-8 flex flex-col lg:flex-row items-start lg:items-center gap-2">
           <svg
+            className="hidden lg:block"
             width="24"
             height="24"
             viewBox="0 0 24 24"
@@ -53,8 +54,8 @@ export const AccordionBlock: React.FC<Props> = ({
         </h2>
       </div>
 
-      <div className="grid grid-cols-12 ">
-        <div className="col-span-12 lg:col-span-4 p-8 border-b lg:border-b-0 lg:border-r border-border">
+      <div className="grid grid-cols-12">
+        <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-4 p-8  lg:border-r border-border">
           {subheading && (
             <h3 className="font-semibold text-lg mb-4">{subheading}</h3>
           )}
@@ -67,7 +68,7 @@ export const AccordionBlock: React.FC<Props> = ({
           )}
         </div>
 
-        <div className="col-span-12 lg:col-span-8 p-8">
+        <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-8 p-8">
           <div className="w-full max-w-[600px]">
             <Accordion.Root type="multiple">
               {items?.map((item, index) => (
@@ -83,13 +84,13 @@ export const AccordionBlock: React.FC<Props> = ({
                   <Accordion.Header>
                     <Accordion.Trigger
                       className={cn(
-                        "AccordionTrigger px-4 py-6 flex justify-between items-center w-full text-left cursor-pointer",
+                        "AccordionTrigger px-4 py-10 flex justify-between items-center w-full text-left cursor-pointer",
                         "hover:bg-[rgba(126,179,106,0.1)]",
                         "data-[state=open]:bg-[#f0f8ec]",
                         "transition-colors duration-300"
                       )}
                     >
-                      <h2 className="text-lg text-gray-600 font-medium">
+                      <h2 className="text-xl text-gray-600 font-medium">
                         {item.title}
                       </h2>
                       <span className="AccordionChevron">

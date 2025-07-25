@@ -21,11 +21,12 @@ export const ContentImageBlock: React.FC<Props> = ({
   const isImageLeft = mediaPosition === "left";
   const pathname = usePathname();
   return (
-    <div className="w-full">
-      <div className="page-with-header mx-8">
+    <div className="">
+      <div className="page-with-header   mb-[70px] sm:mb-[14px]">
         {pathname === "/" ? (
-          <h2 className="page-header flex items-center gap-2">
+          <h2 className="page-header  flex flex-col lg:flex-row items-start lg:items-center gap-2">
             <svg
+              className="hidden lg:block"
               width="24"
               height="24"
               viewBox="0 0 24 24"
@@ -45,8 +46,9 @@ export const ContentImageBlock: React.FC<Props> = ({
             {title}
           </h2>
         ) : (
-          <h1 className="page-header flex items-center gap-2">
+          <h1 className="page-header px-8 flex flex-col lg:flex-row items-start lg:items-center gap-2">
             <svg
+              className="hidden lg:block"
               width="24"
               height="24"
               viewBox="0 0 24 24"

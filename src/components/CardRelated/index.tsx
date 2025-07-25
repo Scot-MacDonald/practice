@@ -1,71 +1,80 @@
-'use client'
-import { cn } from '@/utilities/cn'
-import useClickableCard from '@/utilities/useClickableCard'
-import Link from 'next/link'
-import React, { Fragment } from 'react'
+"use client";
 
-import type { Post } from '@/payload-types'
+import { cn } from "@/utilities/cn";
+import useClickableCard from "@/utilities/useClickableCard";
+import Link from "next/link";
+import React, { Fragment } from "react";
 
-import { Media } from '@/components/Media'
+import type { Post, Doctor } from "@/payload-types";
 
-export const CardRelated: React.FC<{
-  alignItems?: 'center'
-  className?: string
-  doc?: Post
-  relationTo?: 'posts'
-  showCategories?: boolean
-  title?: string
-}> = (props) => {
-  const { card, link } = useClickableCard({})
-  const { className, doc, relationTo, showCategories, title: titleFromProps } = props
+import { Media } from "@/components/Media";
 
-  const { slug, categories, meta, title } = doc || {}
-  const { description, image: metaImage } = meta || {}
+type RelationType = "posts" | "doctors";
 
-  const hasCategories = categories && Array.isArray(categories) && categories.length > 0
-  const titleToUse = titleFromProps || title
-  const sanitizedDescription = description?.replace(/\s/g, ' ') // replace non-breaking space with white space
-  const href = `/${relationTo}/${slug}`
+type CardRelatedProps = {
+  alignItems?: "center";
+  className?: string;
+  doc?: Post | Doctor;
+  relationTo: RelationType;
+  showCategories?: boolean;
+  title?: string;
+};
+
+export const CardRelated: React.FC<CardRelatedProps> = (props) => {
+  const { card, link } = useClickableCard({});
+  const {
+    className,
+    doc,
+    relationTo,
+    showCategories,
+    title: titleFromProps,
+  } = props;
+
+  if (!doc || typeof doc === "string") return null;
+
+  const { slug, categories, meta, title } = doc as Post | Doctor;
+
+  const { description, image: metaImage } = meta || {};
+  const hasCategories =
+    categories && Array.isArray(categories) && categories.length > 0;
+  const titleToUse = titleFromProps || title;
+  const sanitizedDescription = description?.replace(/\s/g, " ") || "";
+  const href = `/${relationTo}/${slug}`;
 
   return (
     <article
       className={cn(
-        'border border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer',
-        className,
+        "border border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer",
+        className
       )}
       ref={card.ref}
     >
-      {/* <div className="relative w-full ">
-        {!metaImage && <div className="">No image</div>}
+      {/* Optional image block */}
+      {/* <div className="relative w-full">
+        {!metaImage && <div className="bg-gray-100 h-48 flex items-center justify-center">No image</div>}
         {metaImage && typeof metaImage !== 'string' && <Media resource={metaImage} size="360px" />}
       </div> */}
+
       <div className="p-4">
         {showCategories && hasCategories && (
           <div className="uppercase text-sm mb-4">
-            {showCategories && hasCategories && (
-              <div>
-                {categories?.map((category, index) => {
-                  if (typeof category === 'object') {
-                    const { title: titleFromCategory } = category
+            {categories.map((category, index) => {
+              if (typeof category === "object" && category !== null) {
+                const categoryTitle = category.title || "Untitled category";
+                const isLast = index === categories.length - 1;
 
-                    const categoryTitle = titleFromCategory || 'Untitled category'
-
-                    const isLast = index === categories.length - 1
-
-                    return (
-                      <Fragment key={index}>
-                        {categoryTitle}
-                        {!isLast && <Fragment>, &nbsp;</Fragment>}
-                      </Fragment>
-                    )
-                  }
-
-                  return null
-                })}
-              </div>
-            )}
+                return (
+                  <Fragment key={index}>
+                    {categoryTitle}
+                    {!isLast && <Fragment>, &nbsp;</Fragment>}
+                  </Fragment>
+                );
+              }
+              return null;
+            })}
           </div>
         )}
+
         {titleToUse && (
           <div className="prose">
             <h3>
@@ -75,8 +84,13 @@ export const CardRelated: React.FC<{
             </h3>
           </div>
         )}
-        {description && <div className="mt-2 text-sm">{description && <p>{sanitizedDescription}</p>}</div>}
+
+        {sanitizedDescription && (
+          <div className="mt-2 text-sm">
+            <p>{sanitizedDescription}</p>
+          </div>
+        )}
       </div>
     </article>
-  )
-}
+  );
+};

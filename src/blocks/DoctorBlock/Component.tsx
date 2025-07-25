@@ -61,9 +61,10 @@ export const DoctorBlock: React.FC<
 
   return (
     <div className="" id={`block-${id}`}>
-      <div className="page-with-header">
-        <h2 className="page-header px-8 flex items-center gap-2">
+      <div className="page-with-header mb-[70px] sm:mb-[14px]">
+        <h2 className="page-header px-8 flex flex-col lg:flex-row items-start lg:items-center gap-2">
           <svg
+            className="hidden lg:block"
             width="24"
             height="24"
             viewBox="0 0 24 24"
@@ -85,7 +86,7 @@ export const DoctorBlock: React.FC<
       </div>
 
       <div className="w-full grid grid-cols-12 ">
-        <div className="col-span-4 p-8 border-r border-border">
+        <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-4  p-8 border-r border-border">
           {introContent && (
             <RichText
               className=""
@@ -96,7 +97,7 @@ export const DoctorBlock: React.FC<
         </div>
 
         {/* Doctors Collection */}
-        <div className="col-span-8 p-8 ">
+        <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-8 p-8 ">
           <CollectionDoctor doctors={doctors} />
         </div>
       </div>

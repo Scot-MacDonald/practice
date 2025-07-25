@@ -78,9 +78,10 @@ export const NewsAndHoursBlock: React.FC<Props> = ({
 
   return (
     <div className=" p-0" id={id}>
-      <div className="page-with-header">
-        <h2 className="page-header px-8 flex items-center gap-2">
+      <div className="page-with-header mb-[70px] sm:mb-[14px]">
+        <h2 className="page-header px-8 flex flex-col lg:flex-row items-start lg:items-center gap-2">
           <svg
+            className="hidden lg:block"
             width="24"
             height="24"
             viewBox="0 0 24 24"
@@ -100,7 +101,10 @@ export const NewsAndHoursBlock: React.FC<Props> = ({
           {t("welcome")}
         </h2>
       </div>
-      <div className="w-full grid grid-cols-4 lg:grid-cols-12    xl:bg-white lg:bg-black p-0 ">
+      <div
+        className="w-full grid grid-cols-4 lg:grid-cols-12    xl:bg-white lg:bg-black p-0 
+       "
+      >
         {news.slice(0, 2).map((item, index) => (
           <div
             key={index}
@@ -155,11 +159,11 @@ export const NewsAndHoursBlock: React.FC<Props> = ({
 
               return (
                 <div key={dayKey} className="flex items-start w-full">
-                  <p className="w-1/2 text-left">
+                  <p className="w-1/3 text-left">
                     {t(`days.${dayKey}` as any)}
                   </p>
 
-                  <p className="w-1/4 text-left">
+                  <p className="w-1/3 text-left">
                     {morning && (
                       <span className={cn(isMorningNow && "text-[#7eb36a]")}>
                         {morning}
@@ -167,7 +171,7 @@ export const NewsAndHoursBlock: React.FC<Props> = ({
                     )}
                   </p>
 
-                  <p className="w-1/4 text-right">
+                  <p className="w-1/3 text-left">
                     {afternoon && (
                       <span className={cn(isAfternoonNow && "text-[#7eb36a]")}>
                         {afternoon}

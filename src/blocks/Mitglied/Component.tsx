@@ -4,9 +4,10 @@ import Link from "next/link";
 export default function MitgliedBlock({ title, description, items }) {
   return (
     <>
-      <div className="page-with-header">
-        <h2 className="page-header px-8 flex items-center gap-2">
+      <div className="page-with-header mb-[70px] sm:mb-[14px]">
+        <h2 className="page-header px-8 flex flex-col lg:flex-row items-start lg:items-center gap-2">
           <svg
+            className="hidden lg:block"
             width="24"
             height="24"
             viewBox="0 0 24 24"
@@ -28,12 +29,12 @@ export default function MitgliedBlock({ title, description, items }) {
       </div>
       <div className="w-full grid grid-cols-12 mb-8">
         {/* 4-column section on the LEFT */}
-        <div className="col-span-12 lg:col-span-4 p-8 border-b lg:border-b-0 lg:border-r border-border">
+        <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-4 p-8  lg:border-r border-border">
           <p>{description}</p>
         </div>
 
         {/* 8-column section on the RIGHT with dynamic items */}
-        <div className="col-span-12 lg:col-span-8 p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 ">
+        <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-8 p-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 ">
           {items.map((item, i) => (
             <Link
               key={i}
