@@ -72,7 +72,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
 
         {/* Mobile Menu */}
         <div className="flex lg:hidden items-center gap-3">
-          <Link href="/" className="bg-[#c0eeff] px-2 py-1  rounded">
+          <Link href="/" className="bg-[#cde3c5] px-2 py-1  rounded">
             {t("appointment")}
           </Link>
           <Sheet open={open} onOpenChange={setOpen}>

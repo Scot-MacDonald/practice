@@ -24,7 +24,7 @@ export const ContentImageBlock: React.FC<Props> = ({
     <div className="">
       <div className="page-with-header   mb-[70px] sm:mb-[14px]">
         {pathname === "/" ? (
-          <h2 className="page-header  flex flex-col lg:flex-row items-start lg:items-center gap-2">
+          <h2 className="page-header px-4 sm:px-8  flex flex-col lg:flex-row items-start lg:items-center gap-2">
             <svg
               className="hidden lg:block"
               width="24"
@@ -46,7 +46,7 @@ export const ContentImageBlock: React.FC<Props> = ({
             {title}
           </h2>
         ) : (
-          <h1 className="page-header px-8 flex flex-col lg:flex-row items-start lg:items-center gap-2">
+          <h1 className="page-header px-4 sm:px-8 flex flex-col lg:flex-row items-start lg:items-center gap-2">
             <svg
               className="hidden lg:block"
               width="24"
@@ -78,7 +78,7 @@ export const ContentImageBlock: React.FC<Props> = ({
           })}
         >
           {image && typeof image !== "string" && (
-            <div className="p-[50px] min-h-[calc(100vh-87px)] flex justify-center">
+            <div className="p-4 sm:p-[50px] h-full md:min-h-[calc(100vh-87px)] flex justify-center">
               <Media
                 resource={image}
                 className="w-full h-full object-cover"

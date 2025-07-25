@@ -30,7 +30,7 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
           key={i}
           {...link}
           appearance="link"
-          className="text-md"
+          className="text-lg"
           onClick={onClickLink}
         />
       ))}

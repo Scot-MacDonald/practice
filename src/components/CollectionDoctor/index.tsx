@@ -14,7 +14,7 @@ export const CollectionDoctor: React.FC<Props> = (props) => {
   console.log("Doctors:", doctors);
   return (
     <div className={cn("")}>
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
         {doctors
           ?.filter((doc) => doc && doc.slug && doc.title) // only valid doctors
           .map((result, index) => (

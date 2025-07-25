@@ -223,7 +223,7 @@ html[data-theme="light"] {
   color: #7eb36a;
   border-top: 0.5px solid #7eb36a;
   margin-top: 42px;
-  padding-top: 24px;
+  /* padding-top: 24px; */
 }
 
 .page-header {
@@ -234,7 +234,7 @@ html[data-theme="light"] {
   background-color: white;
   /* text-transform: uppercase; */
   letter-spacing: 0.07em;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
 }
 
 /* .page-with-header {

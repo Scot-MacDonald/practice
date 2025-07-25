@@ -69,7 +69,7 @@ export const AccordionBlock: React.FC<Props> = ({
         </div>
 
         <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-8 p-8">
-          <div className="w-full max-w-[600px]">
+          <div className="w-full max-w-full lg:max-w-[600px]">
             <Accordion.Root type="multiple">
               {items?.map((item, index) => (
                 <Accordion.Item
