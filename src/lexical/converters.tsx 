@@ -1,0 +1,7 @@
+import { TypographyJSXConverters } from "payload-lexical-typography/converters";
+import type { JSXConvertersFunction } from "@payloadcms/richtext-lexical";
+
+export const jsxConverters: JSXConvertersFunction = ({ defaultConverters }) => ({
+  ...defaultConverters,
+  ...TypographyJSXConverters,
+});

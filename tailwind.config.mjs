@@ -126,6 +126,7 @@ export default {
             },
           },
         },
+
         hero: {
           css: {
             h1: {

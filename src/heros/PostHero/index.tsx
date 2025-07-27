@@ -83,11 +83,11 @@ export const PostHero: React.FC<{
 
   return (
     <div className="relative mt-12">
-      <div className="container grid grid-cols-1 lg:grid-cols-1 gap-8 items-center">
+      <div className=" grid grid-cols-1 lg:grid-cols-1 gap-8 items-center px-8">
         {/* LEFT: Text Content */}
         <div>
           <div className="page-with-header mb-[70px] sm:mb-[14px]">
-            <h2 className="page-header px-8 flex flex-col lg:flex-row items-start lg:items-center gap-2">
+            <h2 className="page-header  flex flex-col lg:flex-row items-start lg:items-center gap-2">
               <svg
                 className="hidden lg:block"
                 width="24"
@@ -117,7 +117,7 @@ export const PostHero: React.FC<{
           <div className="w-full max-w-[250px] aspect-square relative">
             <Media
               className="w-full h-full"
-              imgClassName="object-cover rounded-xl"
+              imgClassName="object-cover "
               resource={metaImage}
               fill
             />

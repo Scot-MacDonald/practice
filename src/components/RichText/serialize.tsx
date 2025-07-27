@@ -1,11 +1,16 @@
-import { BannerBlock } from '@/blocks/Banner/Component'
-import { CallToActionBlock } from '@/blocks/CallToAction/Component'
-import { CodeBlock, CodeBlockProps } from '@/blocks/Code/Component'
-import { MediaBlock } from '@/blocks/MediaBlock/Component'
-import React, { Fragment, JSX } from 'react'
-import { CMSLink } from '@/components/Link'
-import { DefaultNodeTypes, SerializedBlockNode } from '@payloadcms/richtext-lexical'
-import type { BannerBlock as BannerBlockProps } from '@/payload-types'
+import { BannerBlock } from "@/blocks/Banner/Component";
+import { CallToActionBlock } from "@/blocks/CallToAction/Component";
+import { CodeBlock, CodeBlockProps } from "@/blocks/Code/Component";
+import { MediaBlock } from "@/blocks/MediaBlock/Component";
+import { CMSLink } from "@/components/Link";
+import React, { Fragment, JSX } from "react";
+
+import {
+  DefaultNodeTypes,
+  SerializedBlockNode,
+} from "@payloadcms/richtext-lexical";
+
+import type { BannerBlock as BannerBlockProps, Page } from "@/payload-types";
 
 import {
   IS_BOLD,
@@ -15,197 +20,211 @@ import {
   IS_SUBSCRIPT,
   IS_SUPERSCRIPT,
   IS_UNDERLINE,
-} from './nodeFormat'
-import type { Page } from '@/payload-types'
+} from "./nodeFormat";
 
 export type NodeTypes =
   | DefaultNodeTypes
   | SerializedBlockNode<
-      | Extract<Page['layout'][0], { blockType: 'cta' }>
-      | Extract<Page['layout'][0], { blockType: 'mediaBlock' }>
+      | Extract<Page["layout"][0], { blockType: "cta" }>
+      | Extract<Page["layout"][0], { blockType: "mediaBlock" }>
       | BannerBlockProps
       | CodeBlockProps
-    >
+    >;
 
 type Props = {
-  nodes: NodeTypes[]
-}
+  nodes: NodeTypes[];
+};
 
 export function serializeLexical({ nodes }: Props): JSX.Element {
   return (
     <Fragment>
       {nodes?.map((node, index): JSX.Element | null => {
-        if (node == null) {
-          return null
-        }
+        if (node == null) return null;
 
-        if (node.type === 'text') {
-          let text = <React.Fragment key={index}>{node.text}</React.Fragment>
+        if (node.type === "text") {
+          let textNode: JSX.Element | string = node.text;
+
+          // ✅ Apply color style first (check both object and string format)
+          if (
+            typeof node.style === "object" &&
+            node.style !== null &&
+            "color" in node.style
+          ) {
+            const color = (node.style as { color?: string })?.color;
+            if (color) {
+              textNode = <span style={{ color }}>{textNode}</span>;
+            }
+          } else if (typeof node.style === "string") {
+            const colorMatch = node.style.match(
+              /color:\s*(#[0-9A-Fa-f]{6}|[a-zA-Z]+)/
+            );
+            const color = colorMatch?.[1];
+            if (color) {
+              textNode = <span style={{ color }}>{textNode}</span>;
+            }
+          }
+
+          // ✅ Then apply formatting tags around the color
           if (node.format & IS_BOLD) {
-            text = <strong key={index}>{text}</strong>
+            textNode = <strong>{textNode}</strong>;
           }
           if (node.format & IS_ITALIC) {
-            text = <em key={index}>{text}</em>
+            textNode = <em>{textNode}</em>;
           }
           if (node.format & IS_STRIKETHROUGH) {
-            text = (
-              <span key={index} style={{ textDecoration: 'line-through' }}>
-                {text}
-              </span>
-            )
+            textNode = (
+              <span style={{ textDecoration: "line-through" }}>{textNode}</span>
+            );
           }
           if (node.format & IS_UNDERLINE) {
-            text = (
-              <span key={index} style={{ textDecoration: 'underline' }}>
-                {text}
-              </span>
-            )
+            textNode = (
+              <span style={{ textDecoration: "underline" }}>{textNode}</span>
+            );
           }
           if (node.format & IS_CODE) {
-            text = <code key={index}>{node.text}</code>
+            textNode = <code>{node.text}</code>;
           }
           if (node.format & IS_SUBSCRIPT) {
-            text = <sub key={index}>{text}</sub>
+            textNode = <sub>{textNode}</sub>;
           }
           if (node.format & IS_SUPERSCRIPT) {
-            text = <sup key={index}>{text}</sup>
+            textNode = <sup>{textNode}</sup>;
           }
 
-          return text
+          return <Fragment key={index}>{textNode}</Fragment>;
         }
 
-        // NOTE: Hacky fix for
-        // https://github.com/facebook/lexical/blob/d10c4e6e55261b2fdd7d1845aed46151d0f06a8c/packages/lexical-list/src/LexicalListItemNode.ts#L133
-        // which does not return checked: false (only true - i.e. there is no prop for false)
         const serializedChildrenFn = (node: NodeTypes): JSX.Element | null => {
-          if (node.children == null) {
-            return null
-          } else {
-            if (node?.type === 'list' && node?.listType === 'check') {
-              for (const item of node.children) {
-                if ('checked' in item) {
-                  if (!item?.checked) {
-                    item.checked = false
-                  }
-                }
+          if (node.children == null) return null;
+
+          // Fix for checklists missing `checked: false`
+          if (node?.type === "list" && node?.listType === "check") {
+            for (const item of node.children) {
+              if ("checked" in item && item.checked == null) {
+                item.checked = false;
               }
             }
-            return serializeLexical({ nodes: node.children as NodeTypes[] })
           }
-        }
 
-        const serializedChildren = 'children' in node ? serializedChildrenFn(node) : ''
+          return serializeLexical({ nodes: node.children as NodeTypes[] });
+        };
 
-        if (node.type === 'block') {
-          const block = node.fields
+        const serializedChildren =
+          "children" in node ? serializedChildrenFn(node) : "";
 
-          const blockType = block?.blockType
-
-          if (!block || !blockType) {
-            return null
-          }
+        if (node.type === "block") {
+          const block = node.fields;
+          const blockType = block?.blockType;
+          if (!block || !blockType) return null;
 
           switch (blockType) {
-            case 'cta':
-              return <CallToActionBlock key={index} {...block} />
-            case 'mediaBlock':
+            case "cta":
+              return <CallToActionBlock key={index} {...block} />;
+            case "mediaBlock":
               return (
                 <MediaBlock
-                  className="col-start-1 col-span-3"
-                  imgClassName="m-0"
                   key={index}
                   {...block}
+                  className="col-start-1 col-span-3"
+                  imgClassName="m-0"
                   captionClassName="mx-auto max-w-[48rem]"
                   enableGutter={false}
                   disableInnerContainer={true}
                 />
-              )
-            case 'banner':
-              return <BannerBlock className="col-start-2 mb-4" key={index} {...block} />
-            case 'code':
-              return <CodeBlock className="col-start-2" key={index} {...block} />
-            default:
-              return null
-          }
-        } else {
-          switch (node.type) {
-            case 'linebreak': {
-              return <br className="col-start-2" key={index} />
-            }
-            case 'paragraph': {
+              );
+            case "banner":
               return (
-                <p className="col-start-2" key={index}>
-                  {serializedChildren}
-                </p>
-              )
-            }
-            case 'heading': {
-              const Tag = node?.tag
-              return (
-                <Tag className="col-start-2" key={index}>
-                  {serializedChildren}
-                </Tag>
-              )
-            }
-            case 'list': {
-              const Tag = node?.tag
-              return (
-                <Tag className="list col-start-2" key={index}>
-                  {serializedChildren}
-                </Tag>
-              )
-            }
-            case 'listitem': {
-              if (node?.checked != null) {
-                return (
-                  <li
-                    aria-checked={node.checked ? 'true' : 'false'}
-                    className={` ${node.checked ? '' : ''}`}
-                    key={index}
-                    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
-                    role="checkbox"
-                    tabIndex={-1}
-                    value={node?.value}
-                  >
-                    {serializedChildren}
-                  </li>
-                )
-              } else {
-                return (
-                  <li key={index} value={node?.value}>
-                    {serializedChildren}
-                  </li>
-                )
-              }
-            }
-            case 'quote': {
-              return (
-                <blockquote className="col-start-2" key={index}>
-                  {serializedChildren}
-                </blockquote>
-              )
-            }
-            case 'link': {
-              const fields = node.fields
-
-              return (
-                <CMSLink
+                <BannerBlock
                   key={index}
-                  newTab={Boolean(fields?.newTab)}
-                  reference={fields.doc as any}
-                  type={fields.linkType === 'internal' ? 'reference' : 'custom'}
-                  url={fields.url}
+                  {...block}
+                  className="col-start-2 mb-4"
+                />
+              );
+            case "code":
+              return (
+                <CodeBlock key={index} {...block} className="col-start-2" />
+              );
+            default:
+              return null;
+          }
+        }
+
+        switch (node.type) {
+          case "linebreak":
+            return <br key={index} className="col-start-2" />;
+
+          case "paragraph":
+            return (
+              <p key={index} className="col-start-2">
+                {serializedChildren}
+              </p>
+            );
+
+          case "heading": {
+            const Tag = node?.tag;
+            return (
+              <Tag key={index} className="col-start-2">
+                {serializedChildren}
+              </Tag>
+            );
+          }
+
+          case "list": {
+            const Tag = node?.tag;
+            return (
+              <Tag key={index} className="list col-start-2">
+                {serializedChildren}
+              </Tag>
+            );
+          }
+
+          case "listitem":
+            if (node?.checked != null) {
+              return (
+                <li
+                  key={index}
+                  role="checkbox"
+                  aria-checked={node.checked ? "true" : "false"}
+                  tabIndex={-1}
+                  value={node?.value}
                 >
                   {serializedChildren}
-                </CMSLink>
-              )
+                </li>
+              );
+            } else {
+              return (
+                <li key={index} value={node?.value}>
+                  {serializedChildren}
+                </li>
+              );
             }
 
-            default:
-              return null
+          case "quote":
+            return (
+              <blockquote key={index} className="col-start-2">
+                {serializedChildren}
+              </blockquote>
+            );
+
+          case "link": {
+            const fields = node.fields;
+            return (
+              <CMSLink
+                key={index}
+                type={fields.linkType === "internal" ? "reference" : "custom"}
+                url={fields.url}
+                newTab={Boolean(fields?.newTab)}
+                reference={fields.doc as any}
+              >
+                {serializedChildren}
+              </CMSLink>
+            );
           }
+
+          default:
+            return null;
         }
       })}
     </Fragment>
-  )
+  );
 }

@@ -53,10 +53,10 @@ export default async function Doctor({ params: paramsPromise }: Args) {
     <article className="pt-16 pb-16">
       <PageClient />
       <PayloadRedirects disableNotFound url={url} />
-      <PostHero post={doctor} />{" "}
+      <PostHero post={doctor} />
       {/* ✅ consider replacing with <DoctorHero doctor={doctor} /> */}
-      <div className="flex flex-col items-center gap-4 pt-8">
-        <div className="container">
+      <div className="flex flex-col px-8 gap-4 pt-8">
+        <div className="">
           <RichText
             className="max-w-[48rem]"
             content={doctor.content}

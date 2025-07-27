@@ -5,6 +5,7 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from "@payloadcms/richtext-lexical";
+import { TextColorFeature } from "payload-lexical-typography";
 
 const ContentImageBlock: Block = {
   slug: "contentImage",
@@ -30,6 +31,9 @@ const ContentImageBlock: Block = {
           HeadingFeature({ enabledHeadingSizes: ["h2", "h3", "h4"] }),
           FixedToolbarFeature(),
           InlineToolbarFeature(),
+          TextColorFeature({
+            colors: ["#000000", "#FFFFFF", "#FF0000", "#00FF00", "#0000FF"], // Customize as needed
+          }),
         ],
       }),
     },
