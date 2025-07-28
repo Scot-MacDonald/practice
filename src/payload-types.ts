@@ -244,6 +244,10 @@ export interface Page {
      */
     image?: (string | null) | Media;
     description?: string | null;
+    /**
+     * Comma-separated keywords (optional, legacy SEO)
+     */
+    keywords?: string | null;
   };
   publishedAt?: string | null;
   slug?: string | null;
@@ -1180,6 +1184,7 @@ export interface PagesSelect<T extends boolean = true> {
         title?: T;
         image?: T;
         description?: T;
+        keywords?: T;
       };
   publishedAt?: T;
   slug?: T;

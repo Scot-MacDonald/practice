@@ -114,7 +114,7 @@ export const NewsAndHoursBlock: React.FC<Props> = ({
             {index === 0 ? (
               <h2 className="text-xl font-semibold mb-4">Latest Infos</h2>
             ) : (
-              <h2 className="text-xl font-semibold text-transparent mb-4 select-none">
+              <h2 className="text-xl font-semibold text-transparent mb-4 invisible">
                 Latest Infos
               </h2>
             )}

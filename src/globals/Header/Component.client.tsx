@@ -85,6 +85,9 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
                   <SheetTitle>Menu</SheetTitle>
                 </VisuallyHidden>
               </SheetHeader>
+              <Link href="/" onClick={closeSheet} className="mb-2">
+                <Logo />
+              </Link>
               <HeaderNav header={header} onClickLink={closeSheet} />
             </SheetContent>
           </Sheet>

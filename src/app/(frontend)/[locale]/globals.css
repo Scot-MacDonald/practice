@@ -254,3 +254,8 @@ html[data-theme="light"] {
   padding: 2px 5px;
   border-radius: 0.25rem;
 }
+
+.prose {
+  color: #000000;
+  max-width: 100%;
+}

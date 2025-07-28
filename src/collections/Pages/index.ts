@@ -114,6 +114,15 @@ export const Pages: CollectionConfig = {
             }),
 
             MetaDescriptionField({}),
+            {
+              name: "keywords",
+              label: "Meta Keywords",
+              type: "text",
+              admin: {
+                description: "Comma-separated keywords (optional, legacy SEO)",
+              },
+            },
+
             PreviewField({
               // if the `generateUrl` function is configured
               hasGenerateFn: true,

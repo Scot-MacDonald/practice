@@ -57,7 +57,7 @@ export default async function RootLayout({ children, params }: Args) {
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
-      <body>
+      <body className="flex flex-col min-h-screen">
         <ReactLenis root>
           <CustomCursor />
           <Providers>
@@ -70,7 +70,7 @@ export default async function RootLayout({ children, params }: Args) {
               <LivePreviewListener />
 
               <Header locale={locale} />
-              {children}
+              <main className="flex-grow">{children}</main>
               <Footer locale={locale} />
             </NextIntlClientProvider>
           </Providers>

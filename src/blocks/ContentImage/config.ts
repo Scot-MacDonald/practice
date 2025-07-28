@@ -32,7 +32,14 @@ const ContentImageBlock: Block = {
           FixedToolbarFeature(),
           InlineToolbarFeature(),
           TextColorFeature({
-            colors: ["#000000", "#FFFFFF", "#FF0000", "#00FF00", "#0000FF"], // Customize as needed
+            colors: [
+              "#000000",
+              "#FFFFFF",
+              "#FF0000",
+              "#00FF00",
+              "#0000FF",
+              "#7eb36a",
+            ], // Customize as needed
           }),
         ],
       }),

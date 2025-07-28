@@ -71,7 +71,7 @@ export const HighImpactHero: React.FC<Page["hero"]> = ({
               priority
               resource={currentMedia}
             />
-            <div className="absolute pointer-events-none left-0 bottom-0 w-full h-1/2 bg-gradient-to-t from-black to-transparent" />
+            <div className="absolute pointer-events-none left-0 bottom-0 w-full h-3/4 bg-gradient-to-t from-black to-transparent" />
           </>
         )}
       </div>

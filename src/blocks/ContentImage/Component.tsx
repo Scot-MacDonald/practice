@@ -72,13 +72,13 @@ export const ContentImageBlock: React.FC<Props> = ({
       <div className="grid grid-cols-1 md:grid-cols-12 w-full ">
         {/* Image first in markup so it shows first on mobile */}
         <div
-          className={cn("md:col-span-12 lg:col-span-8", {
+          className={cn("md:col-span-12 lg:col-span-6", {
             "lg:order-1": isImageLeft,
             "lg:order-2": !isImageLeft,
           })}
         >
           {image && typeof image !== "string" && (
-            <div className="p-4 sm:p-[50px] h-full md:min-h-[calc(100vh-87px)] flex justify-center">
+            <div className="p-4 sm:p-8  md:mt-[30px] h-full md:min-h-[calc(70vh-87px)] flex justify-center">
               <Media
                 resource={image}
                 className="w-full h-full object-cover"
@@ -97,7 +97,7 @@ export const ContentImageBlock: React.FC<Props> = ({
               // "lg:border-r": !isImageLeft,
               // "lg:border-l": isImageLeft,
             },
-            "md:col-span-12 lg:col-span-4 p-8 border-gray-200"
+            "md:col-span-12 lg:col-span-6 p-4 sm:p-8 border-gray-200"
           )}
         >
           {richText && <RichText content={richText} />}

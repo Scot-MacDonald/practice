@@ -84,7 +84,14 @@ export default buildConfig({
     features: ({ defaultFeatures }) => [
       ...defaultFeatures,
       TextColorFeature({
-        colors: ["#000000", "#FFFFFF", "#FF0000", "#00FF00", "#0000FF"], // Customize this list
+        colors: [
+          "#000000",
+          "#FFFFFF",
+          "#FF0000",
+          "#00FF00",
+          "#0000FF",
+          "#7eb36a",
+        ], // Customize this list
       }),
     ],
   }),
@@ -129,6 +136,17 @@ export default buildConfig({
     seoPlugin({
       generateTitle,
       generateURL,
+      fields: ({ defaultFields }) => [
+        ...defaultFields,
+        {
+          name: "keywords",
+          label: "Meta Keywords",
+          type: "text",
+          admin: {
+            description: "Comma-separated keywords for SEO purposes",
+          },
+        },
+      ],
     }),
     uploadthingStorage({
       collections: {
