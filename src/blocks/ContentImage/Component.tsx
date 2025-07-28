@@ -78,7 +78,7 @@ export const ContentImageBlock: React.FC<Props> = ({
           })}
         >
           {image && typeof image !== "string" && (
-            <div className="p-4 sm:p-8  md:mt-[30px] h-full md:min-h-[calc(70vh-87px)] flex justify-center">
+            <div className="p-4 sm:p-8  h-full md:min-h-[calc(70vh-87px)] flex justify-center">
               <Media
                 resource={image}
                 className="w-full h-full object-cover"

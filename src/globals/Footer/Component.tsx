@@ -13,7 +13,7 @@ export async function Footer({ locale }: { locale: TypedLocale }) {
 
   return (
     <footer className="border-t border-border">
-      <div className="container-full px-6 py-6">
+      <div className="container-full px-8 py-6">
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
           {/* Column 1: Address */}
           <div className="flex flex-col gap-1 leading-snug">

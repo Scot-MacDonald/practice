@@ -4,9 +4,9 @@ import { cn } from "@/utilities/cn";
 import useClickableCard from "@/utilities/useClickableCard";
 import Link from "next/link";
 import React, { Fragment } from "react";
+import Image from "next/image";
 
 import type { Post, Doctor } from "@/payload-types";
-
 import { Media } from "@/components/Media";
 
 type RelationType = "posts" | "doctors";
@@ -32,32 +32,59 @@ export const CardRelated: React.FC<CardRelatedProps> = (props) => {
 
   if (!doc || typeof doc === "string") return null;
 
-  const { slug, categories, meta, title } = doc as Post | Doctor;
-
+  const { slug, categories, meta, title } = doc;
   const { description, image: metaImage } = meta || {};
+
   const hasCategories =
     categories && Array.isArray(categories) && categories.length > 0;
   const titleToUse = titleFromProps || title;
-  const sanitizedDescription = description?.replace(/\s/g, " ") || "";
+  const sanitizedDescription = description?.replace(/\s/g, " ");
   const href = `/${relationTo}/${slug}`;
+
+  const isUrl = typeof metaImage === "string" && metaImage.startsWith("http");
+  const isFilename =
+    typeof metaImage === "string" && !metaImage.startsWith("http");
 
   return (
     <article
       className={cn(
-        "border border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer",
+        "data-cursor-hover border border-border rounded-lg p-4 transition-colors hover:bg-[rgba(126,179,106,0.1);]",
         className
       )}
       ref={card.ref}
+      data-cursor-hover
     >
-      {/* Optional image block */}
-      {/* <div className="relative w-full">
-        {!metaImage && <div className="bg-gray-100 h-48 flex items-center justify-center">No image</div>}
-        {metaImage && typeof metaImage !== 'string' && <Media resource={metaImage} size="360px" />}
-      </div> */}
+      <div className="relative w-full aspect-square bg-gray-100 flex items-center justify-center overflow-hidden">
+        {!metaImage && <div className="text-sm text-gray-500">No image</div>}
 
-      <div className="p-4">
+        {isUrl && (
+          <Image
+            src={metaImage as string}
+            alt={titleToUse || "Image"}
+            width={239}
+            height={239}
+            className="object-cover w-full h-full"
+          />
+        )}
+
+        {isFilename && (
+          <Image
+            src={`/api/media/file/${metaImage}`}
+            alt={titleToUse || "Image"}
+            width={239}
+            height={239}
+            className="object-cover w-full h-full"
+          />
+        )}
+
+        {metaImage && typeof metaImage === "object" && (
+          <Media resource={metaImage} size="360px" />
+        )}
+      </div>
+
+      <div className="pt-4">
         {showCategories && hasCategories && (
-          <div className="uppercase text-sm mb-4">
+          <div className="uppercase text-sm mb-4 text-gray-500">
             {categories.map((category, index) => {
               if (typeof category === "object" && category !== null) {
                 const categoryTitle = category.title || "Untitled category";
@@ -66,7 +93,7 @@ export const CardRelated: React.FC<CardRelatedProps> = (props) => {
                 return (
                   <Fragment key={index}>
                     {categoryTitle}
-                    {!isLast && <Fragment>, &nbsp;</Fragment>}
+                    {!isLast && <>,&nbsp;</>}
                   </Fragment>
                 );
               }
@@ -77,7 +104,7 @@ export const CardRelated: React.FC<CardRelatedProps> = (props) => {
 
         {titleToUse && (
           <div className="prose">
-            <h3>
+            <h3 className="text-base text-gray-600 font-bold">
               <Link className="not-prose" href={href} ref={link.ref}>
                 {titleToUse}
               </Link>
@@ -85,10 +112,10 @@ export const CardRelated: React.FC<CardRelatedProps> = (props) => {
           </div>
         )}
 
-        {sanitizedDescription && (
-          <div className="mt-2 text-sm">
-            <p>{sanitizedDescription}</p>
-          </div>
+        {description && (
+          <p className="mt-1 text-sm text-gray-600 font-medium">
+            {sanitizedDescription}
+          </p>
         )}
       </div>
     </article>
