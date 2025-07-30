@@ -98,7 +98,7 @@ export const DoctorBlock: React.FC<
 
         {/* Doctors Collection */}
         <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-8 px-4 sm:px-8 ">
-          <CollectionDoctor doctors={doctors} />
+          <CollectionDoctor data-cursor-hover doctors={doctors} />
         </div>
       </div>
     </div>

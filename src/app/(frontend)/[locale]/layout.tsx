@@ -62,11 +62,11 @@ export default async function RootLayout({ children, params }: Args) {
           <CustomCursor />
           <Providers>
             <NextIntlClientProvider messages={messages}>
-              <AdminBar
+              {/* <AdminBar
                 adminBarProps={{
                   preview: isEnabled,
                 }}
-              />
+              /> */}
               <LivePreviewListener />
 
               <Header locale={locale} />

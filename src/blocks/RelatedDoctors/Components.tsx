@@ -23,7 +23,14 @@ export const RelatedDoctors: React.FC<RelatedDoctorsProps> = (props) => {
         {docs?.map((doc, index) => {
           if (typeof doc === "string") return null;
 
-          return <CardRelated key={index} doc={doc} relationTo="doctors" />;
+          return (
+            <CardRelated
+              data-cursor-hover
+              key={index}
+              doc={doc}
+              relationTo="doctors"
+            />
+          );
         })}
       </div>
     </div>
