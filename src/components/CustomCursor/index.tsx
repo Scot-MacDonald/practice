@@ -1,14 +1,23 @@
-// components/CustomCursor.tsx
 "use client";
 
 import { useEffect, useState } from "react";
-import "./custom-cursor.css"; // We'll define this in the next step
+import "./custom-cursor.css";
 
 export default function CustomCursor() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [hovering, setHovering] = useState(false);
+  const [enabled, setEnabled] = useState(false); // Track if cursor should be shown
 
   useEffect(() => {
+    // Disable custom cursor on touch devices
+    const isTouchDevice =
+      typeof window !== "undefined" &&
+      ("ontouchstart" in window || navigator.maxTouchPoints > 0);
+
+    if (isTouchDevice) return; // Skip setup entirely
+
+    setEnabled(true);
+
     const handleMouseMove = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY });
     };
@@ -18,7 +27,6 @@ export default function CustomCursor() {
 
     window.addEventListener("mousemove", handleMouseMove);
 
-    // Target all interactive elements
     const hoverables = document.querySelectorAll(
       "a, button, [data-cursor-hover]"
     );
@@ -35,6 +43,8 @@ export default function CustomCursor() {
       });
     };
   }, []);
+
+  if (!enabled) return null; // Do not render the cursor on touch devices
 
   return (
     <div

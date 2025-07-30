@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function MitgliedBlock({ title, description, items }) {
   return (
     <>
-      <div className="page-with-header mb-[70px] sm:mb-[14px]">
+      <div className="page-with-header mb-[44px]">
         <h2 className="page-header px-8 flex flex-col lg:flex-row items-start lg:items-center gap-2">
           <svg
             className="hidden lg:block"

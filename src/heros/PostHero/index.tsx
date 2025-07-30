@@ -86,7 +86,7 @@ export const PostHero: React.FC<{
       <div className=" grid grid-cols-1 lg:grid-cols-1 gap-8 items-center px-8">
         {/* LEFT: Text Content */}
         <div>
-          <div className="page-with-header mb-[70px] sm:mb-[14px]">
+          {/* <div className="page-with-header mb-[70px] sm:mb-[14px]">
             <h2 className="page-header  flex flex-col lg:flex-row items-start lg:items-center gap-2">
               <svg
                 className="hidden lg:block"
@@ -108,13 +108,13 @@ export const PostHero: React.FC<{
               </svg>
               {title}
             </h2>
-          </div>
+          </div> */}
           {/* If you want to re-enable meta info, authors, categories, etc, insert it here */}
         </div>
 
         {/* RIGHT: Image */}
         {metaImage && typeof metaImage !== "string" && (
-          <div className="w-full max-w-[250px] aspect-square relative">
+          <div className="w-full max-w-[336px] aspect-square relative">
             <Media
               className="w-full h-full"
               imgClassName="object-cover "

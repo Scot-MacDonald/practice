@@ -50,34 +50,58 @@ export default async function Doctor({ params: paramsPromise }: Args) {
   if (!doctor) return <PayloadRedirects url={url} />;
 
   return (
-    <article className="pt-16 pb-16">
+    <article className="pt-16 pb-16 px-8">
+      <div className="page-with-header mb-[70px] sm:mb-[14px]">
+        <h2 className="page-header  flex flex-col lg:flex-row items-start lg:items-center gap-2">
+          <svg
+            className="hidden lg:block"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g fill="none" stroke="#7eb36a" strokeWidth="2">
+              <line x1="3" x2="21" y1="12" y2="12" />
+              <line
+                x1="12"
+                x2="12"
+                y1="3"
+                y2="21"
+                className="AccordionVerticalLine"
+              />
+            </g>
+          </svg>
+          {doctor.title}
+        </h2>
+      </div>
       <PageClient />
       <PayloadRedirects disableNotFound url={url} />
-      <PostHero post={doctor} />
-      {/* ✅ consider replacing with <DoctorHero doctor={doctor} /> */}
-      <div className="flex flex-col px-8 gap-4 pt-8">
-        <div className="">
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-8">
+        {/* Left Column: Hero and Main Content */}
+        <div className="lg:col-span-2 flex flex-col gap-8">
+          {/* PostHero (DoctorHero) */}
+          <PostHero post={doctor} />
+
+          {/* Main content */}
           <RichText
-            className="max-w-[48rem]"
+            className="max-w-full"
             content={doctor.content}
             enableGutter={false}
           />
-          {/* {doctor.relatedDoctors && doctor.relatedDoctors.length > 0 && (
-            <RelatedPosts
-              className="mt-12 max-w-[52rem] lg:grid lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[2fr]"
-              docs={doctor.relatedDoctors.filter((doc) => typeof doc === 'object')}
-            />
-          )} */}
         </div>
 
-        {doctor.relatedDoctors && doctor.relatedDoctors.length > 0 && (
-          <RelatedDoctors
-            className="mt-12 max-w-[52rem] lg:grid lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[2fr]"
-            docs={doctor.relatedDoctors.filter(
-              (doc) => typeof doc === "object"
-            )}
-          />
-        )}
+        {/* Right Column: Related Doctors */}
+        <div className="lg:col-span-1 ">
+          {doctor.relatedDoctors && doctor.relatedDoctors.length > 0 && (
+            <RelatedDoctors
+              className="sticky top-20 space-y-6 pt-8"
+              docs={doctor.relatedDoctors.filter(
+                (doc) => typeof doc === "object"
+              )}
+            />
+          )}
+        </div>
       </div>
     </article>
   );
