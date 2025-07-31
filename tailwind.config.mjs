@@ -130,7 +130,7 @@ export default {
         hero: {
           css: {
             h1: {
-              fontSize: "2.5rem",
+              fontSize: "1.8rem",
               fontWeight: "700",
               marginBottom: "",
             },

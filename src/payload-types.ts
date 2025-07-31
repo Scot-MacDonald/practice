@@ -191,7 +191,21 @@ export interface Page {
     | NewsAndHoursBlock
     | {
         title: string;
-        description?: string | null;
+        description?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
         items: {
           title: string;
           description?:
@@ -209,7 +223,21 @@ export interface Page {
       }
     | {
         heading: string;
-        description?: string | null;
+        content?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
         transports: {
           title: string;
           type: 'u-bahn' | 's-bahn' | 'bus' | 'tram' | 'other';
@@ -1149,7 +1177,7 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               heading?: T;
-              description?: T;
+              content?: T;
               transports?:
                 | T
                 | {

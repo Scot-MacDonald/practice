@@ -102,7 +102,7 @@ export const NewsAndHoursBlock: React.FC<Props> = ({
         </h2>
       </div>
       <div
-        className="w-full grid grid-cols-4 lg:grid-cols-12 xl:bg-white lg:bg-black p-0 
+        className="w-full grid grid-cols-4 lg:grid-cols-12  p-0 
        "
       >
         {news.slice(0, 2).map((item, index) => (

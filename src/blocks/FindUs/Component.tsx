@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import React from "react";
+import RichText from "@/components/RichText"; // Adjust path as needed
 
 const Map = dynamic(() => import("@/blocks/FindUs/Map"), { ssr: false });
 
@@ -9,7 +10,7 @@ type TransportType = "u-bahn" | "s-bahn" | "tram" | "bus" | "other";
 
 type Props = {
   heading: string;
-  description: string;
+  content?: any; // Changed from description to content (rich text)
   transports: {
     title: string;
     type: TransportType;
@@ -27,7 +28,7 @@ type Props = {
 
 export default function FindUsBlock({
   heading,
-  description,
+  content,
   transports,
   lat,
   lng,
@@ -78,12 +79,15 @@ export default function FindUsBlock({
           {heading}
         </h2>
       </div>
+
       <div className="w-full grid grid-cols-12">
-        <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-4 p-8  lg:border-r border-border">
-          <p>{description}</p>
+        {/* Left side: rich text content */}
+        <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-4 p-8 lg:border-r border-border">
+          {content && <RichText content={content} />}
         </div>
 
-        <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-8 p-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2  gap-8">
+        {/* Right side: transports grid */}
+        <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-8 p-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-8">
           {transports.map((transport, i) => (
             <div key={i} className="border rounded-lg p-4 flex flex-col">
               <div className="flex items-center mb-1 gap-2">
@@ -101,6 +105,7 @@ export default function FindUsBlock({
           ))}
         </div>
       </div>
+
       <div className="mt-8 px-8">
         <Map
           lat={lat}

@@ -35,7 +35,7 @@ export const HighImpactHero: React.FC<Page["hero"]> = ({
     updateMedia();
 
     // Optional: check every 15 minutes to keep it fresh
-    const interval = setInterval(updateMedia, 15 * 60 * 1000);
+    const interval = setInterval(updateMedia, 60 * 1000); // 1 minute
 
     return () => clearInterval(interval);
   }, [setHeaderTheme, mediaDay, mediaNight]);
@@ -43,7 +43,7 @@ export const HighImpactHero: React.FC<Page["hero"]> = ({
   return (
     <div className="relative flex items-end text-white" data-theme="dark">
       <div className="container-full pl-8 mb-8 z-10 relative">
-        <div className="max-w-[38rem]">
+        <div className="max-w-[44rem]">
           {richText && (
             <RichText
               className="mb-6 text-white prose-hero"

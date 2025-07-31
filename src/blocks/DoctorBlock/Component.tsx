@@ -81,7 +81,7 @@ export const DoctorBlock: React.FC<
               />
             </g>
           </svg>
-          Ärzt*innen.
+          Ärzt*innen – Ihre medizinischen Ansprechpersonen
         </h2>
       </div>
 

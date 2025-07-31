@@ -56,23 +56,28 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
         </div>
 
         {/* Right: Appointment button */}
-        <div className="hidden lg:flex items-center">
-          <p className="text-xs text-black pr-2">
-            <span>{t("appointments.line1")}</span>
-            <br />
-            <span>{t("appointments.line2")}</span>
-          </p>
+        <div className="hidden lg:flex items-center gap-2">
           <Link
             href="/"
-            className="bg-[#cde3c5] text-lg font-semibold px-4 py-2 rounded"
+            className="bg-[#cde3c5] text-[#00264c] text-lg flex items-center font-semibold px-4 py-2 rounded"
           >
+            <img
+              src="/api/media/file/D_Dark_Blue.svg"
+              alt="Doctolib Logo"
+              className="h-6 w-auto pr-2"
+            />
             {t("appointment")}
           </Link>
         </div>
 
         {/* Mobile Menu */}
         <div className="flex lg:hidden items-center gap-3">
-          <Link href="/" className="bg-[#cde3c5] px-2 py-1  rounded">
+          <Link href="/" className="bg-[#cde3c5] px-2 py-1 rounded">
+            <img
+              src="/api/media/file/Doctolib_Dark_Blue.svg"
+              alt="Doctolib Logo"
+              className="h-4 w-auto pr-2"
+            />
             {t("appointment")}
           </Link>
           <Sheet open={open} onOpenChange={setOpen}>

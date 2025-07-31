@@ -1,5 +1,8 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import RichText from "@/components/RichText"; // Adjust path if needed
 
 export default function MitgliedBlock({ title, description, items }) {
   return (
@@ -30,11 +33,11 @@ export default function MitgliedBlock({ title, description, items }) {
       <div className="w-full grid grid-cols-12 mb-8">
         {/* 4-column section on the LEFT */}
         <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-4 p-8  lg:border-r border-border">
-          <p>{description}</p>
+          {description && <RichText content={description} />}
         </div>
 
         {/* 8-column section on the RIGHT with dynamic items */}
-        <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-8 p-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 ">
+        <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-8 p-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {items.map((item, i) => (
             <Link
               key={i}

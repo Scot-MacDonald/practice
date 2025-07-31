@@ -1,4 +1,11 @@
 import { Block } from "payload";
+import {
+  FixedToolbarFeature,
+  HeadingFeature,
+  InlineToolbarFeature,
+  lexicalEditor,
+} from "@payloadcms/richtext-lexical";
+import { TextColorFeature } from "payload-lexical-typography";
 
 export const FindUs: Block = {
   slug: "findUs",
@@ -14,9 +21,27 @@ export const FindUs: Block = {
       localized: true,
     },
     {
-      name: "description",
-      type: "textarea",
+      name: "content", // Changed from description to content and made richText
+      type: "richText",
       localized: true,
+      editor: lexicalEditor({
+        features: ({ rootFeatures }) => [
+          ...rootFeatures,
+          HeadingFeature({ enabledHeadingSizes: ["h2", "h3", "h4"] }),
+          FixedToolbarFeature(),
+          InlineToolbarFeature(),
+          TextColorFeature({
+            colors: [
+              "#000000",
+              "#FFFFFF",
+              "#FF0000",
+              "#00FF00",
+              "#0000FF",
+              "#7eb36a",
+            ],
+          }),
+        ],
+      }),
     },
     {
       name: "transports",
@@ -29,7 +54,7 @@ export const FindUs: Block = {
           required: true,
         },
         {
-          name: "type", // 👈 New field
+          name: "type",
           type: "select",
           required: true,
           options: [
@@ -89,3 +114,5 @@ export const FindUs: Block = {
     },
   ],
 };
+
+export default FindUs;
