@@ -24,11 +24,11 @@ export default async function Page() {
   return (
     <div className="pt-24 pb-24">
       <PageClient />
-      <div className="px-8 mb-16">
+      {/* <div className="px-8 mb-16">
         <div className=" page-with-header">
           <h1 className="page-header">Our Doctors</h1>
         </div>
-      </div>
+      </div> */}
 
       {/* <div className="container mb-8">
         <PageRange

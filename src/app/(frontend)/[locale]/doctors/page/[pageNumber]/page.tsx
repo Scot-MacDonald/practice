@@ -34,13 +34,13 @@ export default async function Page({ params: paramsPromise }: Args) {
   });
 
   return (
-    <div className="pt-24 pb-24">
+    <div className="pt-24 ">
       <PageClient />
-      <div className="mb-16">
+      {/* <div className="mb-16">
         <div className="prose dark:prose-invert max-w-none">
           <h1>doctors</h1>
         </div>
-      </div>
+      </div> */}
 
       <div className=" mb-8">
         <PageRange
