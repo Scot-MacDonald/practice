@@ -24,7 +24,6 @@ import { NextIntlClientProvider } from "next-intl";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import localization from "@/i18n/localization";
-import CustomCursor from "@/components/CustomCursor";
 
 type Args = {
   children: React.ReactNode;
@@ -59,7 +58,6 @@ export default async function RootLayout({ children, params }: Args) {
       </head>
       <body className="flex flex-col min-h-screen">
         <ReactLenis root>
-          <CustomCursor />
           <Providers>
             <NextIntlClientProvider messages={messages}>
               {/* <AdminBar
