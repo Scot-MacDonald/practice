@@ -22,6 +22,33 @@
     color: oklch(44.6% 0.03 256.802); /* OKLCH */
     color: #666666; /* fallback */
   }
+  ul.list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+
+  ul.list li {
+    position: relative;
+    padding-left: 2rem; /* Adjust for SVG size */
+    margin-bottom: 0.75em;
+    line-height: 1.5;
+    display: flex;
+    align-items: center;
+  }
+
+  ul.list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.25em;
+    height: 1.25em;
+    background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%237eb36a' stroke-width='2'%3E%3Cline x1='3' x2='21' y1='12' y2='12' /%3E%3Cline x1='12' x2='12' y1='3' y2='21' /%3E%3C/g%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
   html {
     font-size: 1.1rem;
   }

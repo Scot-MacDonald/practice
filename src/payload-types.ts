@@ -264,6 +264,7 @@ export interface Page {
     | DoctorBlock
     | AccordionBlock
     | ContentImageBlock
+    | SliderBlock
   )[];
   meta?: {
     title?: string | null;
@@ -821,6 +822,10 @@ export interface DoctorBlock {
 export interface Doctor {
   id: string;
   title: string;
+  /**
+   * Lower numbers appear first
+   */
+  order?: number | null;
   content: {
     root: {
       type: string;
@@ -942,10 +947,41 @@ export interface ContentImageBlock {
     [k: string]: unknown;
   } | null;
   image?: (string | null) | Media;
-  mediaPosition?: ('left' | 'right') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'contentImage';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SliderBlock".
+ */
+export interface SliderBlock {
+  title?: string | null;
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  images?:
+    | {
+        image: string | Media;
+        alt?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contentSlider';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1205,6 +1241,7 @@ export interface PagesSelect<T extends boolean = true> {
         doctor?: T | DoctorBlockSelect<T>;
         accordion?: T | AccordionBlockSelect<T>;
         contentImage?: T | ContentImageBlockSelect<T>;
+        contentSlider?: T | SliderBlockSelect<T>;
       };
   meta?:
     | T
@@ -1386,7 +1423,23 @@ export interface ContentImageBlockSelect<T extends boolean = true> {
   title?: T;
   richText?: T;
   image?: T;
-  mediaPosition?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SliderBlock_select".
+ */
+export interface SliderBlockSelect<T extends boolean = true> {
+  title?: T;
+  richText?: T;
+  images?:
+    | T
+    | {
+        image?: T;
+        alt?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -1487,6 +1540,7 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface DoctorsSelect<T extends boolean = true> {
   title?: T;
+  order?: T;
   content?: T;
   relatedDoctors?: T;
   categories?: T;

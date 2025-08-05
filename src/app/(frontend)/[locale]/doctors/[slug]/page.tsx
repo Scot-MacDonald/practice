@@ -77,9 +77,9 @@ export default async function Doctor({ params: paramsPromise }: Args) {
       <PageClient />
       <PayloadRedirects disableNotFound url={url} />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-8">
         {/* Left Column: Hero and Main Content */}
-        <div className="lg:col-span-2 flex flex-col gap-8">
+        <div className="lg:col-span-6 flex flex-col gap-8">
           {/* PostHero (DoctorHero) */}
           <PostHero post={doctor} />
 
@@ -92,7 +92,7 @@ export default async function Doctor({ params: paramsPromise }: Args) {
         </div>
 
         {/* Right Column: Related Doctors */}
-        <div className="lg:col-span-1 ">
+        <div className="lg:col-span-6 ">
           {doctor.relatedDoctors && doctor.relatedDoctors.length > 0 && (
             <RelatedDoctors
               className="sticky top-20 space-y-6 pt-8"

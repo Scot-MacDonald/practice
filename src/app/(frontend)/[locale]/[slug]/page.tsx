@@ -14,6 +14,7 @@ import { generateMeta } from "@/utilities/generateMeta";
 import PageClient from "./page.client";
 import { TypedLocale } from "payload";
 import { routing } from "@/i18n/routing";
+import Link from "next/link";
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise });

@@ -16,8 +16,9 @@ import { revalidatePage } from "./hooks/revalidatePage";
 import { Mitglied } from "@/blocks/Mitglied/config";
 import { FindUs } from "@/blocks/FindUs/config";
 import { AccordionBlock } from "@/blocks/Accordion/config";
-import { Doctor } from "../../blocks/DoctorBlock/config";
+import { Doctor } from "@/blocks/DoctorBlock/config";
 import ContentImageBlock from "@/blocks/ContentImage/config";
+import SliderBlock from "@/blocks/SliderBlock/config";
 
 import {
   MetaDescriptionField,
@@ -91,6 +92,7 @@ export const Pages: CollectionConfig = {
                 Doctor,
                 AccordionBlock,
                 ContentImageBlock,
+                SliderBlock,
               ],
               required: true,
             },

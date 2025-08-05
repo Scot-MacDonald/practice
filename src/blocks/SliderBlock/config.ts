@@ -7,12 +7,12 @@ import {
 } from "@payloadcms/richtext-lexical";
 import { TextColorFeature } from "payload-lexical-typography";
 
-const ContentImageBlock: Block = {
-  slug: "contentImage",
-  interfaceName: "ContentImageBlock",
+const SliderBlock: Block = {
+  slug: "contentSlider",
+  interfaceName: "SliderBlock",
   labels: {
-    singular: "Content w/ Image",
-    plural: "Content w/ Images",
+    singular: "Content w/ Slider",
+    plural: "Content w/ Sliders",
   },
   fields: [
     {
@@ -45,13 +45,24 @@ const ContentImageBlock: Block = {
       }),
     },
     {
-      name: "image",
-      type: "upload",
-      relationTo: "media",
-      required: false,
+      name: "images",
+      type: "array",
+      label: "Slider Images",
+      fields: [
+        {
+          name: "image",
+          type: "upload",
+          relationTo: "media",
+          required: true,
+        },
+        {
+          name: "alt",
+          type: "text",
+          label: "Alt Text",
+        },
+      ],
     },
-    // ✅ Removed mediaPosition field
   ],
 };
 
-export default ContentImageBlock;
+export default SliderBlock;

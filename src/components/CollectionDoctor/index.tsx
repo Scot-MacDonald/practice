@@ -11,9 +11,9 @@ export type Props = {
 
 export const CollectionDoctor: React.FC<Props> = (props) => {
   const { doctors } = props;
-  console.log("Doctors:", doctors);
+
   return (
-    <div className={cn("")}>
+    <div className={cn("container")}>
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
         {doctors
           ?.filter((doc) => doc && doc.slug && doc.title) // only valid doctors

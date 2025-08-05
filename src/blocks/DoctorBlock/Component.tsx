@@ -36,6 +36,7 @@ export const DoctorBlock: React.FC<
     const fetchedDoctors = await payload.find({
       collection: "doctors",
       depth: 1,
+      sort: "order",
       limit,
       ...(flattenedCategories && flattenedCategories.length > 0
         ? {
@@ -98,7 +99,7 @@ export const DoctorBlock: React.FC<
 
         {/* Doctors Collection */}
         <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-8 px-4 sm:px-8 ">
-          <CollectionDoctor data-cursor-hover doctors={doctors} />
+          <CollectionDoctor doctors={doctors} />
         </div>
       </div>
     </div>

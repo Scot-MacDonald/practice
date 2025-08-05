@@ -82,8 +82,8 @@ export const PostHero: React.FC<{
           </div> */
 
   return (
-    <div className="relative mt-12">
-      <div className=" grid grid-cols-1 lg:grid-cols-1 gap-8 items-center px-8">
+    <div className="relative ">
+      <div className=" grid grid-cols-1 lg:grid-cols-1 gap-8 items-center ">
         {/* LEFT: Text Content */}
         <div>
           {/* <div className="page-with-header mb-[70px] sm:mb-[14px]">

@@ -36,7 +36,7 @@ export const Doctors: CollectionConfig = {
     update: authenticated,
   },
   admin: {
-    defaultColumns: ["title", "slug", "updatedAt"],
+    defaultColumns: ["title", "slug", "updatedAt", "order"],
     livePreview: {
       url: ({ data, locale }) => {
         const path = generatePreviewPath({
@@ -65,6 +65,15 @@ export const Doctors: CollectionConfig = {
       type: "text",
       localized: true,
       required: true,
+    },
+    {
+      name: "order",
+      label: "Sort Order",
+      type: "number",
+      admin: {
+        position: "sidebar",
+        description: "Lower numbers appear first",
+      },
     },
     {
       type: "tabs",

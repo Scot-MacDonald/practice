@@ -16,15 +16,15 @@ export const ContentImageBlock: React.FC<Props> = ({
   title,
   richText,
   image,
-  mediaPosition = "right",
 }) => {
-  const isImageLeft = mediaPosition === "left";
   const pathname = usePathname();
+
   return (
     <div className="">
-      <div className="page-with-header   mb-[70px] sm:mb-[14px]">
+      {/* Title Block (non-sticky) */}
+      <div className="page-with-header mb-[70px] sm:mb-[14px]">
         {pathname === "/" ? (
-          <h2 className="page-header px-4 sm:px-8  flex flex-col lg:flex-row items-start lg:items-center gap-2">
+          <h2 className="page-header px-4 sm:px-8 flex flex-col lg:flex-row items-start lg:items-center gap-2">
             <svg
               className="hidden lg:block"
               width="24"
@@ -69,16 +69,20 @@ export const ContentImageBlock: React.FC<Props> = ({
           </h1>
         )}
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-12 w-full ">
-        {/* Image first in markup so it shows first on mobile */}
-        <div
-          className={cn("md:col-span-12 lg:col-span-6", {
-            "lg:order-1": isImageLeft,
-            "lg:order-2": !isImageLeft,
-          })}
-        >
+
+      <div className="grid grid-cols-1 md:grid-cols-12 w-full">
+        {/* Left: Rich Text */}
+        <div className="md:col-span-12 lg:col-span-6 p-4 sm:p-8 border-gray-200">
+          {richText && <RichText content={richText} />}
+        </div>
+
+        {/* Right: Sticky Image */}
+        <div className="md:col-span-12 lg:col-span-6">
           {image && typeof image !== "string" && (
-            <div className="p-4 sm:p-8  h-full md:min-h-[calc(70vh-87px)] flex justify-center">
+            <div
+              className="sticky top-[6.5rem] p-4 sm:p-8 flex justify-center"
+              style={{ maxHeight: "calc(100vh - 6.5rem)" }}
+            >
               <Media
                 resource={image}
                 className="w-full h-full object-cover"
@@ -86,21 +90,6 @@ export const ContentImageBlock: React.FC<Props> = ({
               />
             </div>
           )}
-        </div>
-
-        {/* Text second in markup, shows below image on mobile */}
-        <div
-          className={cn(
-            {
-              "lg:order-2": isImageLeft,
-              "lg:order-1": !isImageLeft,
-              // "lg:border-r": !isImageLeft,
-              // "lg:border-l": isImageLeft,
-            },
-            "md:col-span-12 lg:col-span-6 p-4 sm:p-8 border-gray-200"
-          )}
-        >
-          {richText && <RichText content={richText} />}
         </div>
       </div>
     </div>
