@@ -62,7 +62,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
             className="bg-[#cde3c5] text-[#00264c] text-lg flex items-center font-semibold px-4 py-2 rounded"
           >
             <img
-              src="/api/media/file/D_Dark_Blue.svg"
+              src="/api/media/file/D_Dark_Blue-2.svg"
               alt="Doctolib Logo"
               className="h-6 w-auto pr-2"
             />
@@ -74,7 +74,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
         <div className="flex lg:hidden items-center gap-3">
           <Link href="/" className="bg-[#cde3c5] px-2 py-1 rounded">
             <img
-              src="/api/media/file/Doctolib_Dark_Blue.svg"
+              src="/api/media/file/D_Dark_Blue-2.svg"
               alt="Doctolib Logo"
               className="h-4 w-auto pr-2"
             />

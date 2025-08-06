@@ -35,14 +35,14 @@ export default function Map({
       //   await import("leaflet/dist/leaflet.css");
 
       const dotIcon = L.icon({
-        iconUrl: "/api/media/file/spp_logo.png",
+        iconUrl: "media/spp_logo-1.png",
         iconSize: [42, 42],
         iconAnchor: [16, 32],
         className: "image-marker",
       });
 
       const imageIcon = L.icon({
-        iconUrl: secondIconUrl || "/media/S-Bahn-Logo.svg.webp",
+        iconUrl: secondIconUrl || "/media/S-Bahn-Logo.webp",
         iconSize: [20, 20],
         iconAnchor: [15, 15],
         className: "image-marker",
@@ -55,7 +55,7 @@ export default function Map({
         className: "image-marker",
       });
       const imageIconS = L.icon({
-        iconUrl: fourthIconUrl || "/media/S-Bahn-Logo.svg.webp",
+        iconUrl: fourthIconUrl || "/media/S-Bahn-Logo.webp",
         iconSize: [20, 20],
         iconAnchor: [15, 15],
         className: "image-marker",
