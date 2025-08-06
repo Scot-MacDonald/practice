@@ -148,14 +148,14 @@ export default buildConfig({
         },
       ],
     }),
-    uploadthingStorage({
-      collections: {
-        media: true,
-      },
-      options: {
-        token: process.env.UPLOADTHING_TOKEN || "",
-      },
-    }),
+    // uploadthingStorage({
+    //   collections: {
+    //     media: true,
+    //   },
+    //   options: {
+    //     token: process.env.UPLOADTHING_TOKEN || "",
+    //   },
+    // }),
     formBuilderPlugin({
       fields: {
         payment: false,

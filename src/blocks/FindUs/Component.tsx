@@ -42,7 +42,7 @@ export default function FindUsBlock({
   const getIconForType = (type: TransportType) => {
     switch (type) {
       case "s-bahn":
-        return secondIconUrl || "/media/S-Bahn-Logo.svg.webp";
+        return secondIconUrl || "/media/S-Bahn-Logo.webp";
       case "u-bahn":
         return thirdIconUrl || "/media/U-Bahn.svg";
       case "tram":
@@ -50,7 +50,7 @@ export default function FindUsBlock({
       case "bus":
         return sixthIconUrl || "/media/Bus-Logo.svg";
       default:
-        return fourthIconUrl || "/media/spp_logo.png";
+        return fourthIconUrl || "/media/spp_logo-1.png";
     }
   };
 
