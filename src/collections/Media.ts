@@ -44,10 +44,9 @@ export const Media: CollectionConfig = {
       }),
     },
   ],
+
   upload: {
-    staticDir: isProduction
-      ? "/data/coolify/applications/wg0cook00s840co4k0wgg8sw/uploads"
-      : path.resolve(dirname, "../../public/media"),
+    staticDir: path.resolve(dirname, "../../public/media"),
     mimeTypes: ["image/*", "image/svg+xml", "application/xml"],
   },
 };
