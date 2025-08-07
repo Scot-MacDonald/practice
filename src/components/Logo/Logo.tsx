@@ -29,7 +29,7 @@ export const Logo = (props: Props) => {
         fetchPriority={priority}
         decoding="async"
         className="h-[54px] w-auto object-contain mr-2"
-        src="/api/media/file/spp_logo-1.png"
+        src="/api/media/file/spp_logo.png"
       />
       <span className="text-lg font-semibold whitespace-nowrap">SPP-Mitte</span>
     </div>
