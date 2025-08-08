@@ -50,7 +50,7 @@ export default function FindUsBlock({
       case "bus":
         return sixthIconUrl || "/media/Bus-Logo.svg";
       default:
-        return fourthIconUrl || "/media/spp_logo-1.png";
+        return fourthIconUrl || "/media/spp_logo.png";
     }
   };
 

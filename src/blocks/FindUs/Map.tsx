@@ -35,7 +35,7 @@ export default function Map({
       //   await import("leaflet/dist/leaflet.css");
 
       const dotIcon = L.icon({
-        iconUrl: "media/spp_logo-1.png",
+        iconUrl: "media/spp_logo.png",
         iconSize: [42, 42],
         iconAnchor: [16, 32],
         className: "image-marker",
