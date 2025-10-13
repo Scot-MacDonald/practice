@@ -70,7 +70,7 @@ export default function Time() {
       </div>
       {/* Add space after the clock text */}
       <span className="ml-1"> </span>
-      <p className=" text-[#78716c]">Berlin, Germany</p>
+      <p className=" text-gray-600">Berlin, Germany</p>
     </div>
   );
 }

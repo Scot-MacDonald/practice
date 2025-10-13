@@ -69,10 +69,10 @@ export interface Config {
   collections: {
     pages: Page;
     posts: Post;
+    doctors: Doctor;
     media: Media;
     categories: Category;
     users: User;
-    doctors: Doctor;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -85,10 +85,10 @@ export interface Config {
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    doctors: DoctorsSelect<false> | DoctorsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
-    doctors: DoctorsSelect<false> | DoctorsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -215,6 +215,7 @@ export interface Page {
               }[]
             | null;
           url: string;
+          logo?: (string | null) | Media;
           id?: string | null;
         }[];
         id?: string | null;
@@ -261,10 +262,10 @@ export interface Page {
         blockName?: string | null;
         blockType: 'findUs';
       }
-    | DoctorBlock
     | AccordionBlock
     | ContentImageBlock
     | SliderBlock
+    | DoctorBlock
   )[];
   meta?: {
     title?: string | null;
@@ -747,6 +748,7 @@ export interface Form {
  * via the `definition` "NewsAndHoursBlock".
  */
 export interface NewsAndHoursBlock {
+  latestInfosTitle?: string | null;
   news: {
     date: string;
     summary?: {
@@ -782,10 +784,12 @@ export interface NewsAndHoursBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "DoctorBlock".
+ * via the `definition` "AccordionBlock".
  */
-export interface DoctorBlock {
-  introContent?: {
+export interface AccordionBlock {
+  title?: string | null;
+  subheading?: string | null;
+  richText?: {
     root: {
       type: string;
       children: {
@@ -800,78 +804,7 @@ export interface DoctorBlock {
     };
     [k: string]: unknown;
   } | null;
-  populateBy?: ('collection' | 'selection') | null;
-  relationTo?: 'doctors' | null;
-  categories?: (string | Category)[] | null;
-  limit?: number | null;
-  selectedDocs?:
-    | {
-        relationTo: 'doctors';
-        value: string | Doctor;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'doctor';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "doctors".
- */
-export interface Doctor {
-  id: string;
-  title: string;
-  /**
-   * Lower numbers appear first
-   */
-  order?: number | null;
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  relatedDoctors?: (string | Doctor)[] | null;
-  categories?: (string | Category)[] | null;
-  meta?: {
-    title?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (string | null) | Media;
-    description?: string | null;
-  };
-  publishedAt?: string | null;
-  authors?: (string | User)[] | null;
-  populatedAuthors?:
-    | {
-        id?: string | null;
-        name?: string | null;
-      }[]
-    | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "AccordionBlock".
- */
-export interface AccordionBlock {
-  title?: string | null;
-  subheading?: string | null;
-  richText?: {
+  richText2?: {
     root: {
       type: string;
       children: {
@@ -984,6 +917,87 @@ export interface SliderBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DoctorBlock".
+ */
+export interface DoctorBlock {
+  title?: string | null;
+  introContent?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  populateBy?: ('collection' | 'selection') | null;
+  relationTo?: 'doctors' | null;
+  categories?: (string | Category)[] | null;
+  limit?: number | null;
+  selectedDocs?:
+    | {
+        relationTo: 'doctors';
+        value: string | Doctor;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'doctor';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "doctors".
+ */
+export interface Doctor {
+  id: string;
+  title: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  relatedDoctors?: (string | Doctor)[] | null;
+  categories?: (string | Category)[] | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
+  authors?: (string | User)[] | null;
+  populatedAuthors?:
+    | {
+        id?: string | null;
+        name?: string | null;
+      }[]
+    | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1039,10 +1053,15 @@ export interface Search {
   id: string;
   title?: string | null;
   priority?: number | null;
-  doc: {
-    relationTo: 'posts';
-    value: string | Post;
-  };
+  doc:
+    | {
+        relationTo: 'posts';
+        value: string | Post;
+      }
+    | {
+        relationTo: 'doctors';
+        value: string | Doctor;
+      };
   slug?: string | null;
   meta?: {
     title?: string | null;
@@ -1075,6 +1094,10 @@ export interface PayloadLockedDocument {
         value: string | Post;
       } | null)
     | ({
+        relationTo: 'doctors';
+        value: string | Doctor;
+      } | null)
+    | ({
         relationTo: 'media';
         value: string | Media;
       } | null)
@@ -1085,10 +1108,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: string | User;
-      } | null)
-    | ({
-        relationTo: 'doctors';
-        value: string | Doctor;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1203,6 +1222,7 @@ export interface PagesSelect<T extends boolean = true> {
                           id?: T;
                         };
                     url?: T;
+                    logo?: T;
                     id?: T;
                   };
               id?: T;
@@ -1237,10 +1257,10 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        doctor?: T | DoctorBlockSelect<T>;
         accordion?: T | AccordionBlockSelect<T>;
         contentImage?: T | ContentImageBlockSelect<T>;
         contentSlider?: T | SliderBlockSelect<T>;
+        doctor?: T | DoctorBlockSelect<T>;
       };
   meta?:
     | T
@@ -1347,6 +1367,7 @@ export interface FormBlockSelect<T extends boolean = true> {
  * via the `definition` "NewsAndHoursBlock_select".
  */
 export interface NewsAndHoursBlockSelect<T extends boolean = true> {
+  latestInfosTitle?: T;
   news?:
     | T
     | {
@@ -1373,26 +1394,13 @@ export interface NewsAndHoursBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "DoctorBlock_select".
- */
-export interface DoctorBlockSelect<T extends boolean = true> {
-  introContent?: T;
-  populateBy?: T;
-  relationTo?: T;
-  categories?: T;
-  limit?: T;
-  selectedDocs?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "AccordionBlock_select".
  */
 export interface AccordionBlockSelect<T extends boolean = true> {
   title?: T;
   subheading?: T;
   richText?: T;
+  richText2?: T;
   items?:
     | T
     | {
@@ -1444,12 +1452,57 @@ export interface SliderBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DoctorBlock_select".
+ */
+export interface DoctorBlockSelect<T extends boolean = true> {
+  title?: T;
+  introContent?: T;
+  populateBy?: T;
+  relationTo?: T;
+  categories?: T;
+  limit?: T;
+  selectedDocs?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
   content?: T;
   relatedPosts?: T;
+  categories?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  publishedAt?: T;
+  authors?: T;
+  populatedAuthors?:
+    | T
+    | {
+        id?: T;
+        name?: T;
+      };
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "doctors_select".
+ */
+export interface DoctorsSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
+  relatedDoctors?: T;
   categories?: T;
   meta?:
     | T
@@ -1531,37 +1584,6 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "doctors_select".
- */
-export interface DoctorsSelect<T extends boolean = true> {
-  title?: T;
-  order?: T;
-  content?: T;
-  relatedDoctors?: T;
-  categories?: T;
-  meta?:
-    | T
-    | {
-        title?: T;
-        image?: T;
-        description?: T;
-      };
-  publishedAt?: T;
-  authors?: T;
-  populatedAuthors?:
-    | T
-    | {
-        id?: T;
-        name?: T;
-      };
-  slug?: T;
-  slugLock?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

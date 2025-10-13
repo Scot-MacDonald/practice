@@ -1,43 +1,56 @@
 import type { Metadata } from "next/types";
-import { getPayload } from "payload";
+
+import { CollectionDoctor } from "@/components/CollectionDoctor";
+import { PageRange } from "@/components/PageRange";
+import { Pagination } from "@/components/Pagination";
 import configPromise from "@payload-config";
+import { getPayload } from "payload";
 import React from "react";
-
-import { DoctorBlock } from "@/blocks/DoctorBlock/Component";
 import PageClient from "./page.client";
+import { TypedLocale } from "payload";
+import { getTranslations } from "next-intl/server";
 
-export const dynamic = "force-static";
 export const revalidate = 600;
 
-export default async function Page() {
+type Args = {
+  params: Promise<{
+    locale: TypedLocale;
+  }>;
+};
+
+export default async function Page({ params }: Args) {
+  const { locale = "en" } = await params;
+  const t = await getTranslations();
   const payload = await getPayload({ config: configPromise });
 
-  // Fetch the "doctors" page from Payload Pages collection
-  const page = await payload.find({
-    collection: "pages",
-    where: {
-      slug: {
-        equals: "doctors", // <-- Make sure this matches your actual page slug in CMS
-      },
-    },
+  const doctors = await payload.find({
+    collection: "doctors", // <-- changed from 'posts'
+    locale,
+    depth: 1,
+    limit: 12,
+    overrideAccess: false,
   });
-
-  // Find the first DoctorBlock in the layout (if any)
-  const doctorBlock = page.docs[0]?.layout?.find(
-    (block) => block.blockType === "doctor"
-  );
 
   return (
     <div className="pt-24 pb-24">
       <PageClient />
-
-      <div className="">
-        {doctorBlock ? (
-          <DoctorBlock
-            {...{ ...doctorBlock, id: doctorBlock?.id ?? undefined }}
-          />
-        ) : (
-          <p className="text-center text-muted">No doctor block configured.</p>
+      <div className="container mb-16">
+        <div className="prose dark:prose-invert max-w-none">
+          <h1>{t("doctors")}</h1>
+        </div>
+      </div>
+      <div className="container mb-8">
+        <PageRange
+          collection="doctors" // <-- changed from 'posts'
+          currentPage={doctors.page}
+          limit={12}
+          totalDocs={doctors.totalDocs}
+        />
+      </div>
+      <CollectionDoctor doctors={doctors.docs} /> {/* <-- updated component */}
+      <div className="container">
+        {doctors.totalPages > 1 && doctors.page && (
+          <Pagination page={doctors.page} totalPages={doctors.totalPages} />
         )}
       </div>
     </div>
@@ -46,6 +59,6 @@ export default async function Page() {
 
 export function generateMetadata(): Metadata {
   return {
-    title: `Payload Website Template doctors`,
+    title: `Payload Website Template Doctors`, // <-- updated title
   };
 }

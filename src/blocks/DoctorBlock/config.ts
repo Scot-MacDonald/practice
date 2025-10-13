@@ -1,5 +1,4 @@
-import type { Block } from "payload";
-
+import { Block } from "payload";
 import {
   FixedToolbarFeature,
   HeadingFeature,
@@ -10,19 +9,31 @@ import {
 export const Doctor: Block = {
   slug: "doctor",
   interfaceName: "DoctorBlock",
+  labels: {
+    singular: "Doctor Section",
+    plural: "Doctor Sections",
+  },
   fields: [
+    // New title field
+    {
+      name: "title",
+      type: "text",
+      localized: true,
+      required: false, // optional
+      label: "Section Title",
+    },
+
     {
       name: "introContent",
       type: "richText",
+      localized: true,
       editor: lexicalEditor({
-        features: ({ rootFeatures }) => {
-          return [
-            ...rootFeatures,
-            HeadingFeature({ enabledHeadingSizes: ["h1", "h2", "h3", "h4"] }),
-            FixedToolbarFeature(),
-            InlineToolbarFeature(),
-          ];
-        },
+        features: ({ rootFeatures }) => [
+          ...rootFeatures,
+          HeadingFeature({ enabledHeadingSizes: ["h2", "h3", "h4"] }),
+          FixedToolbarFeature(),
+          InlineToolbarFeature(),
+        ],
       }),
       label: "Intro Content",
     },
@@ -31,14 +42,8 @@ export const Doctor: Block = {
       type: "select",
       defaultValue: "collection",
       options: [
-        {
-          label: "Collection",
-          value: "collection",
-        },
-        {
-          label: "Individual Selection",
-          value: "selection",
-        },
+        { label: "Collection", value: "collection" },
+        { label: "Individual Selection", value: "selection" },
       ],
     },
     {
@@ -49,22 +54,17 @@ export const Doctor: Block = {
       },
       defaultValue: "doctors",
       label: "Collections To Show",
-      options: [
-        {
-          label: "Doctors",
-          value: "doctors",
-        },
-      ],
+      options: [{ label: "Doctors", value: "doctors" }],
     },
     {
-      name: "categories", // Updated from 'specialties' to 'categories'
+      name: "categories",
       type: "relationship",
       admin: {
         condition: (_, siblingData) => siblingData.populateBy === "collection",
       },
       hasMany: true,
-      label: "Categories To Show", // Updated from 'Specialties' to 'Categories'
-      relationTo: "categories", // Updated from 'specialties' to 'categories'
+      label: "Categories To Show",
+      relationTo: "categories",
     },
     {
       name: "limit",
@@ -87,8 +87,4 @@ export const Doctor: Block = {
       relationTo: ["doctors"],
     },
   ],
-  labels: {
-    plural: "Doctors",
-    singular: "Doctors",
-  },
 };

@@ -24,16 +24,17 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
   const t = useTranslations();
 
   return (
-    <nav className="flex flex-col lg:flex-row gap-3 text-md lg:items-center ">
+    <nav className="flex flex-col xl:flex-row gap-3 text-[16px] xl:items-center ">
       {navItems.map(({ link }, i) => (
         <CMSLink
           key={i}
           {...link}
           appearance="link"
-          className="text-lg"
+          className="text-[16px]"
           onClick={onClickLink}
         />
       ))}
+
       <LocaleSwitcher />
     </nav>
   );

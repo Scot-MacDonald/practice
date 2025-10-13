@@ -1,18 +1,14 @@
-//
-
 import type { Metadata } from "next";
 
-// import { RelatedPosts } from '@/blocks/RelatedPosts/Component'
 import { PayloadRedirects } from "@/components/PayloadRedirects";
 import configPromise from "@payload-config";
 import { getPayload } from "payload";
 import { draftMode } from "next/headers";
 import React, { cache } from "react";
 import RichText from "@/components/RichText";
+import { Media } from "@/components/Media";
 
 import type { Doctor } from "@/payload-types";
-import { RelatedDoctors } from "@/blocks/RelatedDoctors/Components";
-import { PostHero } from "@/heros/PostHero"; // ✅ Rename to DoctorHero if desired
 import { generateMeta } from "@/utilities/generateMeta";
 import PageClient from "./page.client";
 import { TypedLocale } from "payload";
@@ -49,10 +45,18 @@ export default async function Doctor({ params: paramsPromise }: Args) {
 
   if (!doctor) return <PayloadRedirects url={url} />;
 
+  const metaImage = doctor.meta?.image;
+
   return (
-    <article className="pt-16 pb-16 px-8">
-      <div className="page-with-header mb-[70px] sm:mb-[14px]">
-        <h2 className="page-header  flex flex-col lg:flex-row items-start lg:items-center gap-2">
+    <article className="pt-16 pb-16">
+      <PageClient />
+
+      {/* Allows redirects for valid pages too */}
+      <PayloadRedirects disableNotFound url={url} />
+
+      {/* ✅ Doctor name header */}
+      <div className="page-with-header mb-[20px] md:mb-[50px] mx-auto">
+        <h1 className="page-header text-3xl font-bold px-4 flex items-center gap-2">
           <svg
             className="hidden lg:block"
             width="24"
@@ -72,35 +76,24 @@ export default async function Doctor({ params: paramsPromise }: Args) {
             </g>
           </svg>
           {doctor.title}
-        </h2>
+        </h1>
+        {/* <p className="text-gray-600 mt-4 max-w-2xl px-4 mx-auto lg:mx-0">
+          {doctor.meta?.description}
+        </p> */}
       </div>
-      <PageClient />
-      <PayloadRedirects disableNotFound url={url} />
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-8">
-        {/* Left Column: Hero and Main Content */}
-        <div className="lg:col-span-6 flex flex-col gap-8">
-          {/* PostHero (DoctorHero) */}
-          <PostHero post={doctor} />
+      {/* Main content flexed */}
+      <div className="flex flex-col lg:flex-row items-start gap-8 px-4 lg:px-6">
+        {/* Left: Image */}
+        {metaImage && (
+          <div className="w-full lg:w-1/3 flex-shrink-0">
+            <Media resource={metaImage} size="480px" />
+          </div>
+        )}
 
-          {/* Main content */}
-          <RichText
-            className="max-w-full"
-            content={doctor.content}
-            enableGutter={false}
-          />
-        </div>
-
-        {/* Right Column: Related Doctors */}
-        <div className="lg:col-span-6 ">
-          {doctor.relatedDoctors && doctor.relatedDoctors.length > 0 && (
-            <RelatedDoctors
-              className="sticky top-20 space-y-6 pt-8"
-              docs={doctor.relatedDoctors.filter(
-                (doc) => typeof doc === "object"
-              )}
-            />
-          )}
+        {/* Right: RichText */}
+        <div className="w-full lg:w-2/3">
+          <RichText content={doctor.content} enableGutter={false} />
         </div>
       </div>
     </article>
@@ -112,16 +105,13 @@ export async function generateMetadata({
 }: Args): Promise<Metadata> {
   const { slug = "", locale = "en" } = await paramsPromise;
   const doctor = await queryDoctor({ slug, locale });
-
-  return generateMeta({
-    doc: doctor,
-    collection: "doctors",
-  } as any);
+  return generateMeta({ doc: doctor });
 }
 
 const queryDoctor = cache(
   async ({ slug, locale }: { slug: string; locale: TypedLocale }) => {
     const { isEnabled: draft } = await draftMode();
+
     const payload = await getPayload({ config: configPromise });
 
     const result = await payload.find({

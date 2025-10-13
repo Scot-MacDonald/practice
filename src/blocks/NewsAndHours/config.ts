@@ -11,6 +11,13 @@ export const NewsAndHours: Block = {
   interfaceName: "NewsAndHoursBlock",
   fields: [
     {
+      name: "latestInfosTitle",
+      type: "text",
+      localized: true,
+      required: false,
+      defaultValue: "Latest Infos",
+    },
+    {
       name: "news",
       type: "array",
       required: true,

@@ -13,7 +13,8 @@ import { TypedLocale } from "payload";
 import { NewsAndHoursBlock } from "@/blocks/NewsAndHours/Component";
 import FindUsBlock from "@/blocks/FindUs/Component";
 import { AccordionBlock } from "@/blocks/Accordion/Component";
-import { DoctorBlock } from "./DoctorBlock/Component";
+import { DoctorBlock } from "@/blocks/DoctorBlock/Component";
+// import { DoctorHomeBlock } from "./DoctorBlock copy/Component";
 import { ContentImageBlock } from "@/blocks/ContentImage/Component";
 import { SliderBlock } from "@/blocks/SliderBlock/Component";
 
@@ -28,6 +29,7 @@ const blockComponents = {
   findUs: FindUsBlock,
   accordion: AccordionBlock,
   doctor: DoctorBlock,
+  // doctorHome: DoctorHomeBlock,
   contentImage: ContentImageBlock,
   contentSlider: SliderBlock,
 };

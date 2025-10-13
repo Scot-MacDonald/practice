@@ -25,7 +25,7 @@ import Categories from "./collections/Categories";
 import { Media } from "./collections/Media";
 import { Pages } from "./collections/Pages";
 import { Posts } from "./collections/Posts";
-import { Doctors } from "./collections/Doctors";
+import { Doctors } from "./collections/Doctors"; // <-- Added Doctors collection
 import Users from "./collections/Users";
 
 import { Footer } from "./globals/Footer/config";
@@ -98,13 +98,13 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || "",
   }),
-  collections: [Pages, Posts, Media, Categories, Users, Doctors],
+  collections: [Pages, Posts, Doctors, Media, Categories, Users], // <-- Added Doctors
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ""].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ""].filter(Boolean),
   globals: [Header, Footer],
   plugins: [
     redirectsPlugin({
-      collections: ["pages", "posts", "doctors"],
+      collections: ["pages", "posts", "doctors"], // <-- Added Doctors
       overrides: {
         fields: ({ defaultFields }) =>
           defaultFields.map((field) => {
@@ -182,7 +182,7 @@ export default buildConfig({
       },
     }),
     searchPlugin({
-      collections: ["posts"],
+      collections: ["posts", "doctors"], // <-- Added Doctors
       beforeSync: beforeSyncWithSearch,
       searchOverrides: {
         fields: ({ defaultFields }) => [...defaultFields, ...searchFields],

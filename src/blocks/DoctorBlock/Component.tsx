@@ -6,42 +6,46 @@ import React from "react";
 import RichText from "@/components/RichText";
 
 import { CollectionDoctor } from "@/components/CollectionDoctor";
+import { TypedLocale } from "payload";
 
 export const DoctorBlock: React.FC<
   DoctorBlockProps & {
     id?: string;
+    locale: TypedLocale;
   }
 > = async (props) => {
   const {
     id,
+    title,
     categories,
     introContent,
     limit: limitFromProps,
     populateBy,
     selectedDocs,
+    locale,
   } = props;
 
   const limit = limitFromProps || 3;
 
   let doctors: Doctor[] = [];
 
+  // Fetch doctors from Payload
   if (populateBy === "collection") {
     const payload = await getPayload({ config: configPromise });
 
-    const flattenedCategories = categories?.map((category) => {
-      if (typeof category === "object") return category.id;
-      else return category;
-    });
+    const flattenedCategories = categories?.map((category) =>
+      typeof category === "object" ? category.id : category
+    );
 
     const fetchedDoctors = await payload.find({
       collection: "doctors",
       depth: 1,
-      sort: "order",
+      locale,
       limit,
       ...(flattenedCategories && flattenedCategories.length > 0
         ? {
             where: {
-              specialties: {
+              categories: {
                 in: flattenedCategories,
               },
             },
@@ -50,58 +54,47 @@ export const DoctorBlock: React.FC<
     });
 
     doctors = fetchedDoctors.docs;
-  } else {
-    if (selectedDocs?.length) {
-      const filteredSelectedDoctors = selectedDocs.map((doctor) => {
-        if (typeof doctor.value === "object") return doctor.value;
-      }) as Doctor[];
-
-      doctors = filteredSelectedDoctors;
-    }
+  } else if (selectedDocs?.length) {
+    doctors = selectedDocs
+      .map((doctor) => (typeof doctor.value === "object" ? doctor.value : null))
+      .filter(Boolean) as Doctor[];
   }
 
   return (
-    <div className="" id={`block-${id}`}>
-      <div className="page-with-header mb-[44px]">
-        <h2 className="page-header px-4 sm:px-8 flex flex-col lg:flex-row items-start lg:items-center gap-2">
-          <svg
-            className="hidden lg:block"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g fill="none" stroke="#7eb36a" strokeWidth="2">
-              <line x1="3" x2="21" y1="12" y2="12" />
-              <line
-                x1="12"
-                x2="12"
-                y1="3"
-                y2="21"
-                className="AccordionVerticalLine"
-              />
-            </g>
-          </svg>
-          Ärzt*innen – Ihre medizinischen Ansprechpersonen
-        </h2>
-      </div>
-
-      <div className="w-full grid grid-cols-12 ">
-        <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-4  px-4 sm:px-8 border-r border-border">
-          {introContent && (
-            <RichText
-              className=""
-              content={introContent}
-              enableGutter={false}
-            />
-          )}
+    <div className="my-16" id={id ? `block-${id}` : undefined}>
+      {title && (
+        <div className="page-with-header mb-[20px] md:mb-[50px]">
+          <h2 className="page-header px-4 flex flex-col lg:flex-row items-start lg:items-center gap-2">
+            <svg
+              className="hidden lg:block"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g fill="none" stroke="#7eb36a" strokeWidth="2">
+                <line x1="3" x2="21" y1="12" y2="12" />
+                <line x1="12" x2="12" y1="3" y2="21" />
+              </g>
+            </svg>
+            {title}
+          </h2>
         </div>
+      )}
 
-        {/* Doctors Collection */}
-        <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-8 px-4 sm:px-8 ">
-          <CollectionDoctor doctors={doctors} />
+      {/* Intro content */}
+      {introContent && (
+        <div className="container mb-0 md:mb-16">
+          <RichText
+            className="ml-0 max-w-[48rem]"
+            content={introContent}
+            enableGutter={false}
+          />
         </div>
-      </div>
+      )}
+
+      {/* Doctor cards */}
+      <CollectionDoctor doctors={doctors} />
     </div>
   );
 };

@@ -4,9 +4,11 @@ import { cn } from "src/utilities/cn";
 import React from "react";
 import RichText from "@/components/RichText";
 import { Media } from "@/components/Media";
+import Link from "next/link";
 
 import type { Page } from "@/payload-types";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 type Props = Extract<Page["layout"][0], { blockType: "contentImage" }> & {
   id?: string;
@@ -18,6 +20,8 @@ export const ContentImageBlock: React.FC<Props> = ({
   image,
 }) => {
   const pathname = usePathname();
+
+  const t = useTranslations();
 
   return (
     <div className="">
@@ -71,13 +75,26 @@ export const ContentImageBlock: React.FC<Props> = ({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-12 w-full">
-        {/* Left: Rich Text */}
-        <div className="md:col-span-12 lg:col-span-6 p-4 sm:p-8 border-gray-200">
+        {/* Text */}
+        <div className="md:col-span-12 lg:col-span-6 p-4 sm:p-8 border-gray-200 order-2 lg:order-1">
           {richText && <RichText content={richText} />}
+          <div>
+            <Link
+              href="/"
+              className="mt-8 bg-[#cde3c5] text-[#00264c] text-lg inline-flex items-center font-semibold px-4 py-2 rounded"
+            >
+              <img
+                src="/api/media/file/D_Dark_Blue-1.svg"
+                alt="Doctolib Logo"
+                className="h-6 w-auto pr-2"
+              />
+              {t("appointment")}
+            </Link>
+          </div>
         </div>
 
-        {/* Right: Sticky Image */}
-        <div className="md:col-span-12 lg:col-span-6">
+        {/* Image */}
+        <div className="md:col-span-12 lg:col-span-6 order-1 lg:order-2">
           {image && typeof image !== "string" && (
             <div
               className="sticky top-[6.5rem] p-4 sm:p-8 flex justify-center"

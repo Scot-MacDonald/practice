@@ -16,7 +16,7 @@ import { Code } from "../../blocks/Code/config";
 import { MediaBlock } from "../../blocks/MediaBlock/config";
 import { generatePreviewPath } from "../../utilities/generatePreviewPath";
 import { populateAuthors } from "./hooks/populateAuthors";
-import { revalidateDoctor } from "./hooks/revalidateDoctor";
+import { revalidateDoctor } from "./hooks/revalidateDoctor"; // new hook for doctors
 
 import {
   MetaDescriptionField,
@@ -36,7 +36,7 @@ export const Doctors: CollectionConfig = {
     update: authenticated,
   },
   admin: {
-    defaultColumns: ["title", "slug", "updatedAt", "order"],
+    defaultColumns: ["title", "slug", "updatedAt"],
     livePreview: {
       url: ({ data, locale }) => {
         const path = generatePreviewPath({
@@ -67,60 +67,63 @@ export const Doctors: CollectionConfig = {
       required: true,
     },
     {
-      name: "order",
-      label: "Sort Order",
-      type: "number",
-      admin: {
-        position: "sidebar",
-        description: "Lower numbers appear first",
-      },
-    },
-    {
       type: "tabs",
       tabs: [
         {
-          label: "Content",
           fields: [
             {
               name: "content",
               type: "richText",
               localized: true,
               editor: lexicalEditor({
-                features: ({ rootFeatures }) => [
-                  ...rootFeatures,
-                  HeadingFeature({
-                    enabledHeadingSizes: ["h1", "h2", "h3", "h4"],
-                  }),
-                  BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
-                  FixedToolbarFeature(),
-                  InlineToolbarFeature(),
-                  HorizontalRuleFeature(),
-                ],
+                features: ({ rootFeatures }) => {
+                  return [
+                    ...rootFeatures,
+                    HeadingFeature({
+                      enabledHeadingSizes: ["h1", "h2", "h3", "h4"],
+                    }),
+                    BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
+                    FixedToolbarFeature(),
+                    InlineToolbarFeature(),
+                    HorizontalRuleFeature(),
+                  ];
+                },
               }),
               label: false,
               required: true,
             },
           ],
+          label: "Content",
         },
         {
-          label: "Meta",
           fields: [
             {
               name: "relatedDoctors",
               type: "relationship",
-              admin: { position: "sidebar" },
-              filterOptions: ({ id }) => ({ id: { not_in: [id] } }),
+              admin: {
+                position: "sidebar",
+              },
+              filterOptions: ({ id }) => {
+                return {
+                  id: {
+                    not_in: [id],
+                  },
+                };
+              },
               hasMany: true,
               relationTo: "doctors",
             },
             {
               name: "categories",
               type: "relationship",
-              admin: { position: "sidebar" },
+              admin: {
+                position: "sidebar",
+              },
               hasMany: true,
               relationTo: "categories",
             },
           ],
+          label: "Meta",
         },
         {
           name: "meta",
@@ -131,8 +134,12 @@ export const Doctors: CollectionConfig = {
               descriptionPath: "meta.description",
               imagePath: "meta.image",
             }),
-            MetaTitleField({ hasGenerateFn: true }),
-            MetaImageField({ relationTo: "media" }),
+            MetaTitleField({
+              hasGenerateFn: true,
+            }),
+            MetaImageField({
+              relationTo: "media",
+            }),
             MetaDescriptionField({}),
             PreviewField({
               hasGenerateFn: true,
@@ -147,7 +154,9 @@ export const Doctors: CollectionConfig = {
       name: "publishedAt",
       type: "date",
       admin: {
-        date: { pickerAppearance: "dayAndTime" },
+        date: {
+          pickerAppearance: "dayAndTime",
+        },
         position: "sidebar",
       },
       hooks: {
@@ -164,18 +173,31 @@ export const Doctors: CollectionConfig = {
     {
       name: "authors",
       type: "relationship",
-      admin: { position: "sidebar" },
+      admin: {
+        position: "sidebar",
+      },
       hasMany: true,
       relationTo: "users",
     },
     {
       name: "populatedAuthors",
       type: "array",
-      access: { update: () => false },
-      admin: { disabled: true, readOnly: true },
+      access: {
+        update: () => false,
+      },
+      admin: {
+        disabled: true,
+        readOnly: true,
+      },
       fields: [
-        { name: "id", type: "text" },
-        { name: "name", type: "text" },
+        {
+          name: "id",
+          type: "text",
+        },
+        {
+          name: "name",
+          type: "text",
+        },
       ],
     },
     ...slugField("title", { slugOverrides: { localized: true } }),
@@ -186,7 +208,9 @@ export const Doctors: CollectionConfig = {
   },
   versions: {
     drafts: {
-      autosave: { interval: 100 },
+      autosave: {
+        interval: 100,
+      },
     },
     maxPerDoc: 50,
   },

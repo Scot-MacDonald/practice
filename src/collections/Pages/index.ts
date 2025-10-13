@@ -16,9 +16,10 @@ import { revalidatePage } from "./hooks/revalidatePage";
 import { Mitglied } from "@/blocks/Mitglied/config";
 import { FindUs } from "@/blocks/FindUs/config";
 import { AccordionBlock } from "@/blocks/Accordion/config";
-import { Doctor } from "@/blocks/DoctorBlock/config";
 import ContentImageBlock from "@/blocks/ContentImage/config";
 import SliderBlock from "@/blocks/SliderBlock/config";
+
+import { Doctor } from "@/blocks/DoctorBlock/config"; // <-- Added DoctorBlock
 
 import {
   MetaDescriptionField,
@@ -89,10 +90,10 @@ export const Pages: CollectionConfig = {
                 NewsAndHours,
                 Mitglied,
                 FindUs,
-                Doctor,
                 AccordionBlock,
                 ContentImageBlock,
                 SliderBlock,
+                Doctor,
               ],
               required: true,
             },
@@ -114,7 +115,6 @@ export const Pages: CollectionConfig = {
             MetaImageField({
               relationTo: "media",
             }),
-
             MetaDescriptionField({}),
             {
               name: "keywords",
@@ -124,12 +124,8 @@ export const Pages: CollectionConfig = {
                 description: "Comma-separated keywords (optional, legacy SEO)",
               },
             },
-
             PreviewField({
-              // if the `generateUrl` function is configured
               hasGenerateFn: true,
-
-              // field paths to match the target field for data
               titlePath: "meta.title",
               descriptionPath: "meta.description",
             }),
@@ -153,7 +149,7 @@ export const Pages: CollectionConfig = {
   versions: {
     drafts: {
       autosave: {
-        interval: 100, // We set this interval for optimal live preview
+        interval: 100,
       },
     },
     maxPerDoc: 50,

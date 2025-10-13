@@ -6,6 +6,7 @@
   "loading": "Loading, please wait...",
   "posts": "Posts",
   "post": "Post",
+  "doctors": "Doctors",
   "showing": "Showing",
   "of": "of",
   "search": "Search",
@@ -21,6 +22,14 @@
   "appointments": {
     "line1": "Our appointments are managed",
     "line2": "through the Doctolib app."
+  },
+  "Footer": {
+    "addressTitle": "SPP-Mitte",
+    "contactTitle": "Contact",
+    "infosTitle": "Info",
+    "openingHoursTitle": "Opening Hours",
+    "phone": "Phone",
+    "fax": "Fax"
   },
   "appointment": "Book appointment",
   "days": {

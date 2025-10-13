@@ -5,6 +5,7 @@ import { cn } from "@/utilities/cn";
 import { useTranslations } from "next-intl";
 import Time from "@/components/Time";
 import RichText from "@/components/RichText";
+
 function parseTime(str: string): Date {
   const [hours, minutes] = str.split(":").map(Number);
   const now = new Date();
@@ -31,6 +32,7 @@ type NewsItem = {
   summary?: any; // RichText content
   link?: string;
   date: string;
+  latestInfosTitle?: string;
 };
 
 type Props = {
@@ -39,6 +41,7 @@ type Props = {
     title?: string;
     hours: Hour[];
   };
+  latestInfosTitle?: string;
   id?: string;
   locale: string;
 };
@@ -46,6 +49,7 @@ type Props = {
 export const NewsAndHoursBlock: React.FC<Props> = ({
   news,
   openingHours,
+  latestInfosTitle,
   id,
   locale,
 }) => {
@@ -77,11 +81,11 @@ export const NewsAndHoursBlock: React.FC<Props> = ({
     : false;
 
   return (
-    <div className=" p-0" id={id}>
-      <div className="page-with-header mb-[70px] sm:mb-[14px] pt-0 sm:pt-[24px]">
-        <h2 className="page-header px-4 sm:px-8 flex flex-col lg:flex-row items-start lg:items-center gap-2">
+    <div className="p-0" id={id}>
+      <div className="page-with-header mb-[20px] sm:mb-[50px]">
+        <h2 className="page-header px-4 sm:px-4  flex flex-col lg:flex-row items-start lg:items-center gap-2">
           <svg
-            className="hidden lg:block"
+            className="hidden xl:block"
             width="24"
             height="24"
             viewBox="0 0 24 24"
@@ -101,27 +105,27 @@ export const NewsAndHoursBlock: React.FC<Props> = ({
           {t("welcome")}
         </h2>
       </div>
-      <div
-        className="w-full grid grid-cols-4 lg:grid-cols-12  p-0 
-       "
-      >
+
+      <div className="w-full grid grid-cols-4 lg:grid-cols-12 p-0">
         {news.slice(0, 2).map((item, index) => (
           <div
             key={index}
-            className="col-span-4 lg:col-span-4 md:col-span-12 px-4 py-0 sm:p-8"
+            className="col-span-4 lg:col-span-4 md:col-span-12 px-4 py-0 sm:px-8 sm:py-4"
           >
-            {/* Heading (outside of bordered box) */}
+            {/* Dynamic Latest Infos title */}
             {index === 0 ? (
-              <h2 className="text-xl font-semibold mb-4">Latest Infos</h2>
+              <h2 className="text-base sm:text-xl font-semibold mb-4">
+                {latestInfosTitle || "Latest Infos"}
+              </h2>
             ) : (
-              <h2 className="text-xl font-semibold text-transparent mb-4 invisible">
-                Latest Infos
+              <h2 className="hidden lg:block text-xl font-semibold text-transparent mb-4 invisible">
+                {latestInfosTitle || "Latest Infos"}
               </h2>
             )}
 
-            {/* Bordered content starts here */}
+            {/* Bordered content */}
             <div className="lg:border-r lg:border-border">
-              <h2 className="text-lg date font-semibold mb-2">
+              <h2 className=" text-md sm:text-lg date font-semibold mb-2">
                 {new Date(item.date).toLocaleDateString(
                   locale === "de" ? "de-DE" : "en-GB"
                 )}
@@ -135,9 +139,9 @@ export const NewsAndHoursBlock: React.FC<Props> = ({
           </div>
         ))}
 
-        <div className="col-span-4 lg:col-span-4 md:col-span-12 px-4 py-8 sm:p-8">
+        <div className="col-span-4 lg:col-span-4 md:col-span-12 px-4 py-8 sm:px-8 sm:py-4">
           {openingHours.title && (
-            <h2 className="text-xl font-semibold  mb-4">
+            <h2 className="text-base sm:text-xl font-semibold mb-4">
               {openingHours.title}
             </h2>
           )}
@@ -149,7 +153,7 @@ export const NewsAndHoursBlock: React.FC<Props> = ({
           >
             {isOpenNow ? t("open") : t("closed")}
           </h2>
-          <div className="flex flex-col gap-2  ">
+          <div className="flex flex-col gap-2">
             {openingHours.hours.map(({ dayKey, morning, afternoon }) => {
               const isToday = dayKey === currentDayKey;
               const isMorningNow =
@@ -161,13 +165,13 @@ export const NewsAndHoursBlock: React.FC<Props> = ({
                 <div key={dayKey} className="w-full mb-2">
                   <div className="flex flex-row xl:flex-row lg:flex-col w-full">
                     {/* Day */}
-                    <p className="w-1/3 lg:w-full xl:w-1/3 text-left mb-1 lg:mb-1 xl:mb-0">
+                    <p className="w-1/3 lg:w-full xl:w-1/3 text-gray-600 text-left mb-1 lg:mb-1 xl:mb-0">
                       {t(`days.${dayKey}` as any)}
                     </p>
 
                     {/* Times */}
-                    <div className="flex flex-row w-2/3 lg:w-full xl:w-2/3">
-                      <p className="w-1/2 text-left">
+                    <div className="flex flex-row w-2/3  lg:w-full xl:w-2/3">
+                      <p className="w-1/2 text-left text-gray-600">
                         {morning && (
                           <span
                             className={cn(isMorningNow && "text-[#7eb36a]")}
@@ -176,7 +180,7 @@ export const NewsAndHoursBlock: React.FC<Props> = ({
                           </span>
                         )}
                       </p>
-                      <p className="w-1/2 text-left">
+                      <p className="w-1/2 text-left text-gray-600">
                         {afternoon && (
                           <span
                             className={cn(isAfternoonNow && "text-[#7eb36a]")}

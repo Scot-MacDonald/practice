@@ -70,6 +70,12 @@ export const Mitglied: Block = {
           type: "text",
           required: true,
         },
+        {
+          name: "logo",
+          type: "upload",
+          relationTo: "media", // assumes you have a Media collection
+          required: false,
+        },
       ],
     },
   ],

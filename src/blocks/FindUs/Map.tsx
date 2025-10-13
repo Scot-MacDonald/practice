@@ -81,7 +81,7 @@ export default function Map({
       setMap(
         <MapContainer
           center={[lat, lng]}
-          zoom={16}
+          zoom={15}
           zoomControl={true}
           scrollWheelZoom={false}
           dragging={true}
@@ -89,7 +89,7 @@ export default function Map({
           style={{
             height: "550px",
             width: "100%",
-            borderRadius: "12px",
+            borderRadius: "",
             zIndex: 1,
           }}
         >

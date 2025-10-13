@@ -70,7 +70,7 @@ export const EmblaSlider: React.FC<EmblaSliderProps> = ({
   return (
     <div
       ref={emblaRef}
-      className="relative w-full aspect-[16/9] overflow-hidden rounded-xl shadow-md"
+      className="relative w-full aspect-[16/9] overflow-hidden  shadow-md"
     >
       {images.map((img, i) => (
         <div

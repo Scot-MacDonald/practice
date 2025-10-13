@@ -41,22 +41,22 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
 
   return (
     <header
-      className="sticky top-0 z-50 bg-white border-b border-gray-100  px-4 py-4"
+      className="sticky top-0 z-50 bg-white border-b border-gray-100 px-4 py-4"
       {...(theme ? { "data-theme": theme } : {})}
     >
       <div className="flex justify-between items-center">
-        {/* Left: Logo + Nav */}
+        {/* Left: Logo + Nav on xl+ */}
         <div className="flex items-center gap-6">
           <Link href="/">
             <Logo />
           </Link>
-          <div className="pl-3 hidden  lg:flex">
+          <div className="hidden xl:flex">
             <HeaderNav header={header} />
           </div>
         </div>
 
-        {/* Right: Appointment button */}
-        <div className="hidden lg:flex items-center gap-2">
+        {/* Right: Appointment button (desktop) */}
+        <div className="hidden xl:flex items-center">
           <Link
             href="/"
             className="bg-[#cde3c5] text-[#00264c] text-lg flex items-center font-semibold px-4 py-2 rounded"
@@ -70,18 +70,21 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
           </Link>
         </div>
 
-        {/* Mobile Menu */}
-        <div className="flex lg:hidden items-center gap-3">
-          <Link href="/" className="bg-[#cde3c5] px-2 py-1 rounded">
+        {/* Mobile menu (only below xl) */}
+        <div className="flex xl:hidden items-center gap-3">
+          <Link
+            href="/"
+            className="bg-[#cde3c5] flex items-center font-semibold px-2 py-1 rounded"
+          >
             <img
-              src="/api/media/file/D_Dark_Blue-2.svg"
+              src="/api/media/file/D_Dark_Blue-1.svg"
               alt="Doctolib Logo"
               className="h-4 w-auto pr-2"
             />
             {t("appointment")}
           </Link>
           <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger className="p-2">
+            <SheetTrigger className="">
               <MenuIcon className="w-8 h-8" />
             </SheetTrigger>
             <SheetContent side="right" className="w-64 flex flex-col gap-4 p-4">

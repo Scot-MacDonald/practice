@@ -1,9 +1,16 @@
 "use client";
 
 import * as Accordion from "@radix-ui/react-accordion";
+import React from "react";
+import { cn } from "@/utilities/cn";
+import RichText from "@/components/RichText";
+import { CMSLink } from "@/components/Link";
+
 type AccordionBlockProps = {
   title?: string;
+  subheading?: string;
   richText?: any;
+  richText2?: any;
   items?: {
     title: string;
     content: any;
@@ -11,14 +18,9 @@ type AccordionBlockProps = {
     link?: any;
   }[];
 };
-import { cn } from "@/utilities/cn";
-import React from "react";
-import RichText from "@/components/RichText";
-import { CMSLink } from "@/components/Link";
 
 type Props = {
   className?: string;
-  subheading?: string;
 } & AccordionBlockProps;
 
 export const AccordionBlock: React.FC<Props> = ({
@@ -26,12 +28,13 @@ export const AccordionBlock: React.FC<Props> = ({
   title,
   subheading,
   richText,
+  richText2,
   items,
 }) => {
   return (
     <section className={cn(" ", className)}>
-      <div className="page-with-header mb-[44px] ">
-        <h2 className="page-header px-8 flex flex-col lg:flex-row items-start lg:items-center gap-2">
+      <div className="page-with-header mb-[20px] sm:mb-[50px] ">
+        <h2 className="page-header px-4 lg:px-8 flex flex-col lg:flex-row items-start lg:items-center gap-2">
           <svg
             className="hidden lg:block"
             width="24"
@@ -54,22 +57,10 @@ export const AccordionBlock: React.FC<Props> = ({
         </h2>
       </div>
 
-      <div className="grid grid-cols-12">
-        <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-4 p-8  lg:border-r border-border">
-          {subheading && (
-            <h3 className="font-semibold text-lg mb-4">{subheading}</h3>
-          )}
-          {richText && (
-            <RichText
-              content={richText}
-              enableGutter={false}
-              className="mb-4"
-            />
-          )}
-        </div>
-
-        <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-8 p-8">
-          <div className="w-full max-w-full lg:max-w-[600px]">
+      <div className="grid grid-cols-12 items-start">
+        {/* Accordion column */}
+        <div className="col-span-12 lg:col-span-6 p-4 lg:p-8">
+          <div className="w-full max-w-full">
             <Accordion.Root type="multiple">
               {items?.map((item, index) => (
                 <Accordion.Item
@@ -90,9 +81,7 @@ export const AccordionBlock: React.FC<Props> = ({
                         "transition-colors duration-300"
                       )}
                     >
-                      <h2 className="text-xl text-gray-600 font-medium">
-                        {item.title}
-                      </h2>
+                      <h2 className="text-xl  font-medium">{item.title}</h2>
                       <span className="AccordionChevron">
                         <svg width="24" height="24" viewBox="0 0 24 24">
                           <g fill="none" stroke="#7eb36a" strokeWidth="2">
@@ -136,6 +125,20 @@ export const AccordionBlock: React.FC<Props> = ({
             </Accordion.Root>
           </div>
         </div>
+
+        {/* First RichText column */}
+        <div className="col-span-12 lg:col-span-6 mt-[15px] p-4 lg:p-8 ">
+          {subheading && <h3 className="">{subheading}</h3>}
+          {richText && (
+            <RichText
+              content={richText}
+              enableGutter={false}
+              className="mb-4"
+            />
+          )}
+        </div>
+
+        {/* Second RichText column */}
       </div>
     </section>
   );

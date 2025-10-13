@@ -56,8 +56,8 @@ export default function FindUsBlock({
 
   return (
     <>
-      <div className="page-with-header mb-[44px]">
-        <h2 className="page-header px-8 flex flex-col lg:flex-row items-start lg:items-center gap-2">
+      <div className="page-with-header mb-[20px] md:mb-[50px]">
+        <h2 className="page-header px-4 flex flex-col lg:flex-row items-start lg:items-center gap-2">
           <svg
             className="hidden lg:block"
             width="24"
@@ -82,12 +82,12 @@ export default function FindUsBlock({
 
       <div className="w-full grid grid-cols-12">
         {/* Left side: rich text content */}
-        <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-4 p-8 lg:border-r border-border">
+        <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-4 p-4 lg:p-8 lg:border-r border-border">
           {content && <RichText content={content} />}
         </div>
 
         {/* Right side: transports grid */}
-        <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-8 p-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-8">
+        <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-8 p-4 lg:p-8 grid grid-cols-1 md:grid-cols-1 xl:grid-cols-2 gap-8">
           {transports.map((transport, i) => (
             <div key={i} className="border rounded-lg p-4 flex flex-col">
               <div className="flex items-center mb-1 gap-2">
@@ -106,7 +106,7 @@ export default function FindUsBlock({
         </div>
       </div>
 
-      <div className="mt-8 px-8">
+      <div className="mt-8 px-4 lg:px-8">
         <Map
           lat={lat}
           lng={lng}

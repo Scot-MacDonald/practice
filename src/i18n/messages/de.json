@@ -6,6 +6,7 @@
   "loading": "Lädt, bitte warten...",
   "posts": "Beiträge",
   "post": "Beitrag",
+  "doctors": "Ärzte",
   "showing": "Anzeigen",
   "of": "von",
   "search": "Suche",
@@ -16,11 +17,19 @@
   "auto": "Automatisch",
   "light": "Hell",
   "dark": "Dunkel",
-  "welcome": "Willkommen in Ihrer Infektionspraxis SPP-Mitte",
+  "welcome": "Willkommen in der infektiologischen Schwerpunktpraxis Berlin Mitte",
 
   "appointments": {
     "line1": "Unsere Termine werden",
     "line2": "über die Doctolib-App verwaltet."
+  },
+  "Footer": {
+    "addressTitle": "SPP-Mitte",
+    "contactTitle": "Kontakt",
+    "infosTitle": "Infos",
+    "openingHoursTitle": "Sprechzeiten",
+    "phone": "Tel.",
+    "fax": "Fax"
   },
   "appointment": "Termin buchen",
 
