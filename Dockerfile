@@ -1,5 +1,5 @@
 # Base image with Node.js and pnpm
-FROM node:18.16-alpine AS base
+FROM node:18.20-alpine AS base
 
 # Install pnpm globally
 RUN npm install -g pnpm
