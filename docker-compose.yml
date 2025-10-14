@@ -2,11 +2,11 @@ services:
   payload:
     image: node:18-alpine
     ports:
-      - '3000:3000'
+      - "4000:4000"
     volumes:
       - .:/home/node/app
       - node_modules:/home/node/app/node_modules
-      - pnpm_store:/home/node/.pnpm-store 
+      - pnpm_store:/home/node/.pnpm-store
     working_dir: /home/node/app/
     command: sh -c "npm install -g pnpm && pnpm install && pnpm dev"
     depends_on:
@@ -17,7 +17,7 @@ services:
   mongo:
     image: mongo:latest
     ports:
-      - '27017:27017'
+      - "27017:27017"
     command:
       - --storageEngine=wiredTiger
     volumes:
@@ -28,4 +28,4 @@ services:
 volumes:
   data:
   node_modules:
-  pnpm_store: 
+  pnpm_store:

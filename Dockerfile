@@ -19,12 +19,13 @@ RUN pnpm build
 FROM base as runtime
 
 ENV NODE_ENV=production
+ENV PORT=4000       # ← change this to whatever port you want
 
 WORKDIR /home/node/app
 COPY package*.json  ./
 COPY pnpm-lock.yaml ./
 RUN pnpm install --prod
 
-EXPOSE 3000
+EXPOSE 4000         # ← match the PORT value
 
 CMD ["node", "dist/server.js"]
