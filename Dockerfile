@@ -8,7 +8,6 @@ ENV PATH=$PNPM_HOME:$PATH
 
 # Builder stage
 FROM base AS builder
-
 WORKDIR /home/node/app
 
 # Copy package files and install dependencies
@@ -22,11 +21,8 @@ RUN pnpm build
 
 # Runtime stage
 FROM base AS runtime
-
-# Set environment variables
 ENV NODE_ENV=production
-# Set the port your app will listen on
-ENV PORT=4000
+ENV PORT=3000        
 
 WORKDIR /home/node/app
 
@@ -35,8 +31,8 @@ COPY package*.json ./
 COPY pnpm-lock.yaml ./
 RUN pnpm install --prod
 
-# Expose the port your app will use
-EXPOSE 4000
+# Expose port 3000
+EXPOSE 3000
 
-# Start the server
-CMD ["node", "dist/server.js"]
+# Start the Next.js server
+CMD ["pnpm", "start"]
