@@ -1,4 +1,5 @@
-FROM node:18.8-alpine as base
+
+FROM node:18.16-alpine AS base
 
 RUN npm install -g pnpm
 ENV PNPM_HOME=/home/node/.pnpm-store
