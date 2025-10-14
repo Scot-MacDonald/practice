@@ -1,22 +1,26 @@
+version: "3.8"
+
 services:
   payload:
-    build: 
+    build:
       context: .
       target: runtime
+    container_name: payload_app
     restart: unless-stopped
     ports:
-      - '3000:3000'
-    volumes:
-      - ./public/media:/home/node/app/public/media
-      - pnpm_store:/home/node/.pnpm-store
-      - node_modules:/home/node/app/node_modules
+      - "3000:3000"
     env_file:
       - .env
     depends_on:
       - mongo
+    volumes:
+      - pnpm_store:/home/node/.pnpm-store
+      - node_modules:/home/node/app/node_modules
+      - ./public/media:/home/node/app/public/media # optional, persistent uploads
 
   mongo:
     image: mongo:latest
+    container_name: payload_mongo
     restart: unless-stopped
     volumes:
       - mongodb_data:/data/db

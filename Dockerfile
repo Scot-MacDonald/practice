@@ -1,37 +1,52 @@
-# Base image with Node.js and pnpm
+# ===============================
+# 1️⃣ Base image
+# ===============================
 FROM node:18.20-alpine AS base
 
 # Install pnpm globally
 RUN npm install -g pnpm
 ENV PNPM_HOME=/home/node/.pnpm-store
 ENV PATH=$PNPM_HOME:$PATH
-
-# Builder stage
-FROM base AS builder
 WORKDIR /home/node/app
 
-# Copy package files and install dependencies
-COPY package*.json ./
-COPY pnpm-lock.yaml ./
-RUN pnpm install
+# ===============================
+# 2️⃣ Dependencies (builder)
+# ===============================
+FROM base AS deps
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
 
-# Copy all source code and build
+# ===============================
+# 3️⃣ Build stage
+# ===============================
+FROM base AS builder
+
+# Copy dependencies from deps stage
+COPY --from=deps /home/node/app/node_modules ./node_modules
 COPY . .
+
+# Build the Next.js application
 RUN pnpm build
 
-# Runtime stage
+# ===============================
+# 4️⃣ Runtime (production)
+# ===============================
 FROM base AS runtime
 ENV NODE_ENV=production
-ENV PORT=3000        
+ENV PORT=3000
 
 WORKDIR /home/node/app
 
-# Install only production dependencies
-COPY package*.json ./
-COPY pnpm-lock.yaml ./
-RUN pnpm install --prod
+# Copy only the files needed for runtime
+COPY --from=builder /home/node/app/.next ./.next
+COPY --from=builder /home/node/app/public ./public
+COPY --from=builder /home/node/app/package.json ./package.json
+COPY --from=builder /home/node/app/pnpm-lock.yaml ./pnpm-lock.yaml
 
-# Expose port 3000
+# Install only production dependencies
+RUN pnpm install --prod --frozen-lockfile
+
+# Expose Next.js port
 EXPOSE 3000
 
 # Start the Next.js server
