@@ -3,7 +3,6 @@
 import { cn } from "src/utilities/cn";
 import React from "react";
 import RichText from "@/components/RichText";
-import { Media } from "@/components/Media";
 import Link from "next/link";
 
 import type { Page } from "@/payload-types";
@@ -14,18 +13,31 @@ type Props = Extract<Page["layout"][0], { blockType: "contentImage" }> & {
   id?: string;
 };
 
+// Type guard to check if image is a Media object
+const isMediaObject = (
+  img: unknown
+): img is { filename: string; alt?: string } =>
+  typeof img === "object" && img !== null && "filename" in img;
+
 export const ContentImageBlock: React.FC<Props> = ({
   title,
   richText,
   image,
 }) => {
   const pathname = usePathname();
-
   const t = useTranslations();
+
+  const imageSrc = isMediaObject(image)
+    ? `${process.env.NEXT_PUBLIC_SERVER_URL}/api/media/file/${image.filename}`
+    : typeof image === "string"
+      ? image
+      : undefined;
+
+  const imageAlt = isMediaObject(image) ? image.alt || "" : "";
 
   return (
     <div className="">
-      {/* Title Block (non-sticky) */}
+      {/* Title Block */}
       <div className="page-with-header mb-[70px] sm:mb-[14px]">
         {pathname === "/" ? (
           <h2 className="page-header px-4 sm:px-8 flex flex-col lg:flex-row items-start lg:items-center gap-2">
@@ -95,15 +107,15 @@ export const ContentImageBlock: React.FC<Props> = ({
 
         {/* Image */}
         <div className="md:col-span-12 lg:col-span-6 order-1 lg:order-2">
-          {image && typeof image !== "string" && (
+          {imageSrc && (
             <div
               className="sticky top-[6.5rem] p-4 sm:p-8 flex justify-center"
               style={{ maxHeight: "calc(100vh - 6.5rem)" }}
             >
-              <Media
-                resource={image}
+              <img
+                src={imageSrc}
+                alt={imageAlt}
                 className="w-full h-full object-cover"
-                size="100vw"
               />
             </div>
           )}
