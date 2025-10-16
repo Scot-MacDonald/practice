@@ -39,7 +39,7 @@ import { beforeSyncWithSearch } from "@/search/beforeSync";
 import localization from "./i18n/localization";
 import { en } from "@payloadcms/translations/languages/en";
 import { de } from "@payloadcms/translations/languages/de";
-import { uploadthingStorage } from "@payloadcms/storage-uploadthing";
+// import { uploadthingStorage } from "@payloadcms/storage-uploadthing";
 
 import { resendAdapter } from "@payloadcms/email-resend";
 

@@ -19,10 +19,10 @@ const isProduction = process.env.NODE_ENV === "production";
 export const Media: CollectionConfig = {
   slug: "media",
   access: {
-    create: authenticated,
-    delete: authenticated,
-    read: anyone,
-    update: authenticated,
+    create: () => true,
+    update: () => true,
+    delete: () => true,
+    read: () => true,
   },
   fields: [
     {
@@ -46,7 +46,9 @@ export const Media: CollectionConfig = {
   ],
 
   upload: {
-    staticDir: path.resolve(dirname, "../../public/media"),
+    staticDir: isProduction
+      ? "/app/payload/uploads"
+      : path.resolve(__dirname, "../../uploads"),
     mimeTypes: ["image/*", "image/svg+xml", "application/xml"],
   },
 };
