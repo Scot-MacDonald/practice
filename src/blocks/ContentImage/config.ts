@@ -50,7 +50,6 @@ const ContentImageBlock: Block = {
       relationTo: "media",
       required: false,
     },
-    // ✅ Removed mediaPosition field
   ],
 };
 
