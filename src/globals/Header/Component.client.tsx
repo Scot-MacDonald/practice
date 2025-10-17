@@ -62,7 +62,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
             className="bg-[#cde3c5] text-[#00264c] text-lg flex items-center font-semibold px-4 py-2 rounded"
           >
             <img
-              src="/api/media/file/D_Dark_Blue-1.svg"
+              src="/api/media/file/D_Dark_Blue-1.svg "
               alt="Doctolib Logo"
               className="h-6 w-auto pr-2"
             />

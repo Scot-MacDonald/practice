@@ -46,9 +46,7 @@ export const Media: CollectionConfig = {
   ],
 
   upload: {
-    staticDir: isProduction
-      ? "/app/payload/uploads"
-      : path.resolve(__dirname, "../../uploads"),
+    staticDir: path.resolve(dirname, "../../public/media"),
     mimeTypes: ["image/*", "image/svg+xml", "application/xml"],
   },
 };

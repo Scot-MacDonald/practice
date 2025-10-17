@@ -27,7 +27,8 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   let width: number | undefined;
   let height: number | undefined;
   let alt = altFromProps;
-  let src: StaticImageData | string = srcFromProps || "";
+  let src: StaticImageData | string | null = srcFromProps || null; // ✅ null instead of ""
+
   let unoptimized = false;
 
   if (!src && resource && typeof resource === "object") {
@@ -45,8 +46,11 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     alt = altFromResource;
 
     src = url || `/api/media/file/${id}`;
-    unoptimized = !!url; // disable optimization for external URLs
+    unoptimized = !!url;
   }
+
+  // If still no src, don't render the image
+  if (!src) return null;
 
   const sizes = sizeFromProps
     ? sizeFromProps
@@ -63,9 +67,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
       onClick={onClick}
       onLoad={() => {
         setIsLoading(false);
-        if (typeof onLoadFromProps === "function") {
-          onLoadFromProps();
-        }
+        if (typeof onLoadFromProps === "function") onLoadFromProps();
       }}
       priority={priority}
       quality={60}
