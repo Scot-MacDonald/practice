@@ -10,5 +10,8 @@ node_modules
 
 # Payload default media upload directory
 # public/media/
+/public/media/*
+
+
 dataDump/
 .vscode/settings.json
