@@ -1,31 +1,39 @@
+version: "3.8"
+
 services:
   payload:
-    image: node:18-alpine
+    build:
+      context: .
+      target: deps # Use deps stage to speed up rebuilds
+    container_name: payload_dev
+    restart: unless-stopped
     ports:
       - "3000:3000"
-    volumes:
-      - .:/home/node/app
-      - node_modules:/home/node/app/node_modules
-      - pnpm_store:/home/node/.pnpm-store
-    working_dir: /home/node/app/
-    command: sh -c "npm install -g pnpm && pnpm install && pnpm dev"
-    depends_on:
-      - mongo
     env_file:
       - .env
+    volumes:
+      - .:/home/node/app # Mount the project for hot reload
+      - ./public/media:/home/node/app/public/media # Persist media uploads
+      - node_modules:/home/node/app/node_modules
+      - pnpm_store:/home/node/.pnpm-store
+    working_dir: /home/node/app
+    command: sh -c "pnpm install && pnpm dev"
+    depends_on:
+      - mongo
 
   mongo:
     image: mongo:latest
+    container_name: payload_mongo_dev
     ports:
       - "27017:27017"
-    command:
-      - --storageEngine=wiredTiger
     volumes:
       - data:/data/db
+    command:
+      - --storageEngine=wiredTiger
     logging:
-      driver: none
+      driver: "none"
 
 volumes:
-  data:
   node_modules:
   pnpm_store:
+  data:

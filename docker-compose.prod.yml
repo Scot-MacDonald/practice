@@ -13,10 +13,9 @@ services:
       - .env
     depends_on:
       - mongo
+    # Only persist uploads; node_modules are already baked into the image
     volumes:
-      - pnpm_store:/home/node/.pnpm-store
-      - node_modules:/home/node/app/node_modules
-      - ./public/media:/home/node/app/public/media # optional, persistent uploads
+      - ./public/media:/home/node/app/public/media
 
   mongo:
     image: mongo:latest
@@ -27,9 +26,7 @@ services:
     command:
       - --storageEngine=wiredTiger
     logging:
-      driver: none
+      driver: "none"
 
 volumes:
   mongodb_data:
-  pnpm_store:
-  node_modules:
