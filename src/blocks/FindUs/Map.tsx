@@ -35,45 +35,45 @@ export default function Map({
       //   await import("leaflet/dist/leaflet.css");
 
       const dotIcon = L.icon({
-        iconUrl: "media/spp_logo.png",
+        iconUrl: "/api/media/spp_logo.png",
         iconSize: [42, 42],
         iconAnchor: [16, 32],
         className: "image-marker",
       });
 
       const imageIcon = L.icon({
-        iconUrl: secondIconUrl || "media/S-Bahn-Logo.webp",
+        iconUrl: secondIconUrl || "/api/media/S-Bahn-Logo.webp",
         iconSize: [20, 20],
         iconAnchor: [15, 15],
         className: "image-marker",
       });
 
       const imageIconU = L.icon({
-        iconUrl: thirdIconUrl || "media/U-Bahn.svg",
+        iconUrl: thirdIconUrl || "/api/media/U-Bahn.svg",
         iconSize: [20, 20],
         iconAnchor: [15, 15],
         className: "image-marker",
       });
       const imageIconS = L.icon({
-        iconUrl: fourthIconUrl || "media/S-Bahn-Logo.webp",
+        iconUrl: fourthIconUrl || "/api/media/S-Bahn-Logo.webp",
         iconSize: [20, 20],
         iconAnchor: [15, 15],
         className: "image-marker",
       });
       const imageIconT = L.icon({
-        iconUrl: fifthIconUrl || "media/Tram-Logo.svg",
+        iconUrl: fifthIconUrl || "/api/media/Tram-Logo.svg",
         iconSize: [20, 20],
         iconAnchor: [15, 15],
         className: "image-marker",
       });
       const imageIconB = L.icon({
-        iconUrl: sixthIconUrl || "media/Bus-Logo.svg",
+        iconUrl: sixthIconUrl || "/api/media/Bus-Logo.svg",
         iconSize: [20, 20],
         iconAnchor: [15, 15],
         className: "image-marker",
       });
       const imageIconB2 = L.icon({
-        iconUrl: seventhIconUrl || "media/BUS-Logo-BVG.svg",
+        iconUrl: seventhIconUrl || "/api/media/BUS-Logo-BVG.svg",
         iconSize: [20, 20],
         iconAnchor: [15, 15],
         className: "image-marker",
