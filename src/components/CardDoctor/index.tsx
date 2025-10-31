@@ -122,11 +122,10 @@ import Link from "next/link";
 import type { Doctor } from "@/payload-types";
 import { Media } from "@/components/Media";
 
-// ✅ Helper function for cache-busting and consistent URLs
 const getMediaUrl = (metaImage: any) => {
   if (!metaImage) return null;
 
-  // If it's already a URL
+  // If it's an external URL
   if (typeof metaImage === "string" && metaImage.startsWith("http")) {
     return `${metaImage}?v=${Date.now()}`;
   }
@@ -136,13 +135,13 @@ const getMediaUrl = (metaImage: any) => {
     return `/api/media/file/${metaImage}?v=${Date.now()}`;
   }
 
-  // If it's a Payload Media object
-  return `/api/media/${metaImage.id}?v=${Date.now()}`;
+  // Otherwise, return null; handle Media objects separately
+  return null;
 };
 
 export const CardDoctor: React.FC<{
   doc?: Doctor;
-  relationTo?: "doctors"; // default to doctors
+  relationTo?: "doctors";
   className?: string;
   showCategories?: boolean;
   title?: string;
@@ -160,7 +159,7 @@ export const CardDoctor: React.FC<{
   if (!slug) return null;
 
   const href = `/${relationTo}/${slug}`;
-  const imageUrl = getMediaUrl(metaImage); // ✅ Use the helper here
+  const imageUrl = getMediaUrl(metaImage);
 
   return (
     <Link href={href} className={cn("block", className)}>
@@ -174,6 +173,10 @@ export const CardDoctor: React.FC<{
               alt={titleToUse || "Doctor image"}
               className="object-cover w-full h-full"
             />
+          )}
+
+          {metaImage && typeof metaImage !== "string" && (
+            <Media resource={metaImage} size="360px" />
           )}
         </div>
 
