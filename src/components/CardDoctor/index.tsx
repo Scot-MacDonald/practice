@@ -122,15 +122,31 @@ import Link from "next/link";
 import type { Doctor } from "@/payload-types";
 import { Media } from "@/components/Media";
 
-interface CardDoctorProps {
+// ✅ Helper function for cache-busting and consistent URLs
+const getMediaUrl = (metaImage: any) => {
+  if (!metaImage) return null;
+
+  // If it's already a URL
+  if (typeof metaImage === "string" && metaImage.startsWith("http")) {
+    return `${metaImage}?v=${Date.now()}`;
+  }
+
+  // If it's a filename from Payload
+  if (typeof metaImage === "string") {
+    return `/api/media/file/${metaImage}?v=${Date.now()}`;
+  }
+
+  // If it's a Payload Media object
+  return `/api/media/${metaImage.id}?v=${Date.now()}`;
+};
+
+export const CardDoctor: React.FC<{
   doc?: Doctor;
-  relationTo?: "doctors";
+  relationTo?: "doctors"; // default to doctors
   className?: string;
   showCategories?: boolean;
   title?: string;
-}
-
-export const CardDoctor: React.FC<CardDoctorProps> = ({
+}> = ({
   doc,
   relationTo = "doctors",
   className,
@@ -144,23 +160,7 @@ export const CardDoctor: React.FC<CardDoctorProps> = ({
   if (!slug) return null;
 
   const href = `/${relationTo}/${slug}`;
-
-  // ✅ Helper to generate cache-busted URL
-  const getImageUrl = (image: any) => {
-    if (!image) return null;
-
-    if (typeof image === "string") {
-      // filename from Payload
-      return `/api/media/file/${image}?v=${Date.now()}`;
-    }
-
-    if (image?.url) {
-      // full URL
-      return `${image.url}?v=${Date.now()}`;
-    }
-
-    return null;
-  };
+  const imageUrl = getMediaUrl(metaImage); // ✅ Use the helper here
 
   return (
     <Link href={href} className={cn("block", className)}>
@@ -168,21 +168,9 @@ export const CardDoctor: React.FC<CardDoctorProps> = ({
         <div className="relative w-full aspect-square bg-gray-100 flex items-center justify-center overflow-hidden">
           {!metaImage && <div className="text-sm text-gray-500">No image</div>}
 
-          {metaImage && typeof metaImage === "string" && (
+          {imageUrl && (
             <img
-              src={getImageUrl(metaImage)!}
-              alt={titleToUse || "Doctor image"}
-              className="object-cover w-full h-full"
-            />
-          )}
-
-          {metaImage && typeof metaImage === "object" && !metaImage.url && (
-            <Media resource={metaImage} size="360px" />
-          )}
-
-          {metaImage && typeof metaImage === "object" && metaImage.url && (
-            <img
-              src={getImageUrl(metaImage)!}
+              src={imageUrl}
               alt={titleToUse || "Doctor image"}
               className="object-cover w-full h-full"
             />
