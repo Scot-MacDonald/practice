@@ -42,15 +42,15 @@ export default function FindUsBlock({
   const getIconForType = (type: TransportType) => {
     switch (type) {
       case "s-bahn":
-        return secondIconUrl || "/api/media/S-Bahn-Logo.webp";
+        return secondIconUrl || "/media/S-Bahn-Logo.webp";
       case "u-bahn":
-        return thirdIconUrl || "/api/media/U-Bahn.svg";
+        return thirdIconUrl || "/media/U-Bahn.svg";
       case "tram":
-        return fifthIconUrl || "/api/media/Tram-Logo.svg";
+        return fifthIconUrl || "/media/Tram-Logo.svg";
       case "bus":
-        return sixthIconUrl || "/api/media/Bus-Logo.svg";
+        return sixthIconUrl || "/media/Bus-Logo.svg";
       default:
-        return fourthIconUrl || "/api/media/spp_logo.png";
+        return fourthIconUrl || "/media/spp_logo.png";
     }
   };
 
