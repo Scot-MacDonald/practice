@@ -4,26 +4,23 @@ import React from "react";
 import Link from "next/link";
 import RichText from "@/components/RichText";
 
-// ✅ Robust helper that handles URLs, filenames, and Payload Media objects
+// ✅ Helper to handle URLs and force cache refresh
 const getMediaUrl = (metaImage: any): string | null => {
   if (!metaImage) return null;
 
-  // If it's already a full URL
+  // Full URL (Payload or external)
   if (typeof metaImage === "string" && /^(https?:)?\/\//.test(metaImage)) {
     return `${metaImage}?v=${Date.now()}`;
   }
 
-  // If it's a string path or filename
+  // Local or /media path
   if (typeof metaImage === "string") {
-    // /media/... path from Payload (common in production)
     if (metaImage.startsWith("/")) return `${metaImage}?v=${Date.now()}`;
-    // media/... without leading slash
     if (metaImage.startsWith("media/")) return `/${metaImage}?v=${Date.now()}`;
-    // fallback to /api/media/file/
     return `/api/media/file/${metaImage}?v=${Date.now()}`;
   }
 
-  // If it's a Payload Media object
+  // Payload Media object
   if (typeof metaImage === "object") {
     if (metaImage.url) {
       const url = metaImage.url.startsWith("/")
@@ -31,9 +28,9 @@ const getMediaUrl = (metaImage: any): string | null => {
         : `/${metaImage.url}`;
       return `${url}?v=${Date.now()}`;
     }
-    if (metaImage.id) return `/api/media/${metaImage.id}?v=${Date.now()}`;
     if (metaImage.filename)
       return `/api/media/file/${metaImage.filename}?v=${Date.now()}`;
+    if (metaImage.id) return `/api/media/${metaImage.id}?v=${Date.now()}`;
   }
 
   return null;
@@ -71,14 +68,16 @@ export default function MitgliedBlock({ title, description, items }) {
         {/* Left side with description */}
         <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-4 p-4 lg:p-8 lg:border-r border-border">
           {description && <RichText content={description} />}
+
           <div className="flex gap-4 items-center mt-6">
-            {/* Static images with cache busting */}
             <img
+              key={Date.now()} // 🔥 Forces re-render
               src={getMediaUrl("/media/bng.jpg")!}
               alt="Image 1"
               className="w-24 h-28 rounded-lg object-cover"
             />
             <img
+              key={Date.now() + 1} // 🔥 Slightly different key
               src={getMediaUrl("/media/daig_dagnae_siegel.jpg")!}
               alt="Image 2"
               className="w-26 h-24 rounded-lg object-cover"
@@ -93,30 +92,28 @@ export default function MitgliedBlock({ title, description, items }) {
 
             return (
               <Link
-                key={i}
+                key={`${i}-${logoUrl}`} // 🔥 unique key ensures React reloads new logo
                 href={item.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="relative border rounded-lg p-4 flex flex-col min-h-[138px] no-underline shadow-sm overflow-hidden"
               >
-                {/* ✅ Dynamic logo background with cache-busting */}
+                {/* ✅ Dynamic logo background with instant refresh */}
                 {logoUrl && (
                   <div
+                    key={logoUrl} // 🔥 re-renders when URL changes
                     className="absolute inset-[20px] bg-center bg-contain bg-no-repeat pointer-events-none"
                     style={{ backgroundImage: `url('${logoUrl}')` }}
                   />
                 )}
 
-                {/* Foreground content (kept for future use) */}
                 <div className="relative z-10">
-                  {/* Title (optional) */}
+                  {/* Keeping commented content for future use */}
                   {/*
                   <h2 className="text-xl font-bold mb-1 text-gray-800">
                     {item.title}
                   </h2>
                   */}
-
-                  {/* Description (optional) */}
                   {/*
                   {item.description?.map((lineObj, j) => (
                     <span key={j} className="text-gray-600">
