@@ -122,13 +122,15 @@ import Link from "next/link";
 import type { Doctor } from "@/payload-types";
 import { Media } from "@/components/Media";
 
-export const CardDoctor: React.FC<{
+interface CardDoctorProps {
   doc?: Doctor;
   relationTo?: "doctors";
   className?: string;
   showCategories?: boolean;
   title?: string;
-}> = ({
+}
+
+export const CardDoctor: React.FC<CardDoctorProps> = ({
   doc,
   relationTo = "doctors",
   className,
@@ -143,24 +145,47 @@ export const CardDoctor: React.FC<{
 
   const href = `/${relationTo}/${slug}`;
 
+  // ✅ Helper to generate cache-busted URL
+  const getImageUrl = (image: any) => {
+    if (!image) return null;
+
+    if (typeof image === "string") {
+      // filename from Payload
+      return `/api/media/file/${image}?v=${Date.now()}`;
+    }
+
+    if (image?.url) {
+      // full URL
+      return `${image.url}?v=${Date.now()}`;
+    }
+
+    return null;
+  };
+
   return (
     <Link href={href} className={cn("block", className)}>
       <article className="border border-border rounded-lg p-4 transition-colors hover:bg-[rgba(126,179,106,0.1);]">
         <div className="relative w-full aspect-square bg-gray-100 flex items-center justify-center overflow-hidden">
           {!metaImage && <div className="text-sm text-gray-500">No image</div>}
 
-          {/* String filename from CMS */}
-          {typeof metaImage === "string" && (
+          {metaImage && typeof metaImage === "string" && (
             <img
-              src={`/api/media/file/${metaImage}?v=${Date.now()}`}
+              src={getImageUrl(metaImage)!}
               alt={titleToUse || "Doctor image"}
               className="object-cover w-full h-full"
             />
           )}
 
-          {/* Full media object */}
-          {metaImage && typeof metaImage === "object" && (
+          {metaImage && typeof metaImage === "object" && !metaImage.url && (
             <Media resource={metaImage} size="360px" />
+          )}
+
+          {metaImage && typeof metaImage === "object" && metaImage.url && (
+            <img
+              src={getImageUrl(metaImage)!}
+              alt={titleToUse || "Doctor image"}
+              className="object-cover w-full h-full"
+            />
           )}
         </div>
 
