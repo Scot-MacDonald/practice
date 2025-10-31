@@ -124,13 +124,13 @@ import { Media } from "@/components/Media";
 
 export const CardDoctor: React.FC<{
   doc?: Doctor;
-  relationTo?: "doctors"; // default to doctors
+  relationTo?: "doctors";
   className?: string;
   showCategories?: boolean;
   title?: string;
 }> = ({
   doc,
-  relationTo = "doctors", // ✅ ensure it defaults to doctors
+  relationTo = "doctors",
   className,
   showCategories,
   title: titleFromProps,
@@ -139,9 +139,8 @@ export const CardDoctor: React.FC<{
   const { description, image: metaImage } = meta || {};
   const titleToUse = titleFromProps || title;
 
-  if (!slug) return null; // avoid broken links
+  if (!slug) return null;
 
-  // ✅ Build correct URL
   const href = `/${relationTo}/${slug}`;
 
   return (
@@ -150,7 +149,17 @@ export const CardDoctor: React.FC<{
         <div className="relative w-full aspect-square bg-gray-100 flex items-center justify-center overflow-hidden">
           {!metaImage && <div className="text-sm text-gray-500">No image</div>}
 
-          {metaImage && typeof metaImage !== "string" && (
+          {/* String filename from CMS */}
+          {typeof metaImage === "string" && (
+            <img
+              src={`/api/media/file/${metaImage}?v=${Date.now()}`}
+              alt={titleToUse || "Doctor image"}
+              className="object-cover w-full h-full"
+            />
+          )}
+
+          {/* Full media object */}
+          {metaImage && typeof metaImage === "object" && (
             <Media resource={metaImage} size="360px" />
           )}
         </div>
