@@ -42,26 +42,26 @@ export default function Map({
       });
 
       const imageIcon = L.icon({
-        iconUrl: secondIconUrl || "/media/S-Bahn-Logo.webp",
+        iconUrl: secondIconUrl || "media/S-Bahn-Logo.webp",
         iconSize: [20, 20],
         iconAnchor: [15, 15],
         className: "image-marker",
       });
 
       const imageIconU = L.icon({
-        iconUrl: thirdIconUrl || "/media/U-Bahn.svg",
+        iconUrl: thirdIconUrl || "media/U-Bahn.svg",
         iconSize: [20, 20],
         iconAnchor: [15, 15],
         className: "image-marker",
       });
       const imageIconS = L.icon({
-        iconUrl: fourthIconUrl || "/media/S-Bahn-Logo.webp",
+        iconUrl: fourthIconUrl || "media/S-Bahn-Logo.webp",
         iconSize: [20, 20],
         iconAnchor: [15, 15],
         className: "image-marker",
       });
       const imageIconT = L.icon({
-        iconUrl: fifthIconUrl || "/media/Tram-Logo.svg",
+        iconUrl: fifthIconUrl || "media/Tram-Logo.svg",
         iconSize: [20, 20],
         iconAnchor: [15, 15],
         className: "image-marker",
@@ -73,7 +73,7 @@ export default function Map({
         className: "image-marker",
       });
       const imageIconB2 = L.icon({
-        iconUrl: seventhIconUrl || "/media/BUS-Logo-BVG.svg",
+        iconUrl: seventhIconUrl || "media/BUS-Logo-BVG.svg",
         iconSize: [20, 20],
         iconAnchor: [15, 15],
         className: "image-marker",
