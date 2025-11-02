@@ -45,7 +45,9 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     height = fullHeight!;
     alt = altFromResource;
 
-    src = url || `/api/media/file/${id}`;
+    src = url
+      ? `${url}?v=${resource.version || Date.now()}`
+      : `/api/media/file/${id}?v=${resource.version || Date.now()}`;
     unoptimized = !!url;
   }
 

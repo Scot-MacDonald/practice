@@ -308,6 +308,7 @@ export interface Media {
     };
     [k: string]: unknown;
   } | null;
+  version?: number | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -1532,6 +1533,7 @@ export interface DoctorsSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
+  version?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
