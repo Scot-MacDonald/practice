@@ -7,17 +7,17 @@ import RichText from "@/components/RichText";
 const getMediaUrl = (metaImage: any): string | null => {
   if (!metaImage) return null;
 
-  // External full URL
+  // External URL
   if (typeof metaImage === "string" && /^(https?:)?\/\//.test(metaImage)) {
     return metaImage;
   }
 
-  // Local /media path (static images)
+  // Local static path
   if (typeof metaImage === "string") {
     return metaImage.startsWith("/") ? metaImage : `/${metaImage}`;
   }
 
-  // Payload Media object (uploaded images)
+  // Payload media object
   if (typeof metaImage === "object") {
     if (metaImage.url)
       return metaImage.url.startsWith("/")
@@ -34,7 +34,7 @@ interface MitgliedBlockProps {
   title: string;
   description?: any;
   items: {
-    logo?: any; // Can be a string (static) or Payload object (uploaded)
+    logo?: any; // Can be string (static) or Payload object
     url: string;
   }[];
 }
@@ -72,12 +72,12 @@ export default function MitgliedBlock({
       </div>
 
       <div className="w-full grid grid-cols-12 mb-8">
-        {/* Left side with description */}
+        {/* Left side description */}
         <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-4 p-4 lg:p-8 lg:border-r border-border">
           {description && <RichText content={description} />}
 
           <div className="flex gap-4 items-center mt-6">
-            {/* Example static images */}
+            {/* Static images */}
             <img
               src={getMediaUrl("/media/bng.jpg")!}
               alt="Image 1"
@@ -106,12 +106,12 @@ export default function MitgliedBlock({
                 rel="noopener noreferrer"
                 className="relative border rounded-lg p-4 flex flex-col min-h-[138px] no-underline shadow-sm overflow-hidden"
               >
-                {logoUrl && (
-                  <div
-                    className="absolute inset-[20px] bg-center bg-contain bg-no-repeat pointer-events-none"
-                    style={{ backgroundImage: `url('${logoUrl}')` }}
-                  />
-                )}
+                {/* Use img tag to guarantee rendering */}
+                <img
+                  src={logoUrl}
+                  alt={item.logo?.alt || `Logo ${i + 1}`}
+                  className="w-full h-28 object-contain rounded-lg"
+                />
               </Link>
             );
           })}
