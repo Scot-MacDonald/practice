@@ -4,39 +4,46 @@ import React from "react";
 import Link from "next/link";
 import RichText from "@/components/RichText";
 
-// ✅ Helper to handle URLs and force cache refresh
 const getMediaUrl = (metaImage: any): string | null => {
   if (!metaImage) return null;
 
-  // Full URL (Payload or external)
+  // External full URL
   if (typeof metaImage === "string" && /^(https?:)?\/\//.test(metaImage)) {
-    return `${metaImage}?v=${Date.now()}`;
+    return metaImage;
   }
 
-  // Local or /media path
+  // Local /media path
   if (typeof metaImage === "string") {
-    if (metaImage.startsWith("/")) return `${metaImage}?v=${Date.now()}`;
-    if (metaImage.startsWith("media/")) return `/${metaImage}?v=${Date.now()}`;
-    return `/api/media/file/${metaImage}?v=${Date.now()}`;
+    return metaImage.startsWith("/") ? metaImage : `/${metaImage}`;
   }
 
   // Payload Media object
   if (typeof metaImage === "object") {
-    if (metaImage.url) {
-      const url = metaImage.url.startsWith("/")
+    if (metaImage.url)
+      return metaImage.url.startsWith("/")
         ? metaImage.url
         : `/${metaImage.url}`;
-      return `${url}?v=${Date.now()}`;
-    }
-    if (metaImage.filename)
-      return `/api/media/file/${metaImage.filename}?v=${Date.now()}`;
-    if (metaImage.id) return `/api/media/${metaImage.id}?v=${Date.now()}`;
+    if (metaImage.filename) return `/api/media/file/${metaImage.filename}`;
+    if (metaImage.id) return `/api/media/file/${metaImage.id}`;
   }
 
   return null;
 };
 
-export default function MitgliedBlock({ title, description, items }) {
+interface MitgliedBlockProps {
+  title: string;
+  description?: any;
+  items: {
+    logo?: any;
+    url: string;
+  }[];
+}
+
+export default function MitgliedBlock({
+  title,
+  description,
+  items,
+}: MitgliedBlockProps) {
   return (
     <>
       {/* Section header */}
@@ -71,13 +78,11 @@ export default function MitgliedBlock({ title, description, items }) {
 
           <div className="flex gap-4 items-center mt-6">
             <img
-              key={Date.now()} // 🔥 Forces re-render
               src={getMediaUrl("/media/bng.jpg")!}
               alt="Image 1"
               className="w-24 h-28 rounded-lg object-cover"
             />
             <img
-              key={Date.now() + 1} // 🔥 Slightly different key
               src={getMediaUrl("/media/daig_dagnae_siegel.jpg")!}
               alt="Image 2"
               className="w-26 h-24 rounded-lg object-cover"
@@ -92,36 +97,18 @@ export default function MitgliedBlock({ title, description, items }) {
 
             return (
               <Link
-                key={`${i}-${logoUrl}`} // 🔥 unique key ensures React reloads new logo
+                key={i}
                 href={item.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="relative border rounded-lg p-4 flex flex-col min-h-[138px] no-underline shadow-sm overflow-hidden"
               >
-                {/* ✅ Dynamic logo background with instant refresh */}
                 {logoUrl && (
                   <div
-                    key={logoUrl} // 🔥 re-renders when URL changes
                     className="absolute inset-[20px] bg-center bg-contain bg-no-repeat pointer-events-none"
                     style={{ backgroundImage: `url('${logoUrl}')` }}
                   />
                 )}
-
-                <div className="relative z-10">
-                  {/* Keeping commented content for future use */}
-                  {/*
-                  <h2 className="text-xl font-bold mb-1 text-gray-800">
-                    {item.title}
-                  </h2>
-                  */}
-                  {/*
-                  {item.description?.map((lineObj, j) => (
-                    <span key={j} className="text-gray-600">
-                      {lineObj.line}
-                    </span>
-                  ))}
-                  */}
-                </div>
               </Link>
             );
           })}
