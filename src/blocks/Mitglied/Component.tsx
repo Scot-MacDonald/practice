@@ -12,12 +12,12 @@ const getMediaUrl = (metaImage: any): string | null => {
     return metaImage;
   }
 
-  // Local /media path
+  // Local /media path (static images)
   if (typeof metaImage === "string") {
     return metaImage.startsWith("/") ? metaImage : `/${metaImage}`;
   }
 
-  // Payload Media object
+  // Payload Media object (uploaded images)
   if (typeof metaImage === "object") {
     if (metaImage.url)
       return metaImage.url.startsWith("/")
@@ -34,7 +34,7 @@ interface MitgliedBlockProps {
   title: string;
   description?: any;
   items: {
-    logo?: any;
+    logo?: any; // Can be a string (static) or Payload object (uploaded)
     url: string;
   }[];
 }
@@ -77,6 +77,7 @@ export default function MitgliedBlock({
           {description && <RichText content={description} />}
 
           <div className="flex gap-4 items-center mt-6">
+            {/* Example static images */}
             <img
               src={getMediaUrl("/media/bng.jpg")!}
               alt="Image 1"
@@ -93,7 +94,9 @@ export default function MitgliedBlock({
         {/* Items grid */}
         <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-8 md:p-8 sm:p-4 p-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
           {items.map((item, i) => {
-            const logoUrl = getMediaUrl(item.logo?.url || item.logo);
+            const logoUrl = getMediaUrl(item.logo);
+
+            if (!logoUrl) return null;
 
             return (
               <Link
