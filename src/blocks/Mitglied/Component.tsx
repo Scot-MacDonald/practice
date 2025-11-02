@@ -4,18 +4,19 @@ import React from "react";
 import Link from "next/link";
 import RichText from "@/components/RichText";
 
-// ✅ Versioned URL helper for cache-busting
+// Versioned URL helper for cache-busting
 export const getMediaUrl = (media: any): string | null => {
   if (!media) return null;
 
   const url = media.url || `/api/media/file/${media.filename}`;
-  const version = media.version || Date.now(); // fallback if version missing
+  const version = media.version || Date.now();
   return `${url}?v=${version}`;
 };
 
 interface MitgliedItem {
   logo?: any;
   url: string;
+  title: string;
 }
 
 interface MitgliedBlockProps {
@@ -61,6 +62,7 @@ export default function MitgliedBlock({
         <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-4 p-4 lg:p-8 lg:border-r border-border">
           {description && <RichText content={description} />}
 
+          {/* Example hard-coded images (optional) */}
           <div className="flex gap-4 items-center mt-6">
             <img
               src={getMediaUrl({ filename: "bng.jpg" })!}
@@ -79,6 +81,7 @@ export default function MitgliedBlock({
         <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-8 md:p-8 sm:p-4 p-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
           {items.map((item, i) => {
             const logoUrl = getMediaUrl(item.logo);
+            const altText = item.logo?.alt || item.title || "Mitglied logo";
 
             return (
               <Link
@@ -89,9 +92,10 @@ export default function MitgliedBlock({
                 className="relative border rounded-lg p-4 flex flex-col min-h-[138px] no-underline shadow-sm overflow-hidden"
               >
                 {logoUrl && (
-                  <div
-                    className="absolute inset-[20px] bg-center bg-contain bg-no-repeat pointer-events-none"
-                    style={{ backgroundImage: `url('${logoUrl}')` }}
+                  <img
+                    src={logoUrl}
+                    alt={altText}
+                    className="absolute inset-[20px] w-[calc(100%-40px)] h-[calc(100%-40px)] object-contain pointer-events-none"
                   />
                 )}
               </Link>
