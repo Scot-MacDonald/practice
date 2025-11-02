@@ -1,11 +1,7 @@
 import type { CollectionConfig } from "payload";
-import {
-  FixedToolbarFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-} from "@payloadcms/richtext-lexical";
 import path from "path";
 import { fileURLToPath } from "url";
+import fs from "fs";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -29,25 +25,50 @@ export const Media: CollectionConfig = {
       name: "caption",
       type: "richText",
       localized: true,
-      editor: lexicalEditor({
-        features: ({ rootFeatures }) => [
-          ...rootFeatures,
-          FixedToolbarFeature(),
-          InlineToolbarFeature(),
-        ],
-      }),
+    },
+    {
+      name: "version",
+      type: "number",
+      admin: {
+        readOnly: true,
+      },
+      defaultValue: Date.now(),
     },
   ],
   upload: {
     staticDir: path.resolve(dirname, "../../public/media"),
     mimeTypes: ["image/*", "image/svg+xml", "application/xml"],
-    // ✅ Set Cache-Control header for all media requests
-    modifyResponseHeaders: (headers) => {
-      headers.headers.set(
-        "Cache-Control",
-        "no-cache, max-age=0, must-revalidate"
-      );
-      return headers.headers;
-    },
+  },
+  hooks: {
+    afterChange: [
+      async ({ doc, req }) => {
+        if (!doc?.id || !req?.payload) return;
+
+        const newVersion = Date.now();
+
+        // ✅ Update version field to force cache-busting
+        await req.payload.update({
+          collection: "media",
+          id: doc.id,
+          data: { version: newVersion } as any,
+          overrideAccess: true,
+        });
+      },
+    ],
+    afterDelete: [
+      async ({ doc }) => {
+        if (!doc?.filename) return;
+
+        const filePath = path.join(
+          path.resolve(dirname, "../../public/media"),
+          doc.filename
+        );
+
+        if (fs.existsSync(filePath)) {
+          fs.unlinkSync(filePath);
+          console.log(`[Media] Deleted file from disk: ${doc.filename}`);
+        }
+      },
+    ],
   },
 };
