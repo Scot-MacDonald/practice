@@ -4,35 +4,11 @@ import React from "react";
 import Link from "next/link";
 import RichText from "@/components/RichText";
 
-// Versioned URL helper for cache-busting
-export const getMediaUrl = (media: any): string | null => {
-  if (!media) return null;
-
-  const url = media.url || `/api/media/file/${media.filename}`;
-  const version = media.version || Date.now();
-  return `${url}?v=${version}`;
-};
-
-interface MitgliedItem {
-  logo?: any;
-  url: string;
-  title: string;
-}
-
-interface MitgliedBlockProps {
-  title: string;
-  description?: any;
-  items: MitgliedItem[];
-}
-
-export default function MitgliedBlock({
-  title,
-  description,
-  items,
-}: MitgliedBlockProps) {
+export default function MitgliedBlock({ title, description, items }) {
   return (
     <>
-      {/* Section header */}
+      {/* Commented out section title */}
+
       <div className="page-with-header mb-[20px] md:mb-[50px]">
         <h2 className="page-header px-4 flex flex-col lg:flex-row items-start lg:items-center gap-2">
           <svg
@@ -58,49 +34,61 @@ export default function MitgliedBlock({
       </div>
 
       <div className="w-full grid grid-cols-12 mb-8">
-        {/* Left side with description */}
+        {/* Commented out description */}
+
         <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-4 p-4 lg:p-8 lg:border-r border-border">
           {description && <RichText content={description} />}
-
-          {/* Example hard-coded images (optional) */}
           <div className="flex gap-4 items-center mt-6">
             <img
-              src={getMediaUrl({ filename: "bng.jpg" })!}
+              src="/api/media/file/bng.jpg"
               alt="Image 1"
-              className="w-24 h-28 rounded-lg object-cover"
+              className="w-24 h-28  rounded-lg object-cover"
             />
             <img
-              src={getMediaUrl({ filename: "daig_dagnae_siegel.jpg" })!}
+              src="/api/media/file/daig_dagnae_siegel.jpg"
               alt="Image 2"
-              className="w-26 h-24 rounded-lg object-cover"
+              className="w-26 h-24  rounded-lg object-cover"
             />
           </div>
         </div>
 
         {/* Items grid */}
         <div className="col-span-12 sm:col-span-12 lg:col-span-6 xl:col-span-8 md:p-8 sm:p-4 p-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-          {items.map((item, i) => {
-            const logoUrl = getMediaUrl(item.logo);
-            const altText = item.logo?.alt || item.title || "Mitglied logo";
+          {items.map((item, i) => (
+            <Link
+              key={i}
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative border rounded-lg p-4 flex flex-col min-h-[138px] no-underline shadow-sm overflow-hidden"
+            >
+              {/* Logo background per item */}
+              {item.logo?.url && (
+                <div
+                  className="absolute inset-[20px] bg-center bg-contain bg-no-repeat  pointer-events-none"
+                  style={{ backgroundImage: `url(${item.logo.url})` }}
+                />
+              )}
 
-            return (
-              <Link
-                key={i}
-                href={item.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative border rounded-lg p-4 flex flex-col min-h-[138px] no-underline shadow-sm overflow-hidden"
-              >
-                {logoUrl && (
-                  <img
-                    src={logoUrl}
-                    alt={altText}
-                    className="absolute inset-[20px] w-[calc(100%-40px)] h-[calc(100%-40px)] object-contain pointer-events-none"
-                  />
-                )}
-              </Link>
-            );
-          })}
+              {/* Foreground content */}
+              <div className="relative z-10">
+                {/* Title hidden for now */}
+                {/*
+                <h2 className="text-xl font-bold mb-1 text-gray-800">
+                  {item.title}
+                </h2>
+                */}
+                {/* Description hidden for now */}
+                {/*
+                {item.description.map((lineObj, j) => (
+                  <span key={j} className="text-gray-600">
+                    {lineObj.line}
+                  </span>
+                ))}
+                */}
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
     </>
